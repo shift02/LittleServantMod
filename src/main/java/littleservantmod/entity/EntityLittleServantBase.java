@@ -51,7 +51,7 @@ public class EntityLittleServantBase extends EntityLiving {
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>> createKey(EntityLittleServantBase.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 	protected static final DataParameter<Boolean> SITED = EntityDataManager.<Boolean> createKey(EntityLittleServantBase.class, DataSerializers.BOOLEAN);
 
-	protected EntityAISit aiSit;
+	public EntityAISit aiSit;
 
 	public EntityLittleServantBase(World worldIn) {
 		super(worldIn);

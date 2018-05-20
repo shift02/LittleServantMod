@@ -4,6 +4,8 @@ import org.apache.logging.log4j.Logger;
 
 import littleservantmod.client.renderer.entity.RenderEntityLittleServant;
 import littleservantmod.entity.EntityLittleServant;
+import littleservantmod.profession.ProfessionChores;
+import littleservantmod.profession.ProfessionUnemployed;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.init.Blocks;
@@ -51,6 +53,10 @@ public class LittleServantMod {
 
 		LSMProxy.getProxy().fmlPreInit();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, LSMProxy.getProxy());
+
+		//職業
+		ProfessionManager.getInstance().registProfession(new ProfessionUnemployed());
+		ProfessionManager.getInstance().registProfession(new ProfessionChores());
 
 	}
 

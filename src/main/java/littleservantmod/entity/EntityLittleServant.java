@@ -1,13 +1,6 @@
 package littleservantmod.entity;
 
-import littleservantmod.entity.ai.EntityAIFollow;
-import littleservantmod.entity.ai.EntityAISit;
-import littleservantmod.entity.ai.EntityAITempt;
-import littleservantmod.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,42 +8,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class EntityLittleServant extends EntityLittleServantBase {
+public class EntityLittleServant extends EntityLittleServantProfession {
 
 	public EntityLittleServant(World worldIn) {
 		super(worldIn);
-
-	}
-
-	@Override
-	protected void initEntityAI() {
-
-		//排他処理メモ
-		//1 = 適当にウロウロ, 2 = 何かを見つめる, 3 = 何かについていく, 5 = 停止
-
-		// うろうろ移動するAIの追加
-		//this.wander = new EntityAIWander(this, interpTargetPitch);
-		//this.tasks.addTask(1, this.wander);
-
-		this.aiSit = new EntityAISit(this);
-
-		this.tasks.addTask(2, this.aiSit);
-
-		//砂糖についてくる
-		this.tasks.addTask(3, new EntityAITempt(this, 0.5D, Items.SUGAR, false));
-
-		this.tasks.addTask(5, new EntityAIFollow(this, EntityRabbit.class, 0.5D));
-
-		//ウロウロ
-		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 0.5D));
-
-		//うさぎを見る
-		this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityRabbit.class, 4.0F));
-
-		//プレイヤーを見る
-		this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		// 見回すAIの追加
-		this.tasks.addTask(10, new EntityAILookIdle(this));
 
 	}
 
