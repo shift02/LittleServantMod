@@ -34,7 +34,9 @@ public class ModelLittleServantBase  extends ModelBiped{
 
     public ModelLittleServantBase(float modelSize, boolean smallArmsIn)
     {
-        super(modelSize, 0.0F, 64, 64);
+        super(modelSize, 0.0F, 64, 32);
+
+
         this.smallArms = smallArmsIn;
         this.bipedDeadmau5Head = new ModelRenderer(this, 24, 0);
         this.bipedDeadmau5Head.addBox(-3.0F, -6.0F, -1.0F, 6, 6, 1, modelSize);
@@ -52,14 +54,15 @@ public class ModelLittleServantBase  extends ModelBiped{
         //頭
         this.bipedHead = new ModelRenderer(this, 0, 0);
         this.bipedHead.setTextureOffset( 0,  0).addBox(-4F, -8F, -4F, 8, 8, 8, modelSize);		// Head
-        this.bipedHead.setTextureOffset(24,  0).addBox(-4F, 0F, 1F, 8, 4, 3, modelSize);			// Hire
+        /*this.bipedHead.setTextureOffset(24,  0).addBox(-4F, 0F, 1F, 8, 4, 3, modelSize);			// Hire
         this.bipedHead.setTextureOffset(24, 18).addBox(-5F, -7F, 0.2F, 1, 3, 3, modelSize);		// ChignonR
         this.bipedHead.setTextureOffset(24, 18).addBox(4F, -7F, 0.2F, 1, 3, 3, modelSize);		// ChignonL
         this.bipedHead.setTextureOffset(52, 10).addBox(-2F, -7.2F, 4F, 4, 4, 2, modelSize);		// ChignonB
         this.bipedHead.setTextureOffset(46, 20).addBox(-1.5F, -6.8F, 4F, 3, 9, 3, modelSize);	// Tail
         this.bipedHead.setTextureOffset(58, 21).addBox(-5.5F, -6.8F, 0.9F, 1, 8, 2, modelSize);	// SideTailR
-        this.bipedHead.mirror =true;
-        this.bipedHead.setTextureOffset(58, 21).addBox(4.5F, -6.8F, 0.9F, 1, 8, 2, modelSize);	// SideTailL
+        */
+        //this.bipedHead.mirror =true;
+        //this.bipedHead.setTextureOffset(58, 21).addBox(4.5F, -6.8F, 0.9F, 1, 8, 2, modelSize);	// SideTailL
         this.bipedHead.setRotationPoint(0F, 0F, 0F);
 
         /*

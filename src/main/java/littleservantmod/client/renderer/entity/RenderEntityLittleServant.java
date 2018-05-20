@@ -1,5 +1,6 @@
 package littleservantmod.client.renderer.entity;
 
+import littleservantmod.LittleServantMod;
 import littleservantmod.client.model.ModelLittleServantBase;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -14,7 +15,7 @@ public class RenderEntityLittleServant extends RenderLivingBase{
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return  new ResourceLocation("");
+		return  new ResourceLocation(LittleServantMod.MOD_ID,"textures/entitys/little_maid/mob_littlemaid.png");
 	}
 
 }
