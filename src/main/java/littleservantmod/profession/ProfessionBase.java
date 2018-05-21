@@ -1,5 +1,6 @@
 package littleservantmod.profession;
 
+import littleservantmod.api.profession.IProfession;
 import littleservantmod.entity.EntityLittleServantBase;
 import littleservantmod.entity.ai.EntityAITempt;
 import littleservantmod.entity.ai.EntityAIWanderAvoidWater;
@@ -13,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
  * サーヴァントの職業クラス
  * @author shift02
  */
-public abstract class ProfessionBase {
+public abstract class ProfessionBase implements IProfession {
 
 	public abstract ResourceLocation getID();
 

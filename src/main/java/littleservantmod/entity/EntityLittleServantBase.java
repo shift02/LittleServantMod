@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Optional;
 
+import littleservantmod.api.IServant;
 import littleservantmod.entity.ai.EntityAISit;
 import littleservantmod.entity.ai.EntityAIWander;
 import net.minecraft.entity.Entity;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
  * @author shift02
  *
  */
-public class EntityLittleServantBase extends EntityLiving {
+public class EntityLittleServantBase extends EntityLiving implements IServant {
 
 	protected EntityAIWander wander;
 

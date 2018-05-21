@@ -1,8 +1,9 @@
 package littleservantmod.entity;
 
-import littleservantmod.ProfessionManager;
 import littleservantmod.entity.ai.EntityAISit;
 import littleservantmod.profession.ProfessionBase;
+import littleservantmod.profession.ProfessionDispatcher;
+import littleservantmod.profession.ProfessionManager;
 import littleservantmod.profession.ProfessionUnemployed;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -21,10 +22,15 @@ public class EntityLittleServantProfession extends EntityLittleServantBase {
 
 	public static ProfessionManager PM = ProfessionManager.getInstance();
 
+	public static ProfessionDispatcher professions;
+
 	protected static final DataParameter<String> PROFESSION = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
 
 	public EntityLittleServantProfession(World worldIn) {
 		super(worldIn);
+
+		professions = ProfessionManager.getInstance().gatProfessions(this);
+
 	}
 
 	@Override
