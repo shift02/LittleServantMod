@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Logger;
 import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.client.renderer.entity.RenderEntityLittleServant;
 import littleservantmod.entity.EntityLittleServant;
-import littleservantmod.profession.ProfessionChores;
+import littleservantmod.profession.ProfessionEventHandler;
 import littleservantmod.profession.ProfessionManager;
-import littleservantmod.profession.ProfessionUnemployed;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -43,15 +43,14 @@ public class LittleServantMod {
 		EntityRegistry.registerModEntity(new ResourceLocation(MOD_ID, "little_servant"), EntityLittleServant.class,
 				"little_servant", 0, this, trackingRange, updateFrequency, sendVelocityUpdates, 0xffffff, 0xFF0000);
 		//EntityRegistry.addSpawn(SampleEntity.class, 8, 4, 4, EnumCreatureType.MONSTER, BiomeGenBase.getBiome(0));
-		if (event.getSide().isServer()) {
-			return;
+		if (!event.getSide().isServer()) {
+			RenderingRegistry.registerEntityRenderingHandler(EntityLittleServant.class, new IRenderFactory() {
+				@Override
+				public Render createRenderFor(RenderManager manager) {
+					return new RenderEntityLittleServant(manager);//new SampleEntityRender(manager);
+				}
+			});
 		}
-		RenderingRegistry.registerEntityRenderingHandler(EntityLittleServant.class, new IRenderFactory() {
-			@Override
-			public Render createRenderFor(RenderManager manager) {
-				return new RenderEntityLittleServant(manager);//new SampleEntityRender(manager);
-			}
-		});
 
 		LSMProxy.getProxy().fmlPreInit();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, LSMProxy.getProxy());
@@ -59,8 +58,9 @@ public class LittleServantMod {
 		LittleServantModAPI.professionManager = ProfessionManager.getInstance();
 
 		//職業
-		ProfessionManager.getInstance().registProfession(new ProfessionUnemployed());
-		ProfessionManager.getInstance().registProfession(new ProfessionChores());
+		MinecraftForge.EVENT_BUS.register(new ProfessionEventHandler());
+		//ProfessionManager.getInstance().registProfession(new ProfessionUnemployed());
+		//ProfessionManager.getInstance().registProfession(new ProfessionChores());
 
 	}
 

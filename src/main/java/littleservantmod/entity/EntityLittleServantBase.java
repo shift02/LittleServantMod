@@ -30,7 +30,7 @@ import net.minecraft.world.World;
  * @author shift02
  *
  */
-public class EntityLittleServantBase extends EntityLiving implements IServant {
+public abstract class EntityLittleServantBase extends EntityLiving implements IServant {
 
 	protected EntityAIWander wander;
 

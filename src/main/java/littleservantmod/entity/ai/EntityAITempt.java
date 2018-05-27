@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import littleservantmod.entity.EntityLittleServantBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -13,7 +13,7 @@ import net.minecraft.pathfinding.PathNavigateGround;
 
 public class EntityAITempt extends EntityAIBase {
 	/** The entity using this AI that is tempted by the player. */
-	private final EntityLittleServantBase temptedEntity;
+	private final EntityLiving temptedEntity;
 	private final double speed;
 	/** X position of player tempting this mob */
 	private double targetX;
@@ -38,12 +38,12 @@ public class EntityAITempt extends EntityAIBase {
 	/** Whether the entity using this AI will be scared by the tempter's sudden movement. */
 	private final boolean scaredByPlayerMovement;
 
-	public EntityAITempt(EntityLittleServantBase temptedEntityIn, double speedIn, Item temptItemIn,
+	public EntityAITempt(EntityLiving entityLiving, double speedIn, Item temptItemIn,
 			boolean scaredByPlayerMovementIn) {
-		this(temptedEntityIn, speedIn, scaredByPlayerMovementIn, Sets.newHashSet(temptItemIn));
+		this(entityLiving, speedIn, scaredByPlayerMovementIn, Sets.newHashSet(temptItemIn));
 	}
 
-	public EntityAITempt(EntityLittleServantBase temptedEntityIn, double speedIn, boolean scaredByPlayerMovementIn,
+	public EntityAITempt(EntityLiving temptedEntityIn, double speedIn, boolean scaredByPlayerMovementIn,
 			Set<Item> temptItemIn) {
 		this.temptedEntity = temptedEntityIn;
 		this.speed = speedIn;

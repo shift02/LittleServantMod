@@ -27,8 +27,9 @@ public class AttachProfessionEvent extends Event {
 		return this.servant;
 	}
 
-	public void addCapability(ResourceLocation key, IProfession profession) {
+	public void addProfession(ResourceLocation key, IProfession profession) {
 		if (professions.containsKey(key)) throw new IllegalStateException("Duplicate IProfession Key: " + key + " " + profession);
+		if (profession.getRegistryName() == null) throw new IllegalStateException("Not found RegistryName: " + key + " " + profession);
 		this.professions.put(key, profession);
 	}
 

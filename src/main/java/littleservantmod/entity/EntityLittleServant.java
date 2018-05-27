@@ -10,9 +10,12 @@ import net.minecraft.world.World;
 
 public class EntityLittleServant extends EntityLittleServantProfession {
 
+	public EntityLittleServant() {
+		super(null);
+	}
+
 	public EntityLittleServant(World worldIn) {
 		super(worldIn);
-
 	}
 
 	@Override
@@ -49,13 +52,20 @@ public class EntityLittleServant extends EntityLittleServantProfession {
 		if (!this.world.isRemote) {
 
 			if (this.rand.nextInt(3) == 0 || true) {
+
+				//テイム成功の処理
 				this.setTamedBy(player);
 				this.navigator.clearPath();
 				this.setAttackTarget((EntityLivingBase) null);
 				this.aiSit.setSitting(true);
 				this.setHealth(20.0F);
 				this.playTameEffect(true);
+
+				//職業を雑用に変更
+				this.changeProfession(this.professions.getDefaultTamedProfession());
+
 				this.world.setEntityState(this, (byte) 7);
+
 			} else {
 				this.playTameEffect(false);
 				this.world.setEntityState(this, (byte) 6);

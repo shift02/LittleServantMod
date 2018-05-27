@@ -1,5 +1,8 @@
 package littleservantmod.api;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAIBase;
+
 /**
  * サーヴァントのEntityに実装されるインターフェイス<br />
  * Entityのインスタンスを直接参照する場合は互換性の保証はできません
@@ -7,5 +10,9 @@ package littleservantmod.api;
  *
  */
 public interface IServant {
+
+	public void addAI(int priority, EntityAIBase task);
+
+	public EntityLiving getEntityInstance();
 
 }

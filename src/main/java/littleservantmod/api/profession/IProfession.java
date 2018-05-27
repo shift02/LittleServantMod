@@ -1,5 +1,7 @@
 package littleservantmod.api.profession;
 
+import littleservantmod.api.IServant;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -8,5 +10,10 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @see INBTSerializable
  * */
 public interface IProfession {
+
+	/** AIの初期化時に呼ばれる */
+	void initAI(IServant servant);
+
+	public ResourceLocation getRegistryName();
 
 }
