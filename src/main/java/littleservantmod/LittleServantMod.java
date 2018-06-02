@@ -16,6 +16,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -32,6 +33,9 @@ public class LittleServantMod {
 	public static final String MOD_VERSION = "0.0.1";
 
 	private static Logger logger;
+
+	@Instance(MOD_ID)
+	public static LittleServantMod instance;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

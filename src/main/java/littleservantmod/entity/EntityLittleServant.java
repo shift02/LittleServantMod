@@ -1,5 +1,6 @@
 package littleservantmod.entity;
 
+import littleservantmod.LSMProxy;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -9,6 +10,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class EntityLittleServant extends EntityLittleServantProfession {
+
+	public boolean isGui = false;
 
 	public EntityLittleServant() {
 		super(null);
@@ -94,6 +97,8 @@ public class EntityLittleServant extends EntityLittleServantProfession {
 			return true;
 
 		}
+
+		if (!this.world.isRemote) LSMProxy.getProxy().openGui(player, this);
 
 		return true;
 

@@ -18,7 +18,7 @@ import net.minecraft.world.World;
  * 職業を設定するクラス
  * @author shift
  */
-public class EntityLittleServantProfession extends EntityLittleServantBase {
+public class EntityLittleServantProfession extends EntityLittleServantFakePlayer {
 
 	public static ProfessionDispatcher professions;
 
