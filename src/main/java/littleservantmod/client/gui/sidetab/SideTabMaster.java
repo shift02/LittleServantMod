@@ -12,7 +12,7 @@ public class SideTabMaster extends SideTabBase {
 		super(guiSideTabContainer);
 		this.guiSideTabContainer = guiSideTabContainer;
 
-		this.name = "master.name";
+		this.name = "sidetab.master_info.name";
 
 		this.backgroundColor = 0x1E90FF;
 
@@ -30,11 +30,15 @@ public class SideTabMaster extends SideTabBase {
 
 			int i = 1;
 
-			this.elementFontRenderer.drawString(this.guiSideTabContainer.localize(getName()), posX + 22, posY + 8 + i, 0xFFD700, true);
+			this.elementFontRenderer.drawString(this.guiSideTabContainer.localize(getName()), posX + 24, posY + 8 + i, 0xFFD700, true);
 
-			this.elementFontRenderer.drawString(this.guiSideTabContainer.localize("master_name.name"), posX + 22, posY + 21 + i, 0xFFFFFF, true);
+			this.elementFontRenderer.drawString(this.guiSideTabContainer.localize("sidetab.master_name.name"), posX + 24, posY + 21 + i, 0xFFFFFF, true);
+
+			String masterName = "None";
+			if (guiSideTabContainer.servant.getOwner() != null) masterName = guiSideTabContainer.servant.getOwner().getDisplayName().getFormattedText();
+
 			this.elementFontRenderer.drawString(
-					"Foo", posX + 28,
+					masterName, posX + 30,
 					posY + 33 + i, 0x000000);
 
 		}

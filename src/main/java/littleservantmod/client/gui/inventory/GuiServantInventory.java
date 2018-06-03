@@ -37,7 +37,7 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	/** The old y position of the mouse pointer */
 	private float oldMouseY;
 
-	private EntityLittleServant servant;
+	public EntityLittleServant servant;
 
 	private final InventoryPlayer playerInventory;
 
@@ -54,7 +54,7 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	protected long lastSystemTime;
 
 	public GuiServantInventory(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
-		super(inventorySlotsIn);
+		super(servant, inventorySlotsIn);
 
 		this.servant = servant;
 

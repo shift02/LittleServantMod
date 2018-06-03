@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL12;
 import littleservantmod.client.gui.sidetab.SideTabBase;
 import littleservantmod.client.gui.sidetab.SideTabMaster;
 import littleservantmod.client.gui.sidetab.SideTabTracker;
+import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
@@ -30,8 +31,12 @@ public abstract class GuiSideTabContainer extends InventoryEffectRenderer {
 	public List<SideTabBase> tabs = new ArrayList<>();
 	protected List<String> tooltip = new LinkedList<String>();
 
-	public GuiSideTabContainer(Container inventorySlotsIn) {
+	public EntityLittleServant servant;
+
+	public GuiSideTabContainer(EntityLittleServant servant, Container inventorySlotsIn) {
 		super(inventorySlotsIn);
+
+		this.servant = servant;
 
 	}
 
