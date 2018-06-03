@@ -101,6 +101,7 @@ public class GuiServantInventory extends GuiSideTabContainer {
 		int i = this.guiLeft;
 		int j = this.guiTop;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+		this.renderCurrentSlot();
 		this.servant.isGui = true;
 		drawEntityOnScreen(i + 51, j + 75 - 16, 30, i + 51 - this.oldMouseX, j + 75 - 50 - this.oldMouseY, this.servant);
 		this.servant.isGui = false;
@@ -113,6 +114,18 @@ public class GuiServantInventory extends GuiSideTabContainer {
 		//drawHeathArmor(0, 0);
 
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+
+	}
+
+	protected void renderCurrentSlot() {
+
+		int i = this.guiLeft;
+		int j = this.guiTop;
+
+		int i1 = 6 + 18 * (this.servant.inventory.currentItem % 9);
+		int ij = 74 + 18 * (this.servant.inventory.currentItem / 9);
+
+		this.drawTexturedModalRect(i + i1, j + ij, 176, 0, 20, 20);
 
 	}
 

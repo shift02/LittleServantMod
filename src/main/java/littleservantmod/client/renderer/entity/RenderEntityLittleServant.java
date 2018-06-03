@@ -2,6 +2,7 @@ package littleservantmod.client.renderer.entity;
 
 import littleservantmod.LittleServantMod;
 import littleservantmod.client.model.ModelLittleServantBase;
+import littleservantmod.client.renderer.entity.layers.LayerCustomHead;
 import littleservantmod.client.renderer.entity.layers.LayerHeldItem;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
@@ -17,7 +18,13 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
 		super(renderManagerIn, new ModelLittleServantBase(0.0F, false), 0.5F);
 
 		this.addLayer(new LayerHeldItem(this));
+		this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
 
+	}
+
+	@Override
+	public ModelLittleServantBase getMainModel() {
+		return (ModelLittleServantBase) super.getMainModel();
 	}
 
 	@Override
