@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import littleservantmod.ForgeLSMHooks;
 import littleservantmod.LittleServantMod;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.block.material.Material;
@@ -119,7 +120,7 @@ public class GuiServantInventory extends GuiSideTabContainer {
 		int left = x;
 		int top = y;
 
-		int level = 14;//ForgeLSMHooks.getTotalArmorValue(this.servant);
+		int level = ForgeLSMHooks.getTotalArmorValue(this.servant);
 		for (int i = 1; level > 0 && i < 20; i += 2) {
 			if (i < level) {
 				drawTexturedModalRect(left, top, 34, 9, 9, 9);

@@ -13,12 +13,16 @@ public class EntityLittleServant extends EntityLittleServantProfession {
 
 	public boolean isGui = false;
 
-	public EntityLittleServant() {
-		super(null);
-	}
-
 	public EntityLittleServant(World worldIn) {
 		super(worldIn);
+
+	}
+
+	@Override
+	protected void entityInit() {
+
+		super.entityInit();
+
 	}
 
 	@Override

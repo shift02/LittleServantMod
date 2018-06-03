@@ -37,7 +37,7 @@ public class LSMProxy implements IGuiHandler {
 
 		switch (ID) {
 		case 0:
-			return new ContainerServant(player.inventory, null, entity);
+			return new ContainerServant(player.inventory, entity.inventory, entity);
 		}
 
 		return null;
@@ -50,7 +50,7 @@ public class LSMProxy implements IGuiHandler {
 
 		switch (ID) {
 		case 0:
-			return new GuiServantInventory(entity, player.inventory, new ContainerServant(player.inventory, null, entity));
+			return new GuiServantInventory(entity, player.inventory, new ContainerServant(player.inventory, entity.inventory, entity));
 		}
 
 		return null;

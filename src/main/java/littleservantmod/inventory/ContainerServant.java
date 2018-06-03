@@ -30,11 +30,14 @@ public class ContainerServant extends Container {
 
 		servant = servantIn;
 
+		//Main size
+		int slotIndex = 15;
+
 		//装備 (Servantは小さいので帽子が不要)
 		for (int k = 0; k < 3; ++k) {
 
 			final EntityEquipmentSlot entityequipmentslot = VALID_EQUIPMENT_SLOTS[k];
-			this.addSlotToContainer(new Slot(playerInventory, 36 + (3 - k), 8, 8 + 0 + k * 18) {
+			this.addSlotToContainer(new Slot(servantInventoryIn, slotIndex + (3 - k), 8, 8 + 0 + k * 18) {
 				/**
 				 * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1
 				 * in the case of armor slots)
@@ -71,14 +74,26 @@ public class ContainerServant extends Container {
 			});
 		}
 
-		//プレイヤーの装備欄
+		//サーヴァントのアイテム欄
+		for (int l = 0; l < 2; ++l) {
+			for (int j1 = 0; j1 < 9; ++j1) {
+				if (l != 1 || j1 < 7) this.addSlotToContainer(new Slot(servantInventoryIn, j1 + l * 9, 8 + j1 * 18, 84 - 8 + l * 18));
+			}
+		}
+		//頭の部分
+		this.addSlotToContainer(new Slot(servantInventoryIn, 19, 8 + 8 * 18, 84 - 8 + 1 * 18));
+
+		//オフハンドの部分
+		this.addSlotToContainer(new Slot(servantInventoryIn, 20, 8 + 7 * 18, 84 - 8 + 1 * 18));
+
+		//プレイヤーのアイテム欄
 		for (int l = 0; l < 3; ++l) {
 			for (int j1 = 0; j1 < 9; ++j1) {
 				this.addSlotToContainer(new Slot(playerInventory, j1 + (l + 1) * 9, 8 + j1 * 18, 84 + 42 + l * 18));
 			}
 		}
 
-		//プレイヤーの装備欄その2
+		//プレイヤーのアイテム欄その2
 		for (int i1 = 0; i1 < 9; ++i1) {
 			this.addSlotToContainer(new Slot(playerInventory, i1, 8 + i1 * 18, 142 + 42));
 		}
