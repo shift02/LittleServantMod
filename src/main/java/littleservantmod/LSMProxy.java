@@ -1,14 +1,21 @@
 package littleservantmod;
 
 import littleservantmod.client.gui.inventory.GuiServantInventory;
+import littleservantmod.client.gui.inventory.GuiServantProfession;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.EntityLittleServantBase;
 import littleservantmod.inventory.ContainerServant;
+import littleservantmod.inventory.ContainerServantProfession;
+import littleservantmod.profession.ProfessionEventHandler;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,6 +45,8 @@ public class LSMProxy implements IGuiHandler {
 		switch (ID) {
 		case 0:
 			return new ContainerServant(player.inventory, entity.inventory, entity);
+		case 1:
+			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
 		}
 
 		return null;
@@ -51,6 +60,8 @@ public class LSMProxy implements IGuiHandler {
 		switch (ID) {
 		case 0:
 			return new GuiServantInventory(entity, player.inventory, new ContainerServant(player.inventory, entity.inventory, entity));
+		case 1:
+			return new GuiServantProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
 		}
 
 		return null;
@@ -60,7 +71,7 @@ public class LSMProxy implements IGuiHandler {
 
 		OpenGuiEntityId id = new OpenGuiEntityId(entity);
 
-		player.openGui(LittleServantMod.instance, 0, player.world, id.getX(), 0, 0);
+		player.openGui(LittleServantMod.instance, 1, player.world, id.getX(), 0, 0);
 
 	}
 
@@ -74,6 +85,23 @@ public class LSMProxy implements IGuiHandler {
 		@Override
 		public EntityPlayer getClientPlayer() {
 			return Minecraft.getMinecraft().player;
+		}
+
+		@SubscribeEvent
+		public void textureStitch(TextureStitchEvent.Pre event) {
+			TextureMap textureMap = event.getMap();
+
+			if (textureMap == Minecraft.getMinecraft().getTextureMapBlocks()) {
+
+				//TODO この辺をもう少しスマートにしたい
+				ProfessionEventHandler.iconUnemployed.setIcon(
+						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "guis/icon/icon_unemployed")));
+
+				ProfessionEventHandler.iconChores.setIcon(
+						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "guis/icon/icon_chores")));
+
+			}
+
 		}
 
 	}

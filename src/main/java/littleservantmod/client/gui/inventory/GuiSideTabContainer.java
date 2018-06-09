@@ -16,13 +16,13 @@ import littleservantmod.client.gui.sidetab.SideTabTracker;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.InventoryEffectRenderer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.Loader;
 
-public abstract class GuiSideTabContainer extends InventoryEffectRenderer {
+public class GuiSideTabContainer extends GuiServantBase {
 
 	protected boolean drawInventory = true;
 	protected int mouseX = 0;
@@ -33,8 +33,8 @@ public abstract class GuiSideTabContainer extends InventoryEffectRenderer {
 
 	public EntityLittleServant servant;
 
-	public GuiSideTabContainer(EntityLittleServant servant, Container inventorySlotsIn) {
-		super(inventorySlotsIn);
+	public GuiSideTabContainer(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
+		super(inventorySlotsIn, playerInventory);
 
 		this.servant = servant;
 
@@ -63,7 +63,9 @@ public abstract class GuiSideTabContainer extends InventoryEffectRenderer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int x, int y) {
+
+		super.drawGuiContainerBackgroundLayer(partialTicks, x, y);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		//drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);

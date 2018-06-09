@@ -1,5 +1,9 @@
 entity.little_servant.name=Little Servant
 
 
+gui.profession.name=Profession
+gui.mode.name=Mode
+gui.sub_mode.name=Sub Mode
+
 sidetab.master_info.name=Master Info
 sidetab.master_name.name=Master

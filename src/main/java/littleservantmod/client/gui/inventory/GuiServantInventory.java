@@ -28,10 +28,6 @@ public class GuiServantInventory extends GuiSideTabContainer {
 
 	/** The location of the inventory background texture */
 	public static final ResourceLocation INVENTORY_BACKGROUND = new ResourceLocation(LittleServantMod.MOD_ID, "textures/guis/container/littleservant_inventory.png");
-	/** The X size of the inventory window in pixels. */
-	protected int xSize = 176;
-	/** The Y size of the inventory window in pixels. */
-	protected int ySize = 208;//166;//208;//166;
 
 	/** The old x position of the mouse pointer */
 	private float oldMouseX;
@@ -39,8 +35,6 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	private float oldMouseY;
 
 	public EntityLittleServant servant;
-
-	private final InventoryPlayer playerInventory;
 
 	private Random rand;
 	private int updateCounter;
@@ -55,11 +49,9 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	protected long lastSystemTime;
 
 	public GuiServantInventory(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
-		super(servant, inventorySlotsIn);
+		super(servant, playerInventory, inventorySlotsIn);
 
 		this.servant = servant;
-
-		this.playerInventory = playerInventory;
 
 		this.rand = new Random();
 	}
@@ -67,15 +59,13 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		this.mc.player.openContainer = this.inventorySlots;
-		this.guiLeft = (this.width - this.xSize) / 2;
-		this.guiTop = (this.height - this.ySize) / 2 + (12);
+
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
-		this.drawDefaultBackground();
+		//this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		this.renderHoveredToolTip(mouseX, mouseY);
@@ -96,12 +86,17 @@ public class GuiServantInventory extends GuiSideTabContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(INVENTORY_BACKGROUND);
 		int i = this.guiLeft;
 		int j = this.guiTop;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+
 		this.renderCurrentSlot();
+
 		this.servant.isGui = true;
 		drawEntityOnScreen(i + 51, j + 75 - 16, 30, i + 51 - this.oldMouseX, j + 75 - 50 - this.oldMouseY, this.servant);
 		this.servant.isGui = false;

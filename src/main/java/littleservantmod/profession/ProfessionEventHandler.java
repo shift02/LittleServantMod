@@ -12,18 +12,22 @@ public class ProfessionEventHandler {
 
 	/** 無職 */
 	public static ResourceLocation kyeUnemployed = new ResourceLocation(LittleServantMod.MOD_ID, "unemployed");
+	public static IconHolder iconUnemployed = new IconHolder();
 
 	/** 雑用 */
 	public static ResourceLocation keyChores = new ResourceLocation(LittleServantMod.MOD_ID, "chores");
+	public static IconHolder iconChores = new IconHolder();
 
 	@SubscribeEvent
 	public void onAttachProfessionEvent(AttachProfessionEvent evt) {
 
 		//無職
-		evt.addProfession(kyeUnemployed, new ProfessionUnemployed().setRegistryName(kyeUnemployed));
+		evt.addProfession(kyeUnemployed,
+				new ProfessionUnemployed().setIconHolder(iconUnemployed).setUnlocalizedName("unemployed").setRegistryName(kyeUnemployed));
 
 		//雑用
-		evt.addProfession(keyChores, new ProfessionChores().setRegistryName(keyChores));
+		evt.addProfession(keyChores,
+				new ProfessionChores().setIconHolder(iconChores).setUnlocalizedName("chores").setRegistryName(keyChores));
 
 	}
 

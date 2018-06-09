@@ -58,6 +58,7 @@ public class LittleServantMod {
 
 		LSMProxy.getProxy().fmlPreInit();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, LSMProxy.getProxy());
+		MinecraftForge.EVENT_BUS.register(LSMProxy.getProxy());
 
 		LittleServantModAPI.professionManager = ProfessionManager.getInstance();
 

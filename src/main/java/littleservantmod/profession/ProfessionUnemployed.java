@@ -1,13 +1,12 @@
 package littleservantmod.profession;
 
 import littleservantmod.api.IServant;
-import littleservantmod.api.profession.ProfessionBase;
 import littleservantmod.entity.ai.EntityAIFollow;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityRabbit;
 
 /** 無職 */
-public class ProfessionUnemployed extends ProfessionBase {
+public class ProfessionUnemployed extends ProfessionLSMBase {
 
 	@Override
 	public void initAI(IServant servant) {

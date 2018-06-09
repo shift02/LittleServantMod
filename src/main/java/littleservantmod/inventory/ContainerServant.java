@@ -6,7 +6,6 @@ import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -19,16 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * GUIのサーバー側の処理
  * @author shift02
  */
-public class ContainerServant extends Container {
+public class ContainerServant extends ContainerServantBase {
 
 	private static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
-	private final EntityLittleServant servant;
-
 	public ContainerServant(InventoryPlayer playerInventory, IInventory servantInventoryIn, EntityLittleServant servantIn) {
-		//super(playerInventory, localWorld, servantIn);
-
-		servant = servantIn;
+		super(playerInventory, servantInventoryIn, servantIn);
 
 		//Main size
 		int slotIndex = 15;

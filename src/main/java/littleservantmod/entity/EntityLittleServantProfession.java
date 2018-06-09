@@ -89,7 +89,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 	}
 
-	private IProfession getProfession() {
+	public IProfession getProfession() {
 		return professions.getProfession(new ResourceLocation(this.dataManager.get(PROFESSION)));
 	}
 
