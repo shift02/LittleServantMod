@@ -22,6 +22,7 @@ public abstract class ProfessionBase implements IProfession {
 	protected ResourceLocation resourceLocation;
 	protected String unlocalizedName;
 
+	@SideOnly(Side.CLIENT)
 	protected TextureAtlasSprite icon;
 
 	public void init() {

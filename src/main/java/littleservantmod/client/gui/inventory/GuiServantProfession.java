@@ -60,4 +60,27 @@ public class GuiServantProfession extends GuiSideTabContainer {
 
 	}
 
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+
+		super.renderHoveredToolTip(mouseX, mouseY);
+
+		int i = this.guiLeft;
+		int j = this.guiTop;
+
+		this.drawGuiContainerBackgroundLayerHoveringText(mouseX - i, mouseY - j);
+
+	}
+
+	protected void drawGuiContainerBackgroundLayerHoveringText(int mouseX, int mouseY) {
+
+		int i = this.guiLeft;
+		int j = this.guiTop;
+
+		if (11 < mouseX && mouseX <= 135 && 17 < mouseY && mouseY <= 39) {
+			this.drawHoveringText(I18n.translateToLocal("gui.change_profession"), i + mouseX, j + mouseY);
+		}
+
+	}
+
 }

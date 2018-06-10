@@ -77,6 +77,7 @@ public class LSMProxy implements IGuiHandler {
 
 	@SideOnly(Side.SERVER)
 	public static class ServerProxy extends LSMProxy {
+
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -95,10 +96,10 @@ public class LSMProxy implements IGuiHandler {
 
 				//TODO この辺をもう少しスマートにしたい
 				ProfessionEventHandler.iconUnemployed.setIcon(
-						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "guis/icon/icon_unemployed")));
+						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed")));
 
 				ProfessionEventHandler.iconChores.setIcon(
-						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "guis/icon/icon_chores")));
+						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_chores")));
 
 			}
 

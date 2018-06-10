@@ -4,6 +4,11 @@ entity.little_servant.name=Little Servant
 gui.profession.name=Profession
 gui.mode.name=Mode
 gui.sub_mode.name=Sub Mode
+gui.change_profession=Change profession
 
 sidetab.master_info.name=Master Info
 sidetab.master_name.name=Master
+
+profession.unemployed.name=Unemployed
+profession.chores.name=Chores
+profession.saber.name=Saber
