@@ -4,6 +4,10 @@ import littleservantmod.client.gui.inventory.GuiSideTabContainer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
+/**
+ * 契約者の情報を表示する
+ * @author shift02
+ */
 public class SideTabMaster extends SideTabBase {
 
 	GuiSideTabContainer guiSideTabContainer;

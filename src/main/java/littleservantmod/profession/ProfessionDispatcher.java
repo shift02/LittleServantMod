@@ -58,6 +58,10 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 
 	}
 
+	public IProfession[] getProfessions() {
+		return professions;
+	}
+
 	public IProfession getDefaultProfession() {
 		return professionsMap.get(ProfessionEventHandler.kyeUnemployed);
 	}

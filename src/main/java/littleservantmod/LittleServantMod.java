@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.client.renderer.entity.RenderEntityLittleServant;
 import littleservantmod.entity.EntityLittleServant;
+import littleservantmod.packet.LSMPacketHandler;
 import littleservantmod.profession.ProfessionEventHandler;
 import littleservantmod.profession.ProfessionManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -60,6 +61,8 @@ public class LittleServantMod {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, LSMProxy.getProxy());
 		MinecraftForge.EVENT_BUS.register(LSMProxy.getProxy());
 
+		LSMPacketHandler.init(event);
+
 		LittleServantModAPI.professionManager = ProfessionManager.getInstance();
 
 		//職業
@@ -67,12 +70,35 @@ public class LittleServantMod {
 		//ProfessionManager.getInstance().registProfession(new ProfessionUnemployed());
 		//ProfessionManager.getInstance().registProfession(new ProfessionChores());
 
+		//Minecraft.getMinecraft().getResourceManager()
+
+		//new FolderResourcePack(null)
+
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		// some example code
 		logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+		/*
+		String name = "Loading Resource";
+		ProgressBar bar = ProgressManager.push(name, 20);
+		
+		ResourceLocation test = new ResourceLocation("military_custom" + "@" + MOD_ID, "test_foo");
+		
+		for (int i = 0; i < 20; i++) {
+			try {
+				Thread.sleep(1000);
+				bar.step(test.toString());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		ProgressManager.pop(bar);
+		*/
+
 	}
 
 }

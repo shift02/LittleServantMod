@@ -1,6 +1,12 @@
 package littleservantmod.client.gui.inventory;
 
+import littleservantmod.client.gui.toptab.TabButton;
+import littleservantmod.client.gui.toptab.TabInventory;
+import littleservantmod.client.gui.toptab.TabProfession;
+import littleservantmod.entity.EntityLittleServant;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 
@@ -17,9 +23,17 @@ public class GuiServantBase extends InventoryEffectRenderer {
 
 	protected final InventoryPlayer playerInventory;
 
-	public GuiServantBase(Container inventorySlotsIn, InventoryPlayer playerInventory) {
+	public EntityLittleServant servant;
+
+	protected TabButton inventoryT;
+	protected TabButton professionT;
+
+	public GuiServantBase(EntityLittleServant servant, Container inventorySlotsIn, InventoryPlayer playerInventory) {
 		super(inventorySlotsIn);
 		this.playerInventory = playerInventory;
+
+		this.servant = servant;
+
 	}
 
 	@Override
@@ -28,7 +42,19 @@ public class GuiServantBase extends InventoryEffectRenderer {
 
 		this.mc.player.openContainer = this.inventorySlots;
 		this.guiLeft = (this.width - this.xSize) / 2;
-		this.guiTop = (this.height - this.ySize) / 2 + (12);
+		this.guiTop = (this.height - this.ySize) / 2 + (14);
+
+		inventoryT = new TabButton(new TabInventory(this.servant));
+		inventoryT.x = guiLeft;
+		inventoryT.y = this.guiTop - 28;
+		inventoryT.id = 2;
+		this.buttonList.add(inventoryT);
+
+		int count = 0;
+		professionT = new TabButton(new TabProfession(this.servant));
+		professionT.x = guiLeft + 32 + count * 29;
+		professionT.y = this.guiTop - 28;
+		this.buttonList.add(professionT);
 
 	}
 
@@ -45,6 +71,20 @@ public class GuiServantBase extends InventoryEffectRenderer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
+	}
+
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		RenderHelper.disableStandardItemLighting();
+
+		for (GuiButton guibutton : this.buttonList) {
+			if (guibutton.isMouseOver()) {
+				guibutton.drawButtonForegroundLayer(mouseX - this.guiLeft, mouseY - this.guiTop);
+				break;
+			}
+		}
+
+		RenderHelper.enableGUIStandardItemLighting();
 	}
 
 }

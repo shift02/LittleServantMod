@@ -22,6 +22,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.Loader;
 
+/**
+ * サイドタブを追加
+ * @author shift02
+ *
+ */
 public class GuiSideTabContainer extends GuiServantBase {
 
 	protected boolean drawInventory = true;
@@ -31,12 +36,8 @@ public class GuiSideTabContainer extends GuiServantBase {
 	public List<SideTabBase> tabs = new ArrayList<>();
 	protected List<String> tooltip = new LinkedList<String>();
 
-	public EntityLittleServant servant;
-
 	public GuiSideTabContainer(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
-		super(inventorySlotsIn, playerInventory);
-
-		this.servant = servant;
+		super(servant, inventorySlotsIn, playerInventory);
 
 	}
 

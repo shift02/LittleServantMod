@@ -93,6 +93,10 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		return professions.getProfession(new ResourceLocation(this.dataManager.get(PROFESSION)));
 	}
 
+	public IProfession[] getProfessions() {
+		return professions.getProfessions();
+	}
+
 	private IProfession getProfession(ResourceLocation resourceLocation) {
 		return professions.getProfession(resourceLocation);
 	}

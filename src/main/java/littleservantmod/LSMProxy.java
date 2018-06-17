@@ -71,7 +71,7 @@ public class LSMProxy implements IGuiHandler {
 
 		OpenGuiEntityId id = new OpenGuiEntityId(entity);
 
-		player.openGui(LittleServantMod.instance, 1, player.world, id.getX(), 0, 0);
+		player.openGui(LittleServantMod.instance, 0, player.world, id.getX(), 0, 0);
 
 	}
 

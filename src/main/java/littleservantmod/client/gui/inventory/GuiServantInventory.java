@@ -34,8 +34,6 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	/** The old y position of the mouse pointer */
 	private float oldMouseY;
 
-	public EntityLittleServant servant;
-
 	private Random rand;
 	private int updateCounter;
 
@@ -51,14 +49,14 @@ public class GuiServantInventory extends GuiSideTabContainer {
 	public GuiServantInventory(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
 		super(servant, playerInventory, inventorySlotsIn);
 
-		this.servant = servant;
-
 		this.rand = new Random();
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
+
+		this.inventoryT.enabled = false;
 
 	}
 
