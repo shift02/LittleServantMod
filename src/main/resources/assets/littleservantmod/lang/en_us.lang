@@ -6,6 +6,14 @@ gui.mode.name=Mode
 gui.sub_mode.name=Sub Mode
 gui.change_profession=Change profession
 
+gui.change_profession.name=Profession
+
+gui.change_profession.name=Profession
+gui.change_profession.name=Profession
+
+gui.button_cancel.name=Cancel
+gui.button_ok.name=Done
+
 sidetab.master_info.name=Master Info
 sidetab.master_name.name=Master
 

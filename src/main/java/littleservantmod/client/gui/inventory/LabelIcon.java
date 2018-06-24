@@ -15,11 +15,22 @@ public class LabelIcon extends GuiButton {
 
 	private EntityLittleServant servant;
 
+	private boolean isNormal = false;
+
 	public LabelIcon(int buttonId, int x, int y, EntityLittleServant servant) {
 		super(buttonId, x, y, 26, 26, "");
 
 		this.servant = servant;
 
+	}
+
+	public boolean isNormal() {
+		return isNormal;
+	}
+
+	public LabelIcon setNormal(boolean isNormal) {
+		this.isNormal = isNormal;
+		return this;
 	}
 
 	@Override
@@ -32,7 +43,9 @@ public class LabelIcon extends GuiButton {
 
 			mc.renderEngine.bindTexture(this.texture);
 
-			this.drawTexturedModalRect(this.x, this.y, 0, 0, 26, 26);
+			int yOfset = isNormal ? 26 : 0;
+
+			this.drawTexturedModalRect(this.x, this.y, 0, yOfset, 26, 26);
 
 			this.zLevel = 100.0F;
 

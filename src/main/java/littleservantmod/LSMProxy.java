@@ -2,6 +2,7 @@ package littleservantmod;
 
 import littleservantmod.client.gui.inventory.GuiServantInventory;
 import littleservantmod.client.gui.inventory.GuiServantProfession;
+import littleservantmod.client.gui.inventory.GuiServantProfessionSelectProfession;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.EntityLittleServantBase;
 import littleservantmod.inventory.ContainerServant;
@@ -47,9 +48,13 @@ public class LSMProxy implements IGuiHandler {
 			return new ContainerServant(player.inventory, entity.inventory, entity);
 		case 1:
 			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
+
+		case 10:
+			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
 		}
 
 		return null;
+
 	}
 
 	@Override
@@ -62,6 +67,8 @@ public class LSMProxy implements IGuiHandler {
 			return new GuiServantInventory(entity, player.inventory, new ContainerServant(player.inventory, entity.inventory, entity));
 		case 1:
 			return new GuiServantProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
+		case 10:
+			return new GuiServantProfessionSelectProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
 		}
 
 		return null;

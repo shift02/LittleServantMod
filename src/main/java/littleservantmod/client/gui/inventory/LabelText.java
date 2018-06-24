@@ -15,10 +15,21 @@ public class LabelText extends GuiButton {
 
 	EntityLittleServant servant;
 
+	private boolean isNormal = false;
+
 	public LabelText(int buttonId, int x, int y, EntityLittleServant servant) {
 		super(buttonId, x, y, 97, 20, "");
 
 		this.servant = servant;
+	}
+
+	public boolean isNormal() {
+		return isNormal;
+	}
+
+	public LabelText setNormal(boolean isNormal) {
+		this.isNormal = isNormal;
+		return this;
 	}
 
 	@Override
@@ -37,9 +48,18 @@ public class LabelText extends GuiButton {
 
 				mc.renderEngine.bindTexture(this.texture);
 
-				this.drawTexturedModalRect(this.x, this.y, 29, 3, this.width, this.height);
+				int yOfset = !isNormal ? 3 : 3 + 26;
+
+				this.drawTexturedModalRect(this.x, this.y, 29, yOfset, this.width, this.height);
+
+				GlStateManager.color(1.0F, 1.0F, 1.0F);
 				int j = 14737632;
-				this.drawString(mc.fontRenderer, this.servant.getProfession().getProfessionDisplayName(servant), this.x + 6, this.y + 7, j);
+				if (isNormal) j = 4210752;
+				if (isNormal) {
+					mc.fontRenderer.drawString(this.servant.getProfession().getProfessionDisplayName(servant), this.x + 6, this.y + 7, j);
+				} else {
+					this.drawString(mc.fontRenderer, this.servant.getProfession().getProfessionDisplayName(servant), this.x + 6, this.y + 7, j);
+				}
 
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
 
