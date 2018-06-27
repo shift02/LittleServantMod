@@ -21,4 +21,9 @@ public class ProfessionUnemployed extends ProfessionLSMBase {
 
 	}
 
+	@Override
+	public boolean isEnableProfession(IServant servant) {
+		return servant.getOwner() == null;
+	}
+
 }

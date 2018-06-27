@@ -1,6 +1,7 @@
 package littleservantmod.api;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
 /**
@@ -14,5 +15,7 @@ public interface IServant {
 	public void addAI(int priority, EntityAIBase task);
 
 	public EntityLiving getEntityInstance();
+
+	public EntityLivingBase getOwner();
 
 }

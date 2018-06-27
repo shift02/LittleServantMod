@@ -1,5 +1,9 @@
 package littleservantmod.client.gui.inventory;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import littleservantmod.client.gui.ElementBase;
 import littleservantmod.client.gui.toptab.TabButton;
 import littleservantmod.client.gui.toptab.TabInventory;
 import littleservantmod.client.gui.toptab.TabProfession;
@@ -27,6 +31,8 @@ public class GuiServantBase extends InventoryEffectRenderer {
 
 	protected TabButton inventoryT;
 	protected TabButton professionT;
+
+	protected ArrayList<ElementBase> elements = new ArrayList<>();
 
 	public GuiServantBase(EntityLittleServant servant, Container inventorySlotsIn, InventoryPlayer playerInventory) {
 		super(inventorySlotsIn);
@@ -56,6 +62,8 @@ public class GuiServantBase extends InventoryEffectRenderer {
 		professionT.y = this.guiTop - 28;
 		this.buttonList.add(professionT);
 
+		elements.clear();
+
 	}
 
 	@Override
@@ -71,6 +79,44 @@ public class GuiServantBase extends InventoryEffectRenderer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
+		updateElements();
+
+		drawElements();
+
+	}
+
+	protected void drawElements() {
+
+		for (ElementBase element : elements) {
+			element.draw();
+		}
+	}
+
+	protected void updateElements() {
+		for (ElementBase element : elements) {
+			element.update();
+		}
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		ElementBase element = getElementAtPosition(mouseX, mouseY);
+
+		if (element != null) {
+			element.handleMouseClicked(mouseX, mouseY, mouseButton);
+		}
+
+	}
+
+	protected ElementBase getElementAtPosition(int mX, int mY) {
+
+		for (ElementBase element : elements) {
+			if (element.intersectsWith(mX, mY)) {
+				return element;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -85,6 +131,20 @@ public class GuiServantBase extends InventoryEffectRenderer {
 		}
 
 		RenderHelper.enableGUIStandardItemLighting();
+	}
+
+	public ElementBase addElement(ElementBase element) {
+
+		elements.add(element);
+		return element;
+	}
+
+	public void setZLevel(float zLevel) {
+		this.zLevel = zLevel;
+	}
+
+	public void setItemZLevel(float zLevel) {
+		this.itemRender.zLevel = zLevel;
 	}
 
 }

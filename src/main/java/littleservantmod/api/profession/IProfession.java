@@ -24,4 +24,6 @@ public interface IProfession {
 
 	public ResourceLocation getRegistryName();
 
+	public boolean isEnableProfession(IServant servant);
+
 }

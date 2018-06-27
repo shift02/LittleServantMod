@@ -3,6 +3,7 @@ package littleservantmod.client.gui.sidetab;
 import org.lwjgl.opengl.GL11;
 
 import littleservantmod.LittleServantMod;
+import littleservantmod.client.gui.ElementBase;
 import littleservantmod.client.gui.inventory.GuiSideTabContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;

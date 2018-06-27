@@ -31,4 +31,9 @@ public class ProfessionLSMBase extends ProfessionBase {
 		return this.iconHolder.getIcon();
 	}
 
+	@Override
+	public boolean isEnableProfession(IServant servant) {
+		return true;
+	}
+
 }

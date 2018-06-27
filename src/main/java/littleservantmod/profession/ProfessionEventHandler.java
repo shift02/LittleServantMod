@@ -33,6 +33,17 @@ public class ProfessionEventHandler {
 
 	};
 
+	/** 弓兵 */
+	public static ResourceLocation keyArcher = new ResourceLocation(LittleServantMod.MOD_ID, "archer");
+	public static IconHolder iconArcher = new IconHolder() {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public TextureAtlasSprite getIcon() {
+			return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:items/bow_standby");
+		}
+
+	};
+
 	@SubscribeEvent
 	public void onAttachProfessionEvent(AttachProfessionEvent evt) {
 
@@ -42,11 +53,15 @@ public class ProfessionEventHandler {
 
 		//雑用
 		evt.addProfession(keyChores,
-				new ProfessionChores().setIconHolder(iconSaber).setUnlocalizedName("chores").setRegistryName(keyChores));
+				new ProfessionChores().setIconHolder(iconChores).setUnlocalizedName("chores").setRegistryName(keyChores));
 
 		//剣士
 		evt.addProfession(keySaber,
 				new ProfessionSaber().setIconHolder(iconSaber).setUnlocalizedName("saber").setRegistryName(keySaber));
+
+		//弓兵
+		evt.addProfession(keyArcher,
+				new ProfessionSaber().setIconHolder(iconArcher).setUnlocalizedName("archer").setRegistryName(keyArcher));
 
 	}
 

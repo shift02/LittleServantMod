@@ -1,9 +1,11 @@
 package littleservantmod.client.gui.inventory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import littleservantmod.LittleServantMod;
-import littleservantmod.client.gui.GuiSmallButton;
+import littleservantmod.client.gui.ElementChangeIcon;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.packet.LSMPacketHandler;
 import littleservantmod.packet.MessageOpenGuiId;
@@ -28,6 +30,10 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 
 	private GuiButton buttonOk;
 
+	private ElementChangeIcon current;
+
+	private List<ElementChangeIcon> elementChangeIcon = new ArrayList<>();
+
 	public GuiServantProfessionSelectProfession(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
 		super(servant, playerInventory, inventorySlotsIn);
 
@@ -40,11 +46,30 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 		//タブの有効化
 		this.professionT.enabled = false;
 
-		buttonCancel = new GuiSmallButton(11, this.guiLeft + 78, this.guiTop + 4, 44, 16, I18n.translateToLocal("gui." + "button_cancel" + ".name"));
+		buttonCancel = new GuiButton(11, this.guiLeft + 78, this.guiTop + 16, 44, 20, I18n.translateToLocal("gui." + "button_cancel" + ".name"));
 		this.addButton(buttonCancel);
 
-		buttonOk = new GuiSmallButton(12, this.guiLeft + 125, this.guiTop + 4, 44, 16, I18n.translateToLocal("gui." + "button_ok" + ".name"));
+		buttonOk = new GuiButton(12, this.guiLeft + 125, this.guiTop + 16, 44, 20, I18n.translateToLocal("gui." + "button_ok" + ".name"));
 		this.addButton(buttonOk);
+
+		//職業をセット
+		current = new ElementChangeIcon(this, 26, 18, this.servant.getProfession(), this.servant);
+		this.addElement(current);
+
+		int countX = 0;
+		int countY = 0;
+		for (int i = 0; i < servant.getProfessions().length; i++) {
+
+			if (!servant.getProfessions()[i].isEnableProfession(servant)) continue;
+			ElementChangeIcon changeIcon = new ElementChangeIcon(this, 8 + 18 * countX, 40 + 18 * countY, servant.getProfessions()[i], this.servant);
+			this.addElement(changeIcon);
+
+			countX++;
+			if (countX > 9) {
+				countX = 0;
+				countY++;
+			}
+		}
 
 	}
 
@@ -70,14 +95,20 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
-		this.fontRenderer.drawString(I18n.translateToLocal("gui." + "change_profession" + ".name"), 8, 6, 4210752);
+		this.fontRenderer.drawString(
+				I18n.translateToLocal("gui." + "change_profession" + ".name") +
+						" - " +
+						this.current.getProfessionDisplayName(),
+				8, 6, 4210752);
+
+		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
+
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(INVENTORY_PROFESSION_BACKGROUND);
@@ -86,6 +117,7 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 		int j = this.guiTop;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 	}
 
 	protected void drawGuiContainerBackgroundLayerNormal(float partialTicks, int mouseX, int mouseY) {

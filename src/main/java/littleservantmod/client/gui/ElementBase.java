@@ -1,4 +1,4 @@
-package littleservantmod.client.gui.sidetab;
+package littleservantmod.client.gui;
 
 import java.util.List;
 
