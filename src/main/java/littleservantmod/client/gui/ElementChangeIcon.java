@@ -1,10 +1,13 @@
 package littleservantmod.client.gui;
 
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
 import littleservantmod.api.IServant;
 import littleservantmod.api.profession.IProfession;
 import littleservantmod.client.gui.inventory.GuiServantBase;
+import littleservantmod.client.gui.inventory.GuiServantProfessionSelectProfession;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -15,15 +18,38 @@ public class ElementChangeIcon extends ElementBase {
 
 	protected IServant servant;
 
-	public ElementChangeIcon(GuiContainer gui, int posX, int posY, IProfession profession, IServant servant) {
+	protected ElementChangeIcon current;
+
+	protected GuiServantProfessionSelectProfession gui;
+
+	public ElementChangeIcon(GuiContainer gui, int posX, int posY, IProfession profession, IServant servant, ElementChangeIcon current) {
 		super(gui, posX, posY);
 		this.sizeX = 16;
 		this.sizeY = 16;
+
+		this.gui = (GuiServantProfessionSelectProfession) gui;
 
 		this.profession = profession;
 
 		this.servant = servant;
 
+		this.current = current;
+
+	}
+
+	@Override
+	public boolean handleMouseClicked(int x, int y, int mouseButton) {
+
+		if (current == null) return false;
+
+		current.setProfession(this.profession);
+		return true;
+
+	}
+
+	@Override
+	public void addTooltip(List<String> list) {
+		list.add("sssss");
 	}
 
 	public String getProfessionDisplayName() {
@@ -53,6 +79,14 @@ public class ElementChangeIcon extends ElementBase {
 
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 
+	}
+
+	public void setProfession(IProfession profession) {
+		this.profession = profession;
+	}
+
+	public IProfession getProfession() {
+		return profession;
 	}
 
 }

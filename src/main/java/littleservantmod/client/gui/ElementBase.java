@@ -93,9 +93,6 @@ public abstract class ElementBase {
 
 	public boolean intersectsWith(int mouseX, int mouseY) {
 
-		mouseX += gui.getGuiLeft();
-		mouseY += gui.getGuiTop();
-
 		if (mouseX >= this.posX && mouseX <= this.posX + this.sizeX && mouseY >= this.posY && mouseY <= this.posY + this.sizeY) {
 			return true;
 		}

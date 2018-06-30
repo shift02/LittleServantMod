@@ -5,6 +5,7 @@ import littleservantmod.entity.ai.EntityAISit;
 import littleservantmod.profession.ProfessionDispatcher;
 import littleservantmod.profession.ProfessionEventHandler;
 import littleservantmod.profession.ProfessionManager;
+import littleservantmod.profession.mode.ModeEventHandler;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,8 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 	protected static final DataParameter<String> PROFESSION = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
 
+	protected static final DataParameter<String> MODE = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
+
 	public EntityLittleServantProfession(World worldIn) {
 		super(worldIn);
 
@@ -35,6 +38,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(PROFESSION, ProfessionEventHandler.kyeUnemployed.toString());
+		this.dataManager.register(MODE, ModeEventHandler.kyeDefault.toString());
 
 		professions = ProfessionManager.gatProfessions(this);
 
@@ -59,6 +63,12 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 	public void addAI(int priority, EntityAIBase task) {
 
 		this.tasks.addTask(priority, task);
+
+	}
+
+	public void changeProfession(ResourceLocation profession) {
+
+		this.changeProfession(getProfession(profession));
 
 	}
 

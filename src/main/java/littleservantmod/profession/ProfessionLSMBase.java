@@ -36,4 +36,9 @@ public class ProfessionLSMBase extends ProfessionBase {
 		return true;
 	}
 
+	@Override
+	public boolean hasMode(IServant servant) {
+		return true;
+	}
+
 }

@@ -18,6 +18,8 @@ public class LSMPacketHandler {
 		 */
 		INSTANCE.registerMessage(OpenGuiIdMessageHandler.class, MessageOpenGuiId.class, 0, Side.SERVER);
 
+		INSTANCE.registerMessage(ChangeProfessionMessageHandler.class, MessageChangeProfession.class, 1, Side.SERVER);
+
 	}
 
 }

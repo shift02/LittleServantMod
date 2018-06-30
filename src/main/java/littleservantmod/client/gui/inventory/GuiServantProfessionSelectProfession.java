@@ -6,8 +6,10 @@ import java.util.List;
 
 import littleservantmod.LittleServantMod;
 import littleservantmod.client.gui.ElementChangeIcon;
+import littleservantmod.client.gui.ElementChangeIconCurrent;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.packet.LSMPacketHandler;
+import littleservantmod.packet.MessageChangeProfession;
 import littleservantmod.packet.MessageOpenGuiId;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.gui.GuiButton;
@@ -30,7 +32,7 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 
 	private GuiButton buttonOk;
 
-	private ElementChangeIcon current;
+	private ElementChangeIconCurrent current;
 
 	private List<ElementChangeIcon> elementChangeIcon = new ArrayList<>();
 
@@ -50,10 +52,10 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 		this.addButton(buttonCancel);
 
 		buttonOk = new GuiButton(12, this.guiLeft + 125, this.guiTop + 16, 44, 20, I18n.translateToLocal("gui." + "button_ok" + ".name"));
-		this.addButton(buttonOk);
+		this.addButton(buttonOk).enabled = false;
 
 		//職業をセット
-		current = new ElementChangeIcon(this, 26, 18, this.servant.getProfession(), this.servant);
+		current = new ElementChangeIconCurrent(this, 26, 18, this.servant.getProfession(), this.servant, buttonOk);
 		this.addElement(current);
 
 		int countX = 0;
@@ -61,7 +63,7 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 		for (int i = 0; i < servant.getProfessions().length; i++) {
 
 			if (!servant.getProfessions()[i].isEnableProfession(servant)) continue;
-			ElementChangeIcon changeIcon = new ElementChangeIcon(this, 8 + 18 * countX, 40 + 18 * countY, servant.getProfessions()[i], this.servant);
+			ElementChangeIcon changeIcon = new ElementChangeIcon(this, 8 + 18 * countX, 40 + 18 * countY, servant.getProfessions()[i], this.servant, current);
 			this.addElement(changeIcon);
 
 			countX++;
@@ -81,6 +83,10 @@ public class GuiServantProfessionSelectProfession extends GuiSideTabContainer {
 		int buttonID = button.id;
 
 		if (!button.enabled) return;
+
+		if (buttonID == 12) {
+			LSMPacketHandler.INSTANCE.sendToServer(new MessageChangeProfession(this.servant, this.current.getProfession()));
+		}
 
 		if (buttonID == 11 || buttonID == 12) {
 

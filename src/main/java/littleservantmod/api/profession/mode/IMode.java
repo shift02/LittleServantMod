@@ -1,4 +1,4 @@
-package littleservantmod.api.profession;
+package littleservantmod.api.profession.mode;
 
 import littleservantmod.api.IServant;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -8,11 +8,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * サーヴァントの職業情報を定義するインターフェイス <br />
- * 職業固有のデータを保存したい時は {@link INBTSerializable} を実装する
+ * サーヴァントの職業内のモードを定義するインターフェイス <br />
+ * モード固有のデータを保存したい時は {@link INBTSerializable} を実装する
  * @see INBTSerializable
  * */
-public interface IProfession {
+public interface IMode {
 
 	/** AIの初期化時に呼ばれる */
 	void initAI(IServant servant);
@@ -20,12 +20,10 @@ public interface IProfession {
 	@SideOnly(Side.CLIENT)
 	public TextureAtlasSprite getIcon(IServant servant);
 
-	public String getProfessionDisplayName(IServant servant);
+	public String getModeDisplayName(IServant servant);
 
 	public ResourceLocation getRegistryName();
 
-	public boolean isEnableProfession(IServant servant);
-
-	public boolean hasMode(IServant servant);
+	public boolean isEnableMode(IServant servant);
 
 }

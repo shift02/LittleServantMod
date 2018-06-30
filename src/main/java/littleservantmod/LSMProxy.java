@@ -8,6 +8,7 @@ import littleservantmod.entity.EntityLittleServantBase;
 import littleservantmod.inventory.ContainerServant;
 import littleservantmod.inventory.ContainerServantProfession;
 import littleservantmod.profession.ProfessionEventHandler;
+import littleservantmod.profession.mode.ModeEventHandler;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -107,6 +108,9 @@ public class LSMProxy implements IGuiHandler {
 
 				ProfessionEventHandler.iconChores.setIcon(
 						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_chores")));
+
+				ModeEventHandler.iconDefault.setIcon(
+						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_default")));
 
 			}
 
