@@ -5,14 +5,31 @@ import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 
+import littleservantmod.LittleServantMod;
 import littleservantmod.api.profession.IProfessionTool;
 import littleservantmod.api.profession.IProfessionToolManager;
+import littleservantmod.api.profession.ProfessionToolBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class ProfessionToolManager implements IProfessionToolManager {
 
 	private ListMultimap<ResourceLocation, IProfessionTool> tools = ArrayListMultimap.create();
+
+	private ResourceLocation saber = new ResourceLocation(LittleServantMod.MOD_ID, "saber");
+
+	public ProfessionToolManager() {
+
+		//バニラ
+		//剣士
+		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.WOODEN_SWORD)));
+		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.STONE_SWORD)));
+		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.IRON_SWORD)));
+		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.GOLDEN_SWORD)));
+		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.DIAMOND_SWORD)));
+
+	}
 
 	@Override
 	public void addProfessionTool(ResourceLocation type, IProfessionTool tool) {
