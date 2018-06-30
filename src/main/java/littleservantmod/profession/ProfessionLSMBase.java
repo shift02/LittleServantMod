@@ -41,4 +41,9 @@ public class ProfessionLSMBase extends ProfessionBase {
 		return true;
 	}
 
+	@Override
+	public boolean hasOption(IServant servant) {
+		return false;
+	}
+
 }

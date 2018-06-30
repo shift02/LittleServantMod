@@ -61,7 +61,7 @@ public class ProfessionEventHandler {
 
 		//弓兵
 		evt.addProfession(keyArcher,
-				new ProfessionSaber().setIconHolder(iconArcher).setUnlocalizedName("archer").setRegistryName(keyArcher));
+				new ProfessionArcher().setIconHolder(iconArcher).setUnlocalizedName("archer").setRegistryName(keyArcher));
 
 	}
 

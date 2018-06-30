@@ -129,14 +129,13 @@ public class InventoryServant implements IInventory {
 	}
 
 	public static boolean isHotbar(int index) {
-		//サーヴァントを強いので装備全てを道具として使える
+		//サーヴァントは強いので持ち物全てを道具として使える
 		return index >= 0 && index < 18;//9;
 	}
 
 	/**
 	 * Finds the stack or an equivalent one in the main inventory
 	 */
-	@SideOnly(Side.CLIENT)
 	public int getSlotFor(ItemStack stack) {
 		for (int i = 0; i < this.mainInventory.size(); ++i) {
 			if (!this.mainInventory.get(i).isEmpty() && this.stackEqualExact(stack, this.mainInventory.get(i))) {

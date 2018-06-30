@@ -26,6 +26,8 @@ public interface IProfession {
 
 	public boolean isEnableProfession(IServant servant);
 
+	public boolean hasOption(IServant servant);
+
 	public boolean hasMode(IServant servant);
 
 }

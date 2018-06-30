@@ -11,6 +11,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigateGround;
 
+/**
+ * 特定のアイテムを持っているプレイヤーについていく
+ * @author shift02
+ *
+ */
 public class EntityAITempt extends EntityAIBase {
 	/** The entity using this AI that is tempted by the player. */
 	private final EntityLiving temptedEntity;

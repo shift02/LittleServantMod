@@ -74,6 +74,8 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		option3.enabled = false;
 		this.buttonList.add(option3);
 
+		resetOption();
+
 	}
 
 	@Override
@@ -89,6 +91,8 @@ public class GuiServantProfession extends GuiSideTabContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
+
+		resetOption();
 
 		super.actionPerformed(button);
 
@@ -136,6 +140,8 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		int j = this.guiTop;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
+		resetOption();
+
 	}
 
 	@Override
@@ -158,6 +164,11 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		if (11 < mouseX && mouseX <= 135 && 17 < mouseY && mouseY <= 39) {
 			this.drawHoveringText(I18n.translateToLocal("gui.change_profession"), i + mouseX, j + mouseY);
 		}
+
+	}
+
+	private void resetOption() {
+		option1.enabled = this.servant.getProfession().hasOption(servant);
 
 	}
 

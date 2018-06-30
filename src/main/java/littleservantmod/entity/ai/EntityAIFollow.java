@@ -6,6 +6,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 
+/**
+ * 特定のEntityについていくAI <br>
+ * Bit 3
+ * @author shift02
+ */
 public class EntityAIFollow extends EntityAIBase {
 	/** The child that is following its parent. */
 	EntityLiving childAnimal;
