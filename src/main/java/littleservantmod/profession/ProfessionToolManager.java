@@ -15,9 +15,17 @@ import net.minecraft.util.ResourceLocation;
 
 public class ProfessionToolManager implements IProfessionToolManager {
 
+	public static ProfessionToolManager instance;
+
+	public static ProfessionToolManager getInstance() {
+		if (instance == null) instance = new ProfessionToolManager();
+
+		return instance;
+	}
+
 	private ListMultimap<ResourceLocation, IProfessionTool> tools = ArrayListMultimap.create();
 
-	private ResourceLocation saber = new ResourceLocation(LittleServantMod.MOD_ID, "saber");
+	public static ResourceLocation saber = new ResourceLocation(LittleServantMod.MOD_ID, "saber");
 
 	public ProfessionToolManager() {
 

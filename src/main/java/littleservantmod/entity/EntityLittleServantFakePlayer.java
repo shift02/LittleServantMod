@@ -11,6 +11,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -29,6 +32,8 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	/** Inventory of the player */
 	public InventoryServant inventory;
 
+	protected static final DataParameter<Integer> CURRENT_ITEN = EntityDataManager.<Integer> createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
+
 	public EntityLittleServantFakePlayer(World worldIn) {
 		super(worldIn);
 	}
@@ -40,6 +45,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 
 		if (!world.isRemote) this.player = FakePlayerFactory.getMinecraft((WorldServer) world);
 		inventory = new InventoryServant((EntityLittleServant) this, player);
+		this.dataManager.register(CURRENT_ITEN, 0);
 
 	}
 
@@ -158,6 +164,27 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		return p_184816_1_.getItem();
 	}
 
+	public int getCurrentItem() {
+		return this.dataManager.get(CURRENT_ITEN);
+	}
+
+	public void setCurrentItem(int currentItem) {
+		this.inventory.currentItem = currentItem;
+		this.dataManager.set(CURRENT_ITEN, currentItem);
+	}
+
+	@Override
+	public void notifyDataManagerChange(DataParameter<?> key) {
+		super.notifyDataManagerChange(key);
+
+		if (CURRENT_ITEN.equals(key) && this.world.isRemote) {
+
+			this.inventory.currentItem = getCurrentItem();
+
+		}
+
+	}
+
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
@@ -171,7 +198,9 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
 		compound.setTag("Inventory", this.inventory.writeToNBT(new NBTTagList()));
-		compound.setInteger("SelectedItemSlot", this.inventory.currentItem);
+		//		compound.setInteger("SelectedItemSlot", this.inventory.currentItem);
+		compound.setInteger("SelectedItemSlot", this.getCurrentItem());
+
 	}
 
 }

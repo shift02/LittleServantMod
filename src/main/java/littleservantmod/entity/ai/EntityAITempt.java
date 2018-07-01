@@ -54,7 +54,7 @@ public class EntityAITempt extends EntityAIBase {
 		this.speed = speedIn;
 		this.temptItem = temptItemIn;
 		this.scaredByPlayerMovement = scaredByPlayerMovementIn;
-		this.setMutexBits(3);
+		this.setMutexBits(0b0011);
 
 		if (!(temptedEntityIn.getNavigator() instanceof PathNavigateGround)) {
 			throw new IllegalArgumentException("Unsupported mob type for TemptGoal");

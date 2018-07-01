@@ -11,7 +11,7 @@ public class EntityAISit extends EntityAIBase {
 
 	public EntityAISit(EntityLittleServantBase entityIn) {
 		this.tameable = entityIn;
-		this.setMutexBits(5);
+		this.setMutexBits(0b0101);//5
 	}
 
 	/**
