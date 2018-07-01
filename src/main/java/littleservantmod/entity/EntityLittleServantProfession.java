@@ -81,9 +81,15 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 	protected void changeAI(IProfession profession) {
 
+		EntityAISit oldSit = this.aiSit;
+
 		this.tasks.taskEntries.clear();
 
-		this.aiSit = new EntityAISit(this);
+		if (oldSit == null) {
+			this.aiSit = new EntityAISit(this);
+		} else {
+			this.aiSit = oldSit;
+		}
 
 		this.tasks.addTask(102, this.aiSit);
 
@@ -149,12 +155,14 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		super.readEntityFromNBT(compound);
 
 		if (this.professions != null && compound.hasKey("Profession")) {
-			this.setProfession(this.getProfession(new ResourceLocation(compound.getString("Profession"))));
+			this.changeProfession(this.getProfession(new ResourceLocation(compound.getString("Profession"))));
 		} else {
-			this.setProfession(this.getProfession(ProfessionEventHandler.keyChores));
+			this.changeProfession(this.getProfession(ProfessionEventHandler.keyChores));
 		}
 
-		if (this.professions != null && compound.hasKey("LMSProfessions")) this.professions.deserializeNBT(compound.getCompoundTag("ForgeCaps"));
+		if (this.professions != null && compound.hasKey("LMSProfessions")) {
+			this.professions.deserializeNBT(compound.getCompoundTag("LMSProfessions"));
+		}
 
 	}
 
