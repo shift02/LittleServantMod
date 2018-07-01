@@ -66,6 +66,13 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 	}
 
+	@Override
+	public void addTargetAI(int priority, EntityAIBase task) {
+
+		this.targetTasks.addTask(priority, task);
+
+	}
+
 	public void changeProfession(ResourceLocation profession) {
 
 		this.changeProfession(getProfession(profession));
@@ -84,6 +91,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		EntityAISit oldSit = this.aiSit;
 
 		this.tasks.taskEntries.clear();
+		this.targetTasks.taskEntries.clear();
 
 		if (oldSit == null) {
 			this.aiSit = new EntityAISit(this);

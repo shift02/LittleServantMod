@@ -208,6 +208,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
 		this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(p_184754_1_));
 	}
 
+	@Override
 	@Nullable
 	public EntityLivingBase getOwner() {
 		try {
@@ -255,6 +256,15 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
 			this.world.spawnParticle(enumparticletypes, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
 					this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
 		}
+	}
+
+	/*
+	 * EntityMob
+	 */
+	@Override
+	public void onLivingUpdate() {
+		this.updateArmSwingProgress();
+		super.onLivingUpdate();
 	}
 
 	/*

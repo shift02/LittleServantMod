@@ -14,6 +14,8 @@ public interface IServant {
 
 	public void addAI(int priority, EntityAIBase task);
 
+	public void addTargetAI(int priority, EntityAIBase task);
+
 	public EntityLiving getEntityInstance();
 
 	public EntityLivingBase getOwner();

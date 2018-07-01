@@ -44,6 +44,17 @@ public class ProfessionEventHandler {
 
 	};
 
+	/** 毛刈り兵 */
+	public static ResourceLocation keyRipper = new ResourceLocation(LittleServantMod.MOD_ID, "ripper");
+	public static IconHolder iconRipper = new IconHolder() {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public TextureAtlasSprite getIcon() {
+			return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:items/shears");
+		}
+
+	};
+
 	@SubscribeEvent
 	public void onAttachProfessionEvent(AttachProfessionEvent evt) {
 
@@ -62,6 +73,10 @@ public class ProfessionEventHandler {
 		//弓兵
 		evt.addProfession(keyArcher,
 				new ProfessionArcher().setIconHolder(iconArcher).setUnlocalizedName("archer").setRegistryName(keyArcher));
+
+		//毛刈り兵
+		evt.addProfession(keyRipper,
+				new ProfessionArcher().setIconHolder(iconRipper).setUnlocalizedName("ripper").setRegistryName(keyRipper));
 
 	}
 

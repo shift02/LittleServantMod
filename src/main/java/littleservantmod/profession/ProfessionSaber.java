@@ -2,8 +2,11 @@ package littleservantmod.profession;
 
 import littleservantmod.api.IServant;
 import littleservantmod.entity.EntityLittleServant;
+import littleservantmod.entity.ai.EntityAIAttackMelee2;
 import littleservantmod.entity.ai.EntityAIEquipShield;
 import littleservantmod.entity.ai.EntityAIEquipTool;
+import littleservantmod.entity.ai.target.EntityAINearestAttackableTarget2;
+import net.minecraft.entity.monster.EntitySpider;
 
 public class ProfessionSaber extends ProfessionLSMBase {
 
@@ -17,6 +20,12 @@ public class ProfessionSaber extends ProfessionLSMBase {
 
 		//剣を持ち帰る
 		servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.saber));
+
+		//攻撃
+		servant.addAI(400, new EntityAIAttackMelee2((EntityLittleServant) servant.getEntityInstance(), 1.0d, false));
+
+		//Target
+		servant.addTargetAI(200, new EntityAINearestAttackableTarget2((EntityLittleServant) servant.getEntityInstance(), EntitySpider.class, true));
 
 	}
 
