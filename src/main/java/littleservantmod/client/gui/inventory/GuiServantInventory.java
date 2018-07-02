@@ -106,7 +106,7 @@ public class GuiServantInventory extends GuiSideTabContainer {
 		renderAir(guiLeft + 84, guiTop + 56);
 		//drawHeathArmor(0, 0);
 
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		//super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
 	}
 

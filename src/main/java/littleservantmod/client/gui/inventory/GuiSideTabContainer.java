@@ -49,6 +49,9 @@ public class GuiSideTabContainer extends GuiServantBase {
 
 		this.addTab(new SideTabMaster(this));
 
+		//Init
+		drawSideTabs();
+
 	}
 
 	@Override
@@ -136,6 +139,7 @@ public class GuiSideTabContainer extends GuiServantBase {
 		}
 	}
 
+	@Override
 	public void addTooltips(List<String> tooltip) {
 
 		SideTabBase tab = getTabAtPosition(mouseX, mouseY);
@@ -174,12 +178,14 @@ public class GuiSideTabContainer extends GuiServantBase {
 		return null;
 	}
 
+	@Override
 	public void drawTooltip(List<String> list) {
 
 		drawTooltipHoveringText(list, mouseX, mouseY, fontRenderer);
 		tooltip.clear();
 	}
 
+	@Override
 	protected void drawTooltipHoveringText(List list, int x, int y, FontRenderer font) {
 
 		if (list == null || list.isEmpty()) {
