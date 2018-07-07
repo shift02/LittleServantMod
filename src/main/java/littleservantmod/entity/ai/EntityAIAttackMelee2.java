@@ -148,23 +148,35 @@ public class EntityAIAttackMelee2 extends EntityAIBase {
 			if (!this.attacker.getNavigator().tryMoveToEntityLiving(entitylivingbase, this.speedTowardsTarget)) {
 				this.delayCounter += 15;
 			}
+
+		}
+
+		//近すぎ過ぎないように
+		if (entitylivingbase != null) {
+			if (d0 <= 4.0d) {
+				this.attacker.getNavigator().clearPath();
+			}
 		}
 
 		this.attackTick = Math.max(this.attackTick - 1, 0);
 		this.checkAndPerformAttack(entitylivingbase, d0);
+
 	}
 
 	protected void checkAndPerformAttack(EntityLivingBase target, double p_190102_2_) {
 		double d0 = this.getAttackReachSqr(target);
 
 		if (p_190102_2_ <= d0 && this.attackTick <= 0) {
-			this.attackTick = 10;
+			this.attackTick = 6;
 			this.attacker.swingArm(EnumHand.MAIN_HAND);
 			this.attacker.attackEntityAsMob(target);
 		}
 	}
 
 	protected double getAttackReachSqr(EntityLivingBase attackTarget) {
-		return this.attacker.width * 2.0F * this.attacker.width * 2.0F + attackTarget.width;
+
+		double reach = attacker.getEntityAttribute(EntityLittleServantFakePlayer.REACH_DISTANCE).getAttributeValue();
+
+		return reach;//this.attacker.width * 2.0F * this.attacker.width * 2.0F + attackTarget.width;
 	}
 }

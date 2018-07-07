@@ -4,9 +4,12 @@ import littleservantmod.LSMProxy;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class EntityLittleServant extends EntityLittleServantProfession {
@@ -24,6 +27,28 @@ public class EntityLittleServant extends EntityLittleServantProfession {
 		super.entityInit();
 
 	}
+
+	/*
+	 * Sound 音楽関係
+	 * */
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return SoundEvents.ENTITY_GHAST_AMBIENT;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return SoundEvents.ENTITY_GHAST_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return SoundEvents.ENTITY_GHAST_DEATH;
+	}
+
+	//protected SoundEvent getStepSound() {
+	//	return SoundEvents.ENTITY_ZOMBIE_STEP;
+	//}
 
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {

@@ -5,6 +5,7 @@ import littleservantmod.entity.ai.EntityAITempt;
 import littleservantmod.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -36,6 +37,9 @@ public abstract class ProfessionBase implements IProfession {
 	}
 
 	protected void initDefaultAI(IServant servant) {
+
+		//泳ぐ
+		servant.addAI(100, new EntityAISwimming(servant.getEntityInstance()));
 
 		//砂糖についてくる
 		servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), 0.5D, Items.SUGAR, false));
