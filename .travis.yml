@@ -1,0 +1,34 @@
+language: java
+jdk: oraclejdk8
+env:
+  matrix:
+    - GRADLE_OPTS="-Xms1024m -Xms256m -XX:MaxPermSize=256m -XX:PermSize=256m"
+before_install:
+  - chmod +x gradlew
+install:
+  - ./gradlew assemble
+script:
+  - ./gradlew check
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    
+    
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: "FGwBIJm4zJy5HyBXw3zzXT4n2v1bnTw9ljXEjZJtOWcblV+JkA4Y6r3yPN3j/lkPZR62/mTNoSIgQpHADS/0A7pqQaEl+rfMBh6cnFWZSOAcfIYec6IiyO73T8z+Tvnl1QRZg6i+xJET95/XB8d7Yp81ADP5kA+CnFvLLgZ55g4mt9AIx/Uwfqkl7DLgsbZztbbRvQ0ldMDkgDqGetnXaR2x1HhqJYgi+n0aDUfW4LMW6MIJCMj+HsqkOugR1kFwqLbK5StsfzVihG0YgJLTis1t1NwS43315DxGSt/X99ZIAwdHNIwQQZmoXUEFzl+c35lFRb/pUrRZP5W+XDwhvESa3hlUMXpt8sh0je5d77cPosW8zhISO5nJdaMmPNEJ35afXRnhsEeeh9oEOPWTzScOul3xfnPx8zF6rEv3cSR0IEHMkJCFqpphYOZm7I90tmz6+pSLnf+AU/K/OV49K7BE6RFWCSn0YAQ2jjEM91leWV+ViBmoToMs8crBIwKVX69TomjnkfRcQpFj7DGzyZDRsJAgCzrCuvbmV9tJRsAHa2G6WHe92660ahl3C4vSJyS++lmCb75fdPnU9KDhr1mlepWAwLEwpdQPtUKmgvzNw8BRhWudne8oXRpa/5/vRFbnnodZhhKSI/M561eJLz5ALgg4N3BwxOo9mEGcdBw="
+  file_glob: true
+  file: "build/libs/*.{jar,zip}"
+  on:
+    repo: shift02/LittleServantMod
+    tags: true
+    all_branches: true
+    condition: "$TRAVIS_TAG =~ ^version/[0-9].*$"
+  
