@@ -1,6 +1,6 @@
 package littleservantmod.entity.ai;
 
-import littleservantmod.entity.EntityLittleServantBase;
+import littleservantmod.entity.EntityLittleServantFakePlayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class EntityAIAttackMelee2 extends EntityAIBase {
 	World world;
-	protected EntityLittleServantBase attacker;
+	protected EntityLittleServantFakePlayer attacker;
 	/** An amount of decrementing ticks that allows the entity to attack once the tick reaches 0. */
 	protected int attackTick;
 	/** The speed with which the mob will approach the target */
@@ -28,7 +28,7 @@ public class EntityAIAttackMelee2 extends EntityAIBase {
 	private int failedPathFindingPenalty = 0;
 	private boolean canPenalize = false;
 
-	public EntityAIAttackMelee2(EntityLittleServantBase servant, double speedIn, boolean useLongMemory) {
+	public EntityAIAttackMelee2(EntityLittleServantFakePlayer servant, double speedIn, boolean useLongMemory) {
 		this.attacker = servant;
 		this.world = servant.world;
 		this.speedTowardsTarget = speedIn;

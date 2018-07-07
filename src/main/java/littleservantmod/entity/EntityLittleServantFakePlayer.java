@@ -27,6 +27,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketAnimation;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
+import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -43,7 +44,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
  */
 public abstract class EntityLittleServantFakePlayer extends EntityLittleServantBase {
 
-	protected EntityPlayer player;
+	public EntityPlayer player;
 
 	/** Inventory of the player */
 	public InventoryServant inventory;
@@ -51,6 +52,12 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	protected static final DataParameter<Integer> CURRENT_ITEN = EntityDataManager.<Integer> createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
 
 	public static final net.minecraft.entity.ai.attributes.IAttribute REACH_DISTANCE = new net.minecraft.entity.ai.attributes.RangedAttribute(null, "generic.reachDistance", 5.0D, 0.0D, 1024.0D).setShouldWatch(true);
+
+	private final CooldownTracker cooldownTracker = this.createCooldownTracker();
+
+	protected CooldownTracker createCooldownTracker() {
+		return new CooldownTracker();
+	}
 
 	public EntityLittleServantFakePlayer(World worldIn) {
 		super(worldIn);
@@ -75,6 +82,12 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_SPEED);
 		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.LUCK);
 		this.getAttributeMap().registerAttribute(REACH_DISTANCE);
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		this.cooldownTracker.tick();
 	}
 
 	/* ======================
@@ -417,6 +430,10 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		if (this.world instanceof WorldServer) {
 			((WorldServer) this.world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, this.posX + d0, this.posY + this.height * 0.5D, this.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
 		}
+	}
+
+	public CooldownTracker getCooldownTracker() {
+		return this.cooldownTracker;
 	}
 
 	public int getCurrentItem() {

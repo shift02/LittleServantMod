@@ -76,7 +76,7 @@ public class ProfessionEventHandler {
 
 		//毛刈り兵
 		evt.addProfession(keyRipper,
-				new ProfessionArcher().setIconHolder(iconRipper).setUnlocalizedName("ripper").setRegistryName(keyRipper));
+				new ProfessionRipper().setIconHolder(iconRipper).setUnlocalizedName("ripper").setRegistryName(keyRipper));
 
 	}
 

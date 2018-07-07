@@ -111,7 +111,7 @@ public class EntityLittleServant extends EntityLittleServantProfession {
 	protected void playSitEffect(boolean play) {
 		EnumParticleTypes enumparticletypes = EnumParticleTypes.NOTE;
 
-		if (!play) enumparticletypes = EnumParticleTypes.SPELL_WITCH;
+		//if (!play) enumparticletypes = EnumParticleTypes.SPELL_WITCH;
 
 		for (int i = 0; i < 4; ++i) {
 			double d0 = this.rand.nextGaussian() * 0.02D;
