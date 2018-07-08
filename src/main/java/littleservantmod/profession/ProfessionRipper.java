@@ -20,7 +20,7 @@ public class ProfessionRipper extends ProfessionLSMBase {
 		servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.ripper));
 
 		//毛を狩る
-		servant.addAI(400, new EntityAIUseItemForEntity((EntityLittleServant) servant.getEntityInstance(), 1.0d, false));
+		servant.addAI(400, new EntityAIUseItemForEntity((EntityLittleServant) servant.getEntityInstance(), 0.8d, false));
 
 		//Target
 		servant.addTargetAI(200,

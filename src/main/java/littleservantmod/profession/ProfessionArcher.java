@@ -28,7 +28,7 @@ public class ProfessionArcher extends ProfessionLSMBase implements IRangedAttack
 		servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.archer));
 
 		//攻撃
-		servant.addAI(400, new EntityAIAttackRangedBow2(servant.getEntityInstance(), this, ProfessionToolManager.archer, 1.0D, 20, 15.0F));
+		servant.addAI(400, new EntityAIAttackRangedBow2(servant.getEntityInstance(), this, ProfessionToolManager.archer, 0.8D, 20, 15.0F));
 
 		//Target
 		servant.addTargetAI(200, new EntityAINearestAttackableTarget2((EntityLittleServant) servant.getEntityInstance(), EntitySpider.class, true));
