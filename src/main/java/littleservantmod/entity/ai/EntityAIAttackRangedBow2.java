@@ -125,6 +125,10 @@ public class EntityAIAttackRangedBow2<T extends EntityLiving, R extends IRangedA
 				this.strafingTime = -1;
 			}
 
+			if (d0 <= this.maxAttackDistance || entitylivingbase.isDead) {
+				this.entity.getNavigator().clearPath();
+			}
+
 			if (this.strafingTime >= 20) {
 				if (this.entity.getRNG().nextFloat() < 0.3D) {
 					this.strafingClockwise = !this.strafingClockwise;
