@@ -27,6 +27,8 @@ public class ProfessionToolManager implements IProfessionToolManager {
 
 	public static ResourceLocation saber = new ResourceLocation(LittleServantMod.MOD_ID, "saber");
 
+	public static ResourceLocation archer = new ResourceLocation(LittleServantMod.MOD_ID, "archer");
+
 	public static ResourceLocation ripper = new ResourceLocation(LittleServantMod.MOD_ID, "ripper");
 
 	public ProfessionToolManager() {
@@ -38,6 +40,9 @@ public class ProfessionToolManager implements IProfessionToolManager {
 		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.IRON_SWORD)));
 		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.GOLDEN_SWORD)));
 		addProfessionTool(saber, new ProfessionToolBase(new ItemStack(Items.DIAMOND_SWORD)));
+
+		//弓兵
+		addProfessionTool(archer, new ProfessionToolBase(new ItemStack(Items.BOW)));
 
 		//毛刈り兵
 		addProfessionTool(ripper, new ProfessionToolBase(new ItemStack(Items.SHEARS)));

@@ -20,6 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public abstract class ProfessionBase implements IProfession {
 
+	protected double defaultSpeed = 0.5D;
+
 	protected ResourceLocation resourceLocation;
 	protected String unlocalizedName;
 
@@ -42,10 +44,10 @@ public abstract class ProfessionBase implements IProfession {
 		servant.addAI(100, new EntityAISwimming(servant.getEntityInstance()));
 
 		//砂糖についてくる
-		servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), 0.5D, Items.SUGAR, false));
+		servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), defaultSpeed, Items.SUGAR, false));
 
 		//ウロウロ
-		servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), 0.5D));
+		servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), defaultSpeed));
 
 		//プレイヤーを見る
 		servant.addAI(900, new EntityAIWatchClosest(servant.getEntityInstance(), EntityPlayer.class, 8.0F));

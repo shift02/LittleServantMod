@@ -78,7 +78,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.10000000149011612D);
+		//this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.10000000149011612D);
 		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_SPEED);
 		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.LUCK);
 		this.getAttributeMap().registerAttribute(REACH_DISTANCE);
