@@ -22,3 +22,8 @@ profession.chores.name=Chores
 profession.saber.name=Saber
 profession.archer.name=Archer
 profession.ripper.name=Ripper
+
+
+mode.mode_none.name=None
+
+mode.chores_escort.name=Escort

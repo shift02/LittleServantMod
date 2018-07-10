@@ -1,5 +1,6 @@
 package littleservantmod;
 
+import littleservantmod.api.profession.mode.ModeNone;
 import littleservantmod.client.gui.inventory.GuiServantInventory;
 import littleservantmod.client.gui.inventory.GuiServantProfession;
 import littleservantmod.client.gui.inventory.GuiServantProfessionSelectProfession;
@@ -11,6 +12,7 @@ import littleservantmod.profession.ProfessionEventHandler;
 import littleservantmod.profession.mode.ModeEventHandler;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -88,6 +90,8 @@ public class LSMProxy implements IGuiHandler {
 
 	}
 
+	public static TextureAtlasSprite escort;
+
 	@SideOnly(Side.CLIENT)
 	public static class ClientProxy extends LSMProxy {
 
@@ -111,6 +115,10 @@ public class LSMProxy implements IGuiHandler {
 
 				ModeEventHandler.iconDefault.setIcon(
 						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_default")));
+
+				ModeNone.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed"));
+
+				escort = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed"));
 
 			}
 

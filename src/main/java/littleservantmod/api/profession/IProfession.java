@@ -1,6 +1,9 @@
 package littleservantmod.api.profession;
 
+import java.util.Map;
+
 import littleservantmod.api.IServant;
+import littleservantmod.api.profession.mode.IMode;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -29,5 +32,12 @@ public interface IProfession {
 	public boolean hasOption(IServant servant);
 
 	public boolean hasMode(IServant servant);
+
+	/**
+	 * DefaultのModeを返す
+	 * */
+	public IMode getDefaultMode(IServant servant);
+
+	public Map<ResourceLocation, IMode> initModes(IServant servant);
 
 }

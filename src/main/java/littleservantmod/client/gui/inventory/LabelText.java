@@ -34,6 +34,9 @@ public class LabelText extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+
+		this.preDrawButton();
+
 		if (this.visible) {
 
 			if (this.visible) {
@@ -50,15 +53,18 @@ public class LabelText extends GuiButton {
 
 				int yOfset = !isNormal ? 3 : 3 + 26;
 
+				if (!this.enabled) yOfset += 26;
+
 				this.drawTexturedModalRect(this.x, this.y, 29, yOfset, this.width, this.height);
 
 				GlStateManager.color(1.0F, 1.0F, 1.0F);
 				int j = 14737632;
 				if (isNormal) j = 4210752;
+				if (!this.enabled) j = 14737632;
 				if (isNormal) {
-					mc.fontRenderer.drawString(this.servant.getProfession().getProfessionDisplayName(servant), this.x + 6, this.y + 7, j);
+					mc.fontRenderer.drawString(getLabelText(), this.x + 6, this.y + 7, j);
 				} else {
-					this.drawString(mc.fontRenderer, this.servant.getProfession().getProfessionDisplayName(servant), this.x + 6, this.y + 7, j);
+					this.drawString(mc.fontRenderer, getLabelText(), this.x + 6, this.y + 7, j);
 				}
 
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -100,6 +106,14 @@ public class LabelText extends GuiButton {
 			this.drawString(fontrenderer, displayString2, this.x + 6, this.y + 10, j);
 			*/
 		}
+	}
+
+	public void preDrawButton() {
+
+	}
+
+	public String getLabelText() {
+		return this.servant.getProfession().getProfessionDisplayName(servant);
 	}
 
 }

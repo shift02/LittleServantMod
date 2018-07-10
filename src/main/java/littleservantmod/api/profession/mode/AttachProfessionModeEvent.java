@@ -19,8 +19,11 @@ public class AttachProfessionModeEvent extends Event {
 	private final Map<ResourceLocation, IMode> modes = Maps.newLinkedHashMap();
 	private final Map<ResourceLocation, IMode> view = Collections.unmodifiableMap(modes);
 
-	public AttachProfessionModeEvent(IServant servant) {
+	private final Map<ResourceLocation, IMode> defaultView;
+
+	public AttachProfessionModeEvent(IServant servant, Map<ResourceLocation, IMode> defaultModes) {
 		this.servant = servant;
+		this.defaultView = Collections.unmodifiableMap(defaultModes);
 	}
 
 	public IServant getServant() {
@@ -33,8 +36,12 @@ public class AttachProfessionModeEvent extends Event {
 		this.modes.put(key, mode);
 	}
 
-	public Map<ResourceLocation, IMode> getProfessions() {
+	public Map<ResourceLocation, IMode> getModes() {
 		return view;
+	}
+
+	public Map<ResourceLocation, IMode> getDefaultModes() {
+		return defaultView;
 	}
 
 }

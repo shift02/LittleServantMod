@@ -3,8 +3,13 @@ package littleservantmod.api;
 import littleservantmod.api.profession.AttachProfessionEvent;
 import littleservantmod.api.profession.IProfessionFactory;
 import littleservantmod.api.profession.IProfessionManager;
+import littleservantmod.api.profession.mode.IMode;
+import littleservantmod.api.profession.mode.ModeNone;
+import net.minecraft.util.ResourceLocation;
 
 public class LittleServantModAPI {
+
+	public static final String MOD_ID = "littleservantmod";
 
 	public static IProfessionManager professionManager;
 
@@ -19,5 +24,7 @@ public class LittleServantModAPI {
 		professionManager.registerProfession(factory);
 
 	}
+
+	public static IMode noneMode = new ModeNone().setUnlocalizedName("mode_none").setRegistryName(new ResourceLocation(MOD_ID, "mode_none"));
 
 }

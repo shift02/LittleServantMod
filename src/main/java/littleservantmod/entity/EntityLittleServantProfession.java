@@ -1,6 +1,8 @@
 package littleservantmod.entity;
 
+import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.api.profession.IProfession;
+import littleservantmod.api.profession.mode.IMode;
 import littleservantmod.entity.ai.EntityAISit;
 import littleservantmod.profession.ProfessionDispatcher;
 import littleservantmod.profession.ProfessionEventHandler;
@@ -55,7 +57,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		//this.wander = new EntityAIWander(this, interpTargetPitch);
 		//this.tasks.addTask(1, this.wander);
 		IProfession tmp = professions.getDefaultProfession();
-		this.changeAI(tmp);
+		this.changeProfessionAI(tmp);
 
 	}
 
@@ -73,20 +75,23 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 	}
 
+	/* ================================
+	 *   IProfession
+	 * ================================ */
 	public void changeProfession(ResourceLocation profession) {
 
 		this.changeProfession(getProfession(profession));
 
 	}
 
-	public void changeProfession(IProfession profession) {
+	protected void changeProfession(IProfession profession) {
 
 		this.setProfession(profession);
-		if (!this.world.isRemote) this.changeAI(profession);
+		if (!this.world.isRemote) this.changeProfessionAI(profession);
 
 	}
 
-	protected void changeAI(IProfession profession) {
+	protected void changeProfessionAI(IProfession profession) {
 
 		EntityAISit oldSit = this.aiSit;
 
@@ -103,13 +108,28 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 		profession.initAI(this);
 
+		//モードがある時
+		if (profession.hasMode(this)) {
+			IMode mode = profession.getDefaultMode(this);
+			mode.initAI(this);
+		}
+
 	}
 
-	protected void setProfession(IProfession profession) {
+	private void setProfession(IProfession profession) {
 
 		this.professions.setCurrentProfession(profession);
 
-		if (!this.world.isRemote) this.dataManager.set(PROFESSION, profession.getRegistryName().toString());
+		if (!this.world.isRemote) {
+			this.dataManager.set(PROFESSION, profession.getRegistryName().toString());
+
+			//モードがある時
+			if (profession.hasMode(this)) {
+				IMode mode = profession.getDefaultMode(this);
+				this.dataManager.set(MODE, mode.getRegistryName().toString());
+			}
+
+		}
 
 	}
 
@@ -125,6 +145,19 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		return professions.getProfession(resourceLocation);
 	}
 
+	/* ================================
+	 *   IMode
+	 * ================================ */
+	public IMode getMode() {
+
+		if (!this.getProfession().hasMode(this)) return LittleServantModAPI.noneMode;
+
+		return professions.getMode(new ResourceLocation(
+				this.dataManager.get(PROFESSION)),
+				new ResourceLocation(this.dataManager.get(MODE)));
+
+	}
+
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		super.notifyDataManagerChange(key);
@@ -134,22 +167,19 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 			//初期起動時にNullの時があるから
 			if (this.professions != null) this.setProfession(getProfession());
 
-			//クライアント側を変える必要があるかわからないけど一応
-			//追記　必要なかった...
-			//this.changeAI(getProfession());
-
 		}
 
 	}
 
-	/*
-	 * NBT
-	 */
+	/* ================================
+	 *   NBT
+	 * ================================ */
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
 
 		if (this.professions != null) compound.setString("Profession", getProfession().getRegistryName().toString());
+		if (this.professions != null && getMode() != null) compound.setString("Mode", getMode().getRegistryName().toString());
 
 		if (this.professions != null) compound.setTag("LMSProfessions", this.professions.serializeNBT());
 

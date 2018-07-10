@@ -12,6 +12,7 @@ import littleservantmod.packet.MessageOpenGuiId;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -44,18 +45,55 @@ public class GuiServantProfession extends GuiSideTabContainer {
 
 		labelIcons = Lists.newArrayList();
 
+		//Pro
 		LabelIcon labelIcon = new LabelIcon(11, this.guiLeft + 9, this.guiTop + 15, servant);
 		this.buttonList.add(labelIcon);
 		labelIcons.add(labelIcon);
 
 		this.buttonList.add(new LabelText(12, this.guiLeft + 38, this.guiTop + 18, servant));
 
-		LabelIcon labelIcon2 = new LabelIcon(13, this.guiLeft + 9, this.guiTop + 51, servant).setNormal(true);
+		//Mode
+		//if (servant.getProfession().hasMode(servant)) {
+		LabelIcon labelIcon2 = new LabelIcon(13, this.guiLeft + 9, this.guiTop + 51, servant) {
+
+			@Override
+			protected void preDrawButton() {
+				if (servant.getProfession().hasMode(servant)) {
+					this.enabled = true;
+				} else {
+					this.enabled = false;
+				}
+			}
+
+			@Override
+			protected TextureAtlasSprite getIcon() {
+
+				//if (!servant.getProfession().hasMode(servant)) return net.minecraft.client.Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+				return this.servant.getMode().getIcon(servant);
+			}
+		}.setNormal(true);
 		this.buttonList.add(labelIcon2);
 		labelIcons.add(labelIcon2);
 
-		this.buttonList.add(new LabelText(14, this.guiLeft + 38, this.guiTop + 54, servant).setNormal(true));
+		this.buttonList.add(new LabelText(14, this.guiLeft + 38, this.guiTop + 54, servant) {
+			@Override
+			public void preDrawButton() {
+				if (servant.getProfession().hasMode(servant)) {
+					this.enabled = true;
+				} else {
+					this.enabled = false;
+				}
+			}
 
+			@Override
+			public String getLabelText() {
+				//if (!servant.getProfession().hasMode(servant)) return "";
+				return this.servant.getMode().getModeDisplayName(servant);
+			}
+		}.setNormal(true));
+		//}
+
+		//SubMode
 		LabelIcon labelIcon3 = new LabelIcon(15, this.guiLeft + 9, this.guiTop + 87, servant).setNormal(true);
 		this.buttonList.add(labelIcon3);
 		labelIcons.add(labelIcon3);

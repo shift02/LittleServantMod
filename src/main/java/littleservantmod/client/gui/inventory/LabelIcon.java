@@ -6,6 +6,7 @@ import littleservantmod.LittleServantMod;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 
@@ -13,7 +14,7 @@ public class LabelIcon extends GuiButton {
 
 	ResourceLocation texture = new ResourceLocation(LittleServantMod.MOD_ID, "textures/guis/container/labels.png");
 
-	private EntityLittleServant servant;
+	protected EntityLittleServant servant;
 
 	private boolean isNormal = false;
 
@@ -35,6 +36,9 @@ public class LabelIcon extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+
+		preDrawButton();
+
 		if (this.visible) {
 
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -45,13 +49,15 @@ public class LabelIcon extends GuiButton {
 
 			int yOfset = isNormal ? 26 : 0;
 
+			if (!this.enabled) yOfset += 26;
+
 			this.drawTexturedModalRect(this.x, this.y, 0, yOfset, 26, 26);
 
 			this.zLevel = 100.0F;
 
 			//GlStateManager.disableLighting();
 			mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			this.drawTexturedModalRect(this.x + 5, this.y + 5, this.servant.getProfession().getIcon(servant), 16, 16);
+			this.drawTexturedModalRect(this.x + 5, this.y + 5, getIcon(), 16, 16);
 			//GlStateManager.enableLighting();
 
 			this.zLevel = 0.0F;
@@ -60,6 +66,14 @@ public class LabelIcon extends GuiButton {
 
 		}
 
+	}
+
+	protected void preDrawButton() {
+
+	}
+
+	protected TextureAtlasSprite getIcon() {
+		return this.servant.getProfession().getIcon(servant);
 	}
 
 }

@@ -30,7 +30,7 @@ public class ProfessionManager implements IProfessionManager {
 		AttachProfessionEvent event = new AttachProfessionEvent(servant);
 		MinecraftForge.EVENT_BUS.post(event);
 
-		return new ProfessionDispatcher(event.getProfessions());
+		return new ProfessionDispatcher(servant, event.getProfessions());
 
 	}
 

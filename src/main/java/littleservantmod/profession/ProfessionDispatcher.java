@@ -5,11 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
+import littleservantmod.api.IServant;
 import littleservantmod.api.profession.IProfession;
+import littleservantmod.api.profession.mode.AttachProfessionModeEvent;
+import littleservantmod.api.profession.mode.IMode;
+import littleservantmod.profession.mode.ModeDispatcher;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -27,9 +33,12 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 	/** 現在の職業 */
 	private IProfession currentProfession = null;
 
-	public ProfessionDispatcher(Map<ResourceLocation, IProfession> list) {
+	private Map<ResourceLocation, ModeDispatcher> modeDispatcher = null;
+
+	public ProfessionDispatcher(IServant servant, Map<ResourceLocation, IProfession> list) {
 
 		this.initNBT(list);
+		this.initModes(servant, list);
 
 	}
 
@@ -55,6 +64,33 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 		professionsMap = mapRro;
 		writers = lstWriters.toArray(new INBTSerializable[lstWriters.size()]);
 		names = lstNames.toArray(new String[lstNames.size()]);
+
+	}
+
+	//モードの初期化
+	public void initModes(IServant servant, Map<ResourceLocation, IProfession> list) {
+
+		modeDispatcher = Maps.newLinkedHashMap();
+
+		for (Map.Entry<ResourceLocation, IProfession> entry : list.entrySet()) {
+
+			modeDispatcher.put(entry.getKey(), gatProfessionModes(servant, entry.getValue()));
+
+		}
+
+	}
+
+	public ModeDispatcher gatProfessionModes(IServant servant, IProfession profession) {
+
+		Map<ResourceLocation, IMode> modes = profession.initModes(servant);
+		if (modes == null) {
+			modes = Maps.newLinkedHashMap();
+		}
+
+		AttachProfessionModeEvent event = new AttachProfessionModeEvent(servant, modes);
+		MinecraftForge.EVENT_BUS.post(event);
+
+		return new ModeDispatcher(modes, event.getModes());
 
 	}
 
@@ -84,23 +120,57 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 		this.currentProfession = profession;
 	}
 
+	public IMode getMode(ResourceLocation resourceProfessionLocation, ResourceLocation resourceLocation) {
+
+		return modeDispatcher.get(resourceProfessionLocation).getMode(resourceLocation);
+
+	}
+
 	// NBT
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
+
+		//Profession
+		NBTTagCompound nbtProfession = new NBTTagCompound();
+
+		nbt.setTag("Profession", nbtProfession);
+
 		for (int x = 0; x < writers.length; x++) {
-			nbt.setTag(names[x], writers[x].serializeNBT());
+			nbtProfession.setTag(names[x], writers[x].serializeNBT());
 		}
+
+		//Mode
+		NBTTagCompound nbtMode = new NBTTagCompound();
+		nbt.setTag("Mode", nbtMode);
+
+		for (Map.Entry<ResourceLocation, ModeDispatcher> entry : modeDispatcher.entrySet()) {
+			nbtMode.setTag(entry.getKey().toString(), entry.getValue().serializeNBT());
+		}
+
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
+
+		//Profession
+		NBTTagCompound nbtProfession = nbt.getCompoundTag("Profession");
+
 		for (int x = 0; x < writers.length; x++) {
-			if (nbt.hasKey(names[x])) {
-				writers[x].deserializeNBT(nbt.getTag(names[x]));
+			if (nbtProfession.hasKey(names[x])) {
+				writers[x].deserializeNBT(nbtProfession.getTag(names[x]));
 			}
 		}
+
+		//Mode
+		NBTTagCompound nbtMode = nbt.getCompoundTag("Mode");
+		for (Map.Entry<ResourceLocation, ModeDispatcher> entry : modeDispatcher.entrySet()) {
+			if (nbtMode.hasKey(entry.getKey().toString())) {
+				entry.getValue().deserializeNBT(nbtMode.getCompoundTag(entry.getKey().toString()));
+			}
+		}
+
 	}
 
 }

@@ -1,8 +1,12 @@
 package littleservantmod.profession;
 
+import java.util.Map;
+
 import littleservantmod.api.IServant;
 import littleservantmod.api.profession.ProfessionBase;
+import littleservantmod.api.profession.mode.IMode;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,12 +42,22 @@ public class ProfessionLSMBase extends ProfessionBase {
 
 	@Override
 	public boolean hasMode(IServant servant) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean hasOption(IServant servant) {
 		return false;
+	}
+
+	@Override
+	public Map<ResourceLocation, IMode> initModes(IServant servant) {
+		return null;
+	}
+
+	@Override
+	public IMode getDefaultMode(IServant servant) {
+		return null;
 	}
 
 }
