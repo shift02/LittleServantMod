@@ -91,6 +91,7 @@ public class LSMProxy implements IGuiHandler {
 	}
 
 	public static TextureAtlasSprite escort;
+	public static TextureAtlasSprite free;
 
 	@SideOnly(Side.CLIENT)
 	public static class ClientProxy extends LSMProxy {
@@ -116,9 +117,11 @@ public class LSMProxy implements IGuiHandler {
 				ModeEventHandler.iconDefault.setIcon(
 						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_default")));
 
-				ModeNone.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed"));
+				ModeNone.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_none"));
 
-				escort = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed"));
+				escort = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_escort"));
+
+				free = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_free"));
 
 			}
 

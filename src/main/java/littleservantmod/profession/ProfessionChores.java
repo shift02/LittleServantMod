@@ -32,11 +32,26 @@ public class ProfessionChores extends ProfessionLSMBase {
 
 	};
 
+	/** 自由行動 */
+	public static ResourceLocation kyeFree = new ResourceLocation(LittleServantMod.MOD_ID, "chores_free");
+	public static IconHolder iconFree = new IconHolder() {
+
+		@Override
+		@SideOnly(Side.CLIENT)
+		public TextureAtlasSprite getIcon() {
+			return LSMProxy.getProxy().free;
+		}
+
+	};
+
 	public IMode modeEscort;
+	public IMode modeFree;
 
 	public ProfessionChores() {
 
 		this.modeEscort = new ModeEscort().setIconHolder(iconEscort).setUnlocalizedName("chores_escort").setRegistryName(kyeEscort);
+
+		this.modeFree = new ModeEscort().setIconHolder(iconFree).setUnlocalizedName("chores_free").setRegistryName(kyeFree);
 
 	}
 
@@ -50,8 +65,8 @@ public class ProfessionChores extends ProfessionLSMBase {
 
 		Map<ResourceLocation, IMode> map = Maps.newLinkedHashMap();
 
-		map.put(kyeEscort,
-				modeEscort);
+		map.put(kyeEscort, modeEscort);
+		map.put(kyeFree, modeFree);
 
 		return map;
 
