@@ -5,14 +5,14 @@ import littleservantmod.api.profession.IProfession;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
-public class ElementChangeIconCurrent extends ElementChangeIcon {
+public class ElementChangeProfessionCurrent extends ElementChangeProfession {
 
 	protected IProfession now;
 
 	protected GuiButton buttonOk;
 
-	public ElementChangeIconCurrent(GuiContainer gui, int posX, int posY, IProfession profession, IServant servant, GuiButton buttonOk) {
-		super(gui, posX, posY, profession, servant, null);
+	public ElementChangeProfessionCurrent(GuiContainer gui, int posX, int posY, IProfession profession, IServant servant, GuiButton buttonOk) {
+		super(gui, posX, posY, profession, servant);
 
 		this.now = profession;
 
@@ -20,12 +20,15 @@ public class ElementChangeIconCurrent extends ElementChangeIcon {
 
 	}
 
-	@Override
 	public void setProfession(IProfession profession) {
 		this.profession = profession;
 
 		this.buttonOk.enabled = !this.now.equals(this.profession);
 
+	}
+
+	public IProfession getProfession() {
+		return this.profession;
 	}
 
 }
