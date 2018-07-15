@@ -1,8 +1,8 @@
-package littleservantmod.profession.mode;
+package littleservantmod.profession.behavior;
 
 import littleservantmod.api.IServant;
 
-public class ModeFree extends ModeLSMBase {
+public class BehaviorFree extends BehaviorLSMBase {
 
 	@Override
 	public boolean isEnableMode(IServant servant) {

@@ -1,7 +1,7 @@
 package littleservantmod.entity;
 
-import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.api.profession.IProfession;
+import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import littleservantmod.entity.ai.EntityAISit;
 import littleservantmod.profession.ProfessionDispatcher;
@@ -29,6 +29,8 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 	protected static final DataParameter<String> MODE = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
 
+	protected static final DataParameter<String> BEHAVIOR = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
+
 	public EntityLittleServantProfession(World worldIn) {
 		super(worldIn);
 
@@ -41,6 +43,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		super.entityInit();
 		this.dataManager.register(PROFESSION, ProfessionEventHandler.kyeUnemployed.toString());
 		this.dataManager.register(MODE, ModeEventHandler.kyeDefault.toString());
+		this.dataManager.register(BEHAVIOR, ModeEventHandler.kyeDefault.toString());
 
 		professions = ProfessionManager.gatProfessions(this);
 
@@ -109,10 +112,15 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		profession.initAI(this);
 
 		//モードがある時
-		if (profession.hasMode(this)) {
-			IMode mode = profession.getDefaultMode(this);
-			mode.initAI(this);
-		}
+		//モードは必ずある
+		//if (profession.hasMode(this)) {
+		IMode mode = profession.getDefaultMode(this);
+		mode.initAI(this);
+
+		IBehavior behavior = profession.getDefaultBehavior(this);
+		behavior.initAI(this);
+
+		//}
 
 	}
 
@@ -123,11 +131,14 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		if (!this.world.isRemote) {
 			this.dataManager.set(PROFESSION, profession.getRegistryName().toString());
 
-			//モードがある時
-			if (profession.hasMode(this)) {
-				IMode mode = profession.getDefaultMode(this);
-				this.dataManager.set(MODE, mode.getRegistryName().toString());
-			}
+			//モードがある時. fix: Modeは必ずある
+			//if (profession.hasMode(this)) {
+			IMode mode = profession.getDefaultMode(this);
+			this.dataManager.set(MODE, mode.getRegistryName().toString());
+			//}
+
+			IBehavior behavior = profession.getDefaultBehavior(this);
+			this.dataManager.set(BEHAVIOR, behavior.getRegistryName().toString());
 
 		}
 
@@ -150,11 +161,24 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 	 * ================================ */
 	public IMode getMode() {
 
-		if (!this.getProfession().hasMode(this)) return LittleServantModAPI.noneMode;
+		//if (!this.getProfession().hasMode(this)) return LittleServantModAPI.noneMode;
 
 		return professions.getMode(new ResourceLocation(
 				this.dataManager.get(PROFESSION)),
 				new ResourceLocation(this.dataManager.get(MODE)));
+
+	}
+
+	/* ================================
+	 *   IBehavior
+	 * ================================ */
+	public IBehavior getBehavior() {
+
+		//if (!this.getProfession().hasMode(this)) return LittleServantModAPI.noneMode;
+
+		return professions.getBehavior(new ResourceLocation(
+				this.dataManager.get(PROFESSION)),
+				new ResourceLocation(this.dataManager.get(BEHAVIOR)));
 
 	}
 

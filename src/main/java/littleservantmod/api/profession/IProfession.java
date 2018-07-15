@@ -2,7 +2,11 @@ package littleservantmod.api.profession;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import littleservantmod.api.IServant;
+import littleservantmod.api.LittleServantModAPI;
+import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
@@ -31,13 +35,22 @@ public interface IProfession {
 
 	public boolean hasOption(IServant servant);
 
-	public boolean hasMode(IServant servant);
-
 	/**
 	 * DefaultのModeを返す
+	 * Modeが一つしか無いときは {@link LittleServantModAPI#getBasicMode()} を使ってもOK
+	 * @see LittleServantModAPI
 	 * */
+	@Nonnull
 	public IMode getDefaultMode(IServant servant);
 
 	public Map<ResourceLocation, IMode> initModes(IServant servant);
+
+	/**
+	 * DefaultのBehaviorを返す
+	 * */
+	@Nonnull
+	public IBehavior getDefaultBehavior(IServant servant);
+
+	public Map<ResourceLocation, IBehavior> initBehavior(IServant servant);
 
 }

@@ -4,13 +4,14 @@ import java.util.Map;
 
 import littleservantmod.api.IServant;
 import littleservantmod.api.profession.ProfessionBase;
+import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ProfessionLSMBase extends ProfessionBase {
+public abstract class ProfessionLSMBase extends ProfessionBase {
 
 	protected IconHolder iconHolder;
 
@@ -41,13 +42,14 @@ public class ProfessionLSMBase extends ProfessionBase {
 	}
 
 	@Override
-	public boolean hasMode(IServant servant) {
+	public boolean hasOption(IServant servant) {
 		return false;
 	}
 
 	@Override
-	public boolean hasOption(IServant servant) {
-		return false;
+	public IMode getDefaultMode(IServant servant) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
 	@Override
@@ -56,7 +58,12 @@ public class ProfessionLSMBase extends ProfessionBase {
 	}
 
 	@Override
-	public IMode getDefaultMode(IServant servant) {
+	public IBehavior getDefaultBehavior(IServant servant) {
+		return null;
+	}
+
+	@Override
+	public Map<ResourceLocation, IBehavior> initBehavior(IServant servant) {
 		return null;
 	}
 

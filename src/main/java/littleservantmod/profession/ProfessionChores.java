@@ -7,8 +7,10 @@ import com.google.common.collect.Maps;
 import littleservantmod.LSMProxy;
 import littleservantmod.LittleServantMod;
 import littleservantmod.api.IServant;
+import littleservantmod.api.LittleServantModAPI;
+import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
-import littleservantmod.profession.mode.ModeEscort;
+import littleservantmod.profession.behavior.BehaviorEscort;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,20 +46,21 @@ public class ProfessionChores extends ProfessionLSMBase {
 
 	};
 
-	public IMode modeEscort;
-	public IMode modeFree;
+	public IMode modeBasic;
+
+	public IBehavior behaviorEscort;
+	public IBehavior behaviorFree;
 
 	public ProfessionChores() {
 
-		this.modeEscort = new ModeEscort().setIconHolder(iconEscort).setUnlocalizedName("chores_escort").setRegistryName(kyeEscort);
+		//Mode
+		this.modeBasic = LittleServantModAPI.professionManager.getBasicMode();
 
-		this.modeFree = new ModeEscort().setIconHolder(iconFree).setUnlocalizedName("chores_free").setRegistryName(kyeFree);
+		//Behavior
+		this.behaviorEscort = new BehaviorEscort().setIconHolder(iconEscort).setUnlocalizedName("chores_escort").setRegistryName(kyeEscort);
 
-	}
+		this.behaviorFree = new BehaviorEscort().setIconHolder(iconFree).setUnlocalizedName("chores_free").setRegistryName(kyeFree);
 
-	@Override
-	public boolean hasMode(IServant servant) {
-		return true;
 	}
 
 	@Override
@@ -65,8 +68,19 @@ public class ProfessionChores extends ProfessionLSMBase {
 
 		Map<ResourceLocation, IMode> map = Maps.newLinkedHashMap();
 
-		map.put(kyeEscort, modeEscort);
-		map.put(kyeFree, modeFree);
+		map.put(LittleServantModAPI.professionManager.getBasicModeKey(), this.modeBasic);
+
+		return map;
+
+	}
+
+	@Override
+	public Map<ResourceLocation, IBehavior> initBehavior(IServant servant) {
+
+		Map<ResourceLocation, IBehavior> map = Maps.newLinkedHashMap();
+
+		map.put(kyeEscort, behaviorEscort);
+		map.put(kyeFree, behaviorFree);
 
 		return map;
 
@@ -74,7 +88,12 @@ public class ProfessionChores extends ProfessionLSMBase {
 
 	@Override
 	public IMode getDefaultMode(IServant servant) {
-		return modeEscort;
+		return this.modeBasic;
+	}
+
+	@Override
+	public IBehavior getDefaultBehavior(IServant servant) {
+		return this.behaviorEscort;
 	}
 
 }

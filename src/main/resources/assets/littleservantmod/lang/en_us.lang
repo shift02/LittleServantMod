@@ -3,7 +3,7 @@ entity.little_servant.name=Little Servant
 
 gui.profession.name=Profession
 gui.mode.name=Mode
-gui.sub_mode.name=Sub Mode
+gui.behavior.name=Behavior
 gui.change_profession=Change profession
 
 gui.change_profession.name=Profession
@@ -26,4 +26,8 @@ profession.ripper.name=Ripper
 
 mode.mode_none.name=None
 
-mode.chores_escort.name=Escort
+mode.mode_basic.name=Basic Mode
+
+mode.mode_basic.name=Basic Mode
+
+behavior.chores_escort.name=Escort

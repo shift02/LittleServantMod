@@ -9,8 +9,11 @@ import com.google.common.collect.Maps;
 
 import littleservantmod.api.IServant;
 import littleservantmod.api.profession.IProfession;
+import littleservantmod.api.profession.behavior.AttachProfessionBehaviorEvent;
+import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.AttachProfessionModeEvent;
 import littleservantmod.api.profession.mode.IMode;
+import littleservantmod.profession.behavior.BehaviorDispatcher;
 import littleservantmod.profession.mode.ModeDispatcher;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,11 +37,13 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 	private IProfession currentProfession = null;
 
 	private Map<ResourceLocation, ModeDispatcher> modeDispatcher = null;
+	private Map<ResourceLocation, BehaviorDispatcher> behaviorDispatcher = null;
 
 	public ProfessionDispatcher(IServant servant, Map<ResourceLocation, IProfession> list) {
 
 		this.initNBT(list);
 		this.initModes(servant, list);
+		this.initBehavior(servant, list);
 
 	}
 
@@ -80,6 +85,19 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 
 	}
 
+	//振る舞いの初期化
+	public void initBehavior(IServant servant, Map<ResourceLocation, IProfession> list) {
+
+		behaviorDispatcher = Maps.newLinkedHashMap();
+
+		for (Map.Entry<ResourceLocation, IProfession> entry : list.entrySet()) {
+
+			behaviorDispatcher.put(entry.getKey(), gatProfessionBehavior(servant, entry.getValue()));
+
+		}
+
+	}
+
 	public ModeDispatcher gatProfessionModes(IServant servant, IProfession profession) {
 
 		Map<ResourceLocation, IMode> modes = profession.initModes(servant);
@@ -91,6 +109,20 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 		MinecraftForge.EVENT_BUS.post(event);
 
 		return new ModeDispatcher(modes, event.getModes());
+
+	}
+
+	public BehaviorDispatcher gatProfessionBehavior(IServant servant, IProfession profession) {
+
+		Map<ResourceLocation, IBehavior> modes = profession.initBehavior(servant);
+		if (modes == null) {
+			modes = Maps.newLinkedHashMap();
+		}
+
+		AttachProfessionBehaviorEvent event = new AttachProfessionBehaviorEvent(servant, modes);
+		MinecraftForge.EVENT_BUS.post(event);
+
+		return new BehaviorDispatcher(modes, event.getBehaviors());
 
 	}
 
@@ -126,6 +158,12 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 
 	}
 
+	public IBehavior getBehavior(ResourceLocation resourceProfessionLocation, ResourceLocation resourceLocation) {
+
+		return behaviorDispatcher.get(resourceProfessionLocation).getBehavior(resourceLocation);
+
+	}
+
 	// NBT
 	@Override
 	public NBTTagCompound serializeNBT() {
@@ -148,6 +186,14 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 			nbtMode.setTag(entry.getKey().toString(), entry.getValue().serializeNBT());
 		}
 
+		//Behavior
+		NBTTagCompound nbtBehavior = new NBTTagCompound();
+		nbt.setTag("Behavior", nbtBehavior);
+
+		for (Map.Entry<ResourceLocation, BehaviorDispatcher> entry : behaviorDispatcher.entrySet()) {
+			nbtBehavior.setTag(entry.getKey().toString(), entry.getValue().serializeNBT());
+		}
+
 		return nbt;
 	}
 
@@ -168,6 +214,14 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 		for (Map.Entry<ResourceLocation, ModeDispatcher> entry : modeDispatcher.entrySet()) {
 			if (nbtMode.hasKey(entry.getKey().toString())) {
 				entry.getValue().deserializeNBT(nbtMode.getCompoundTag(entry.getKey().toString()));
+			}
+		}
+
+		//Behavior
+		NBTTagCompound nbtBehavior = nbt.getCompoundTag("Behavior");
+		for (Map.Entry<ResourceLocation, BehaviorDispatcher> entry : behaviorDispatcher.entrySet()) {
+			if (nbtBehavior.hasKey(entry.getKey().toString())) {
+				entry.getValue().deserializeNBT(nbtBehavior.getCompoundTag(entry.getKey().toString()));
 			}
 		}
 

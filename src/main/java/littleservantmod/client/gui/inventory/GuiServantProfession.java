@@ -58,11 +58,11 @@ public class GuiServantProfession extends GuiSideTabContainer {
 
 			@Override
 			protected void preDrawButton() {
-				if (servant.getProfession().hasMode(servant)) {
+				/*if (servant.getProfession().hasMode(servant)) {
 					this.enabled = true;
 				} else {
 					this.enabled = false;
-				}
+				}*/
 			}
 
 			@Override
@@ -78,11 +78,12 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		this.buttonList.add(new LabelText(14, this.guiLeft + 38, this.guiTop + 54, servant) {
 			@Override
 			public void preDrawButton() {
+				/*
 				if (servant.getProfession().hasMode(servant)) {
 					this.enabled = true;
 				} else {
 					this.enabled = false;
-				}
+				}*/
 			}
 
 			@Override
@@ -93,12 +94,29 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		}.setNormal(true));
 		//}
 
-		//SubMode
-		LabelIcon labelIcon3 = new LabelIcon(15, this.guiLeft + 9, this.guiTop + 87, servant).setNormal(true);
+		//Behavior
+		LabelIcon labelIcon3 = new LabelIcon(15, this.guiLeft + 9, this.guiTop + 87, servant) {
+			@Override
+			protected TextureAtlasSprite getIcon() {
+
+				//if (!servant.getProfession().hasMode(servant)) return net.minecraft.client.Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+				return this.servant.getBehavior().getIcon(servant);
+			}
+
+		}.setNormal(true);
+
 		this.buttonList.add(labelIcon3);
 		labelIcons.add(labelIcon3);
 
-		this.buttonList.add(new LabelText(16, this.guiLeft + 38, this.guiTop + 90, servant).setNormal(true));
+		this.buttonList.add(new LabelText(16, this.guiLeft + 38, this.guiTop + 90, servant) {
+
+			@Override
+			public String getLabelText() {
+				//if (!servant.getProfession().hasMode(servant)) return "";
+				return this.servant.getBehavior().getBehaviorDisplayName(servant);
+			}
+
+		}.setNormal(true));
 
 		//
 		option1 = new GuiButton(5, this.guiLeft + 143, this.guiTop + 17 + 1, 22, 20, "@");
@@ -158,7 +176,7 @@ public class GuiServantProfession extends GuiSideTabContainer {
 
 		this.fontRenderer.drawString(I18n.translateToLocal("gui." + "mode" + ".name"), 8, 6 + 36, 4210752);
 
-		this.fontRenderer.drawString(I18n.translateToLocal("gui." + "sub_mode" + ".name"), 8, 6 + 72, 4210752);
+		this.fontRenderer.drawString(I18n.translateToLocal("gui." + "behavior" + ".name"), 8, 6 + 72, 4210752);
 
 		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 
