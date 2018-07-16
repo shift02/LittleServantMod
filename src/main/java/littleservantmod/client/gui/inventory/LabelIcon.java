@@ -5,12 +5,12 @@ import org.lwjgl.opengl.GL11;
 import littleservantmod.LittleServantMod;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
-public class LabelIcon extends GuiButton {
+public class LabelIcon extends GuiLSMButton {
 
 	ResourceLocation texture = new ResourceLocation(LittleServantMod.MOD_ID, "textures/guis/container/labels.png");
 
@@ -18,8 +18,8 @@ public class LabelIcon extends GuiButton {
 
 	private boolean isNormal = false;
 
-	public LabelIcon(int buttonId, int x, int y, EntityLittleServant servant) {
-		super(buttonId, x, y, 26, 26, "");
+	public LabelIcon(GuiServantBase gui, int buttonId, int x, int y, EntityLittleServant servant) {
+		super(gui, buttonId, x, y, 26, 26, "");
 
 		this.servant = servant;
 
@@ -74,6 +74,15 @@ public class LabelIcon extends GuiButton {
 
 	protected TextureAtlasSprite getIcon() {
 		return this.servant.getProfession().getIcon(servant);
+	}
+
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+		gui.drawHoveringText(I18n.translateToLocal(getHoveredToolTip()), mouseX, mouseY);
+	}
+
+	protected String getHoveredToolTip() {
+		return "tooltip.change_profession.name";
 	}
 
 }

@@ -4,9 +4,10 @@ entity.little_servant.name=Little Servant
 gui.profession.name=Profession
 gui.mode.name=Mode
 gui.behavior.name=Behavior
-gui.change_profession=Change profession
 
 gui.change_profession.name=Profession
+gui.change_mode.name=Mode
+gui.change_behavior.name=Behavior
 
 gui.change_profession.name=Profession
 gui.change_profession.name=Profession
@@ -16,6 +17,13 @@ gui.button_ok.name=Done
 
 sidetab.master_info.name=Master Info
 sidetab.master_name.name=Master
+
+toptab.home.name=Home
+toptab.profession.name=Profession
+
+tooltip.change_profession.name=Change profession
+tooltip.change_mode=Change mode
+tooltip.change_behavior=Change behavior
 
 profession.unemployed.name=Unemployed
 profession.chores.name=Chores
@@ -30,4 +38,5 @@ mode.mode_basic.name=Basic Mode
 
 mode.mode_basic.name=Basic Mode
 
-behavior.chores_escort.name=Escort
+behavior.behavior_escort.name=Escort
+behavior.behavior_free.name=Free

@@ -1,8 +1,11 @@
 package littleservantmod;
 
+import littleservantmod.api.profession.mode.ModeBasic;
 import littleservantmod.api.profession.mode.ModeNone;
 import littleservantmod.client.gui.inventory.GuiServantInventory;
 import littleservantmod.client.gui.inventory.GuiServantProfession;
+import littleservantmod.client.gui.inventory.GuiServantSelectBehavior;
+import littleservantmod.client.gui.inventory.GuiServantSelectMode;
 import littleservantmod.client.gui.inventory.GuiServantSelectProfession;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.EntityLittleServantBase;
@@ -54,6 +57,12 @@ public class LSMProxy implements IGuiHandler {
 
 		case 10:
 			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
+
+		case 11:
+			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
+
+		case 12:
+			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
 		}
 
 		return null;
@@ -72,6 +81,10 @@ public class LSMProxy implements IGuiHandler {
 			return new GuiServantProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
 		case 10:
 			return new GuiServantSelectProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
+		case 11:
+			return new GuiServantSelectMode(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
+		case 12:
+			return new GuiServantSelectBehavior(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
 		}
 
 		return null;
@@ -118,6 +131,8 @@ public class LSMProxy implements IGuiHandler {
 						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_default")));
 
 				ModeNone.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_none"));
+
+				ModeBasic.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_basic"));
 
 				escort = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_escort"));
 

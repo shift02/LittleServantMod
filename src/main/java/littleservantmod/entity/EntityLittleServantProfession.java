@@ -82,9 +82,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 	 *   IProfession
 	 * ================================ */
 	public void changeProfession(ResourceLocation profession) {
-
 		this.changeProfession(getProfession(profession));
-
 	}
 
 	protected void changeProfession(IProfession profession) {
@@ -95,33 +93,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 	}
 
 	protected void changeProfessionAI(IProfession profession) {
-
-		EntityAISit oldSit = this.aiSit;
-
-		this.tasks.taskEntries.clear();
-		this.targetTasks.taskEntries.clear();
-
-		if (oldSit == null) {
-			this.aiSit = new EntityAISit(this);
-		} else {
-			this.aiSit = oldSit;
-		}
-
-		this.tasks.addTask(102, this.aiSit);
-
-		profession.initAI(this);
-
-		//モードがある時
-		//モードは必ずある
-		//if (profession.hasMode(this)) {
-		IMode mode = profession.getDefaultMode(this);
-		mode.initAI(this);
-
-		IBehavior behavior = profession.getDefaultBehavior(this);
-		behavior.initAI(this);
-
-		//}
-
+		changeAI(profession, null, null);
 	}
 
 	private void setProfession(IProfession profession) {
@@ -156,29 +128,170 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		return professions.getProfession(resourceLocation);
 	}
 
+	private void loadProfession(ResourceLocation professionL, ResourceLocation modeL, ResourceLocation behaviorL) {
+
+		IProfession profession = this.getProfession(professionL);
+		IMode mode = null;
+		IBehavior behavior = null;
+
+		if (modeL != null) {
+			mode = this.getMode(professionL, modeL);
+		} else {
+			mode = profession.getDefaultMode(this);
+		}
+
+		if (behaviorL != null) {
+			behavior = this.getBehavior(professionL, behaviorL);
+		} else {
+			behavior = profession.getDefaultBehavior(this);
+		}
+
+		this.professions.setCurrentProfession(profession);
+
+		if (!this.world.isRemote) {
+
+			this.dataManager.set(PROFESSION, profession.getRegistryName().toString());
+			this.dataManager.set(MODE, mode.getRegistryName().toString());
+			this.dataManager.set(BEHAVIOR, behavior.getRegistryName().toString());
+
+			this.changeAI(profession, mode, behavior);
+
+		}
+
+	}
+
 	/* ================================
 	 *   IMode
 	 * ================================ */
+	public void changeMode(ResourceLocation mode) {
+		this.changeMode(getMode(mode));
+	}
+
+	protected void changeMode(IMode mode) {
+
+		this.setMode(mode);
+		if (!this.world.isRemote) this.changeModeAI(mode);
+
+	}
+
+	protected void changeModeAI(IMode mode) {
+		changeAI(this.getProfession(), mode, this.getBehavior());
+	}
+
+	private void setMode(IMode mode) {
+
+		if (!this.world.isRemote) {
+
+			this.dataManager.set(MODE, mode.getRegistryName().toString());
+
+		}
+
+	}
+
 	public IMode getMode() {
 
-		//if (!this.getProfession().hasMode(this)) return LittleServantModAPI.noneMode;
-
-		return professions.getMode(new ResourceLocation(
-				this.dataManager.get(PROFESSION)),
+		return professions.getMode(
+				new ResourceLocation(this.dataManager.get(PROFESSION)),
 				new ResourceLocation(this.dataManager.get(MODE)));
 
+	}
+
+	public IMode[] getModes() {
+		return professions.getModes(new ResourceLocation(this.dataManager.get(PROFESSION)));
+	}
+
+	private IMode getMode(ResourceLocation resourceLocation) {
+		return this.getMode(new ResourceLocation(this.dataManager.get(PROFESSION)), resourceLocation);
+	}
+
+	private IMode getMode(ResourceLocation pResourceLocation, ResourceLocation resourceLocation) {
+		return professions.getMode(pResourceLocation, resourceLocation);
 	}
 
 	/* ================================
 	 *   IBehavior
 	 * ================================ */
+	public void changeBehavior(ResourceLocation behavior) {
+		this.changeBehavior(getBehavior(behavior));
+	}
+
+	protected void changeBehavior(IBehavior behavior) {
+
+		this.setBehavior(behavior);
+		if (!this.world.isRemote) this.changeBehaviorAI(behavior);
+
+	}
+
+	protected void changeBehaviorAI(IBehavior behavior) {
+		changeAI(this.getProfession(), this.getMode(), behavior);
+	}
+
+	private void setBehavior(IBehavior behavior) {
+
+		if (!this.world.isRemote) {
+
+			this.dataManager.set(BEHAVIOR, behavior.getRegistryName().toString());
+
+		}
+
+	}
+
 	public IBehavior getBehavior() {
 
-		//if (!this.getProfession().hasMode(this)) return LittleServantModAPI.noneMode;
-
-		return professions.getBehavior(new ResourceLocation(
-				this.dataManager.get(PROFESSION)),
+		return professions.getBehavior(
+				new ResourceLocation(this.dataManager.get(PROFESSION)),
 				new ResourceLocation(this.dataManager.get(BEHAVIOR)));
+
+	}
+
+	public IBehavior[] getBehaviorList() {
+		return professions.getBehaviorList(new ResourceLocation(this.dataManager.get(PROFESSION)));
+	}
+
+	private IBehavior getBehavior(ResourceLocation resourceLocation) {
+		return this.getBehavior(new ResourceLocation(this.dataManager.get(PROFESSION)), resourceLocation);
+	}
+
+	private IBehavior getBehavior(ResourceLocation bResourceLocation, ResourceLocation resourceLocation) {
+		return professions.getBehavior(bResourceLocation, resourceLocation);
+	}
+
+	/* ================================
+	 *   共通
+	 * ================================ */
+	private void changeAI(IProfession profession, IMode mode, IBehavior behavior) {
+
+		if (mode == null) {
+			mode = profession.getDefaultMode(this);
+		}
+		if (behavior == null) {
+			behavior = profession.getDefaultBehavior(this);
+		}
+
+		EntityAISit oldSit = this.aiSit;
+
+		this.tasks.taskEntries.clear();
+		this.targetTasks.taskEntries.clear();
+
+		if (oldSit == null) {
+			this.aiSit = new EntityAISit(this);
+		} else {
+			this.aiSit = oldSit;
+		}
+
+		this.tasks.addTask(102, this.aiSit);
+
+		profession.initAI(this);
+
+		//TODO 親の初期化とかできるように
+		//モードがある時
+		//モードは必ずある
+		//if (profession.hasMode(this)) {
+		mode.initAI(this);
+
+		behavior.initAI(this);
+
+		//}
 
 	}
 
@@ -204,6 +317,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 
 		if (this.professions != null) compound.setString("Profession", getProfession().getRegistryName().toString());
 		if (this.professions != null && getMode() != null) compound.setString("Mode", getMode().getRegistryName().toString());
+		if (this.professions != null && getBehavior() != null) compound.setString("Behavior", getBehavior().getRegistryName().toString());
 
 		if (this.professions != null) compound.setTag("LMSProfessions", this.professions.serializeNBT());
 
@@ -217,7 +331,15 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		super.readEntityFromNBT(compound);
 
 		if (this.professions != null && compound.hasKey("Profession")) {
-			this.changeProfession(this.getProfession(new ResourceLocation(compound.getString("Profession"))));
+
+			ResourceLocation profession = new ResourceLocation(compound.getString("Profession"));
+			ResourceLocation mode = compound.hasKey("Mode") ? new ResourceLocation(compound.getString("Mode")) : null;
+			ResourceLocation behavior = compound.hasKey("Behavior") ? new ResourceLocation(compound.getString("Behavior")) : null;
+
+			this.loadProfession(
+					profession,
+					mode,
+					behavior);
 		} else {
 			this.changeProfession(this.getProfession(ProfessionEventHandler.keyChores));
 		}

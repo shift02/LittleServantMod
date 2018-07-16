@@ -20,6 +20,10 @@ public class LSMPacketHandler {
 
 		INSTANCE.registerMessage(ChangeProfessionMessageHandler.class, MessageChangeProfession.class, 1, Side.SERVER);
 
+		INSTANCE.registerMessage(ChangeModeMessageHandler.class, MessageChangeMode.class, 2, Side.SERVER);
+
+		INSTANCE.registerMessage(ChangeBehaviorMessageHandler.class, MessageChangeBehavior.class, 3, Side.SERVER);
+
 	}
 
 }

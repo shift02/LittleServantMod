@@ -24,6 +24,6 @@ public interface IBehavior {
 
 	public ResourceLocation getRegistryName();
 
-	public boolean isEnableMode(IServant servant);
+	public boolean isEnableBehavior(IServant servant);
 
 }

@@ -3,7 +3,7 @@ package littleservantmod.client.gui;
 import org.lwjgl.opengl.GL11;
 
 import littleservantmod.client.gui.inventory.GuiServantBase;
-import littleservantmod.client.gui.inventory.GuiServantSelectProfession;
+import littleservantmod.client.gui.inventory.GuiServantSelect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -11,12 +11,12 @@ import net.minecraft.client.renderer.texture.TextureMap;
 
 public abstract class ElementIcon extends ElementBase {
 
-	protected GuiServantSelectProfession gui;
+	protected GuiServantSelect gui;
 
 	public ElementIcon(GuiContainer gui, int posX, int posY) {
 		super(gui, posX, posY);
 
-		this.gui = (GuiServantSelectProfession) gui;
+		this.gui = (GuiServantSelect) gui;
 
 	}
 

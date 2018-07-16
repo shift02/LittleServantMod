@@ -33,7 +33,7 @@ public class BehaviorLSMBase extends BehaviorBase {
 	}
 
 	@Override
-	public boolean isEnableMode(IServant servant) {
+	public boolean isEnableBehavior(IServant servant) {
 		return true;
 	}
 

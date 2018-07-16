@@ -14,11 +14,6 @@ public class BehaviorBasic extends BehaviorBase {
 	}
 
 	@Override
-	public boolean isEnableMode(IServant servant) {
-		return true;
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public TextureAtlasSprite getIcon(IServant servant) {
 
@@ -28,6 +23,11 @@ public class BehaviorBasic extends BehaviorBase {
 		}
 
 		return icon;
+	}
+
+	@Override
+	public boolean isEnableBehavior(IServant servant) {
+		return true;
 	}
 
 }

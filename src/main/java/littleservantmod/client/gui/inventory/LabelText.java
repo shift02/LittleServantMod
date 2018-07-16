@@ -5,11 +5,11 @@ import org.lwjgl.opengl.GL11;
 import littleservantmod.LittleServantMod;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
-public class LabelText extends GuiButton {
+public class LabelText extends GuiLSMButton {
 
 	ResourceLocation texture = new ResourceLocation(LittleServantMod.MOD_ID, "textures/guis/container/labels.png");
 
@@ -17,8 +17,8 @@ public class LabelText extends GuiButton {
 
 	private boolean isNormal = false;
 
-	public LabelText(int buttonId, int x, int y, EntityLittleServant servant) {
-		super(buttonId, x, y, 97, 20, "");
+	public LabelText(GuiServantBase gui, int buttonId, int x, int y, EntityLittleServant servant) {
+		super(gui, buttonId, x, y, 97, 20, "");
 
 		this.servant = servant;
 	}
@@ -114,6 +114,15 @@ public class LabelText extends GuiButton {
 
 	public String getLabelText() {
 		return this.servant.getProfession().getProfessionDisplayName(servant);
+	}
+
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+		gui.drawHoveringText(I18n.translateToLocal(getHoveredToolTip()), mouseX, mouseY);
+	}
+
+	protected String getHoveredToolTip() {
+		return "gui.change_profession";
 	}
 
 }

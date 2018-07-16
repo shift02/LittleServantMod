@@ -158,9 +158,21 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 
 	}
 
+	public IMode[] getModes(ResourceLocation resourceProfessionLocation) {
+
+		return modeDispatcher.get(resourceProfessionLocation).getModes();
+
+	}
+
 	public IBehavior getBehavior(ResourceLocation resourceProfessionLocation, ResourceLocation resourceLocation) {
 
 		return behaviorDispatcher.get(resourceProfessionLocation).getBehavior(resourceLocation);
+
+	}
+
+	public IBehavior[] getBehaviorList(ResourceLocation resourceProfessionLocation) {
+
+		return behaviorDispatcher.get(resourceProfessionLocation).getBehaviors();
 
 	}
 

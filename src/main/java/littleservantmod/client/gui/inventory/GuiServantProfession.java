@@ -46,15 +46,15 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		labelIcons = Lists.newArrayList();
 
 		//Pro
-		LabelIcon labelIcon = new LabelIcon(11, this.guiLeft + 9, this.guiTop + 15, servant);
+		LabelIcon labelIcon = new LabelIcon(this, 11, this.guiLeft + 9, this.guiTop + 15, servant);
 		this.buttonList.add(labelIcon);
 		labelIcons.add(labelIcon);
 
-		this.buttonList.add(new LabelText(12, this.guiLeft + 38, this.guiTop + 18, servant));
+		this.buttonList.add(new LabelText(this, 12, this.guiLeft + 38, this.guiTop + 18, servant));
 
 		//Mode
 		//if (servant.getProfession().hasMode(servant)) {
-		LabelIcon labelIcon2 = new LabelIcon(13, this.guiLeft + 9, this.guiTop + 51, servant) {
+		LabelIcon labelIcon2 = new LabelIcon(this, 13, this.guiLeft + 9, this.guiTop + 51, servant) {
 
 			@Override
 			protected void preDrawButton() {
@@ -71,11 +71,17 @@ public class GuiServantProfession extends GuiSideTabContainer {
 				//if (!servant.getProfession().hasMode(servant)) return net.minecraft.client.Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
 				return this.servant.getMode().getIcon(servant);
 			}
+
+			@Override
+			protected String getHoveredToolTip() {
+				return "tooltip.change_mode";
+			}
+
 		}.setNormal(true);
 		this.buttonList.add(labelIcon2);
 		labelIcons.add(labelIcon2);
 
-		this.buttonList.add(new LabelText(14, this.guiLeft + 38, this.guiTop + 54, servant) {
+		this.buttonList.add(new LabelText(this, 14, this.guiLeft + 38, this.guiTop + 54, servant) {
 			@Override
 			public void preDrawButton() {
 				/*
@@ -91,11 +97,17 @@ public class GuiServantProfession extends GuiSideTabContainer {
 				//if (!servant.getProfession().hasMode(servant)) return "";
 				return this.servant.getMode().getModeDisplayName(servant);
 			}
+
+			@Override
+			protected String getHoveredToolTip() {
+				return "tooltip.change_mode";
+			}
+
 		}.setNormal(true));
 		//}
 
 		//Behavior
-		LabelIcon labelIcon3 = new LabelIcon(15, this.guiLeft + 9, this.guiTop + 87, servant) {
+		LabelIcon labelIcon3 = new LabelIcon(this, 15, this.guiLeft + 9, this.guiTop + 87, servant) {
 			@Override
 			protected TextureAtlasSprite getIcon() {
 
@@ -103,17 +115,27 @@ public class GuiServantProfession extends GuiSideTabContainer {
 				return this.servant.getBehavior().getIcon(servant);
 			}
 
+			@Override
+			protected String getHoveredToolTip() {
+				return "tooltip.change_behavior";
+			}
+
 		}.setNormal(true);
 
 		this.buttonList.add(labelIcon3);
 		labelIcons.add(labelIcon3);
 
-		this.buttonList.add(new LabelText(16, this.guiLeft + 38, this.guiTop + 90, servant) {
+		this.buttonList.add(new LabelText(this, 16, this.guiLeft + 38, this.guiTop + 90, servant) {
 
 			@Override
 			public String getLabelText() {
 				//if (!servant.getProfession().hasMode(servant)) return "";
 				return this.servant.getBehavior().getBehaviorDisplayName(servant);
+			}
+
+			@Override
+			protected String getHoveredToolTip() {
+				return "tooltip.change_behavior";
 			}
 
 		}.setNormal(true));
@@ -165,6 +187,24 @@ public class GuiServantProfession extends GuiSideTabContainer {
 
 		}
 
+		if (buttonID == 13 || buttonID == 14) {
+			//changeStage(Stage.Profession);
+
+			OpenGuiEntityId id = new OpenGuiEntityId(this.servant);
+
+			LSMPacketHandler.INSTANCE.sendToServer(new MessageOpenGuiId(11, id.getX()));
+
+		}
+
+		if (buttonID == 15 || buttonID == 16) {
+			//changeStage(Stage.Profession);
+
+			OpenGuiEntityId id = new OpenGuiEntityId(this.servant);
+
+			LSMPacketHandler.INSTANCE.sendToServer(new MessageOpenGuiId(12, id.getX()));
+
+		}
+
 	}
 
 	@Override
@@ -208,7 +248,7 @@ public class GuiServantProfession extends GuiSideTabContainer {
 		int i = this.guiLeft;
 		int j = this.guiTop;
 
-		this.drawGuiContainerBackgroundLayerHoveringText(mouseX - i, mouseY - j);
+		//this.drawGuiContainerBackgroundLayerHoveringText(mouseX - i, mouseY - j);
 
 	}
 

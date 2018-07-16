@@ -239,6 +239,19 @@ public class GuiServantBase extends InventoryEffectRenderer {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}
 
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+		super.renderHoveredToolTip(mouseX, mouseY);
+
+		//button
+		for (GuiButton button : this.buttonList) {
+			if (button instanceof GuiLSMButton && button.mousePressed(mc, mouseX, mouseY)) {
+				((GuiLSMButton) button).renderHoveredToolTip(mouseX, mouseY);
+			}
+		}
+
+	}
+
 	public ElementBase addElement(ElementBase element) {
 
 		elements.add(element);

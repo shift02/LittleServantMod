@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import littleservantmod.client.gui.ElementChangeProfession;
-import littleservantmod.client.gui.ElementChangeProfessionCurrent;
-import littleservantmod.client.gui.ElementChangeProfessionSelect;
+import littleservantmod.client.gui.ElementChangeMode;
+import littleservantmod.client.gui.ElementChangeModeCurrent;
+import littleservantmod.client.gui.ElementChangeModeSelect;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.packet.LSMPacketHandler;
-import littleservantmod.packet.MessageChangeProfession;
+import littleservantmod.packet.MessageChangeMode;
 import littleservantmod.packet.MessageOpenGuiId;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.gui.GuiButton;
@@ -18,19 +18,19 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.text.translation.I18n;
 
 /**
- * 職業を設定するGUI
+ * 職業のモードを設定するGUI
  * */
-public class GuiServantSelectProfession extends GuiServantSelect {
+public class GuiServantSelectMode extends GuiServantSelect {
 
 	private GuiButton buttonCancel;
 
 	private GuiButton buttonOk;
 
-	private ElementChangeProfessionCurrent current;
+	private ElementChangeModeCurrent current;
 
-	private List<ElementChangeProfession> elementChangeIcon = new ArrayList<>();
+	private List<ElementChangeMode> elementChangeIcon = new ArrayList<>();
 
-	public GuiServantSelectProfession(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
+	public GuiServantSelectMode(EntityLittleServant servant, InventoryPlayer playerInventory, Container inventorySlotsIn) {
 		super(servant, playerInventory, inventorySlotsIn);
 
 	}
@@ -49,15 +49,15 @@ public class GuiServantSelectProfession extends GuiServantSelect {
 		this.addButton(buttonOk).enabled = false;
 
 		//職業をセット
-		current = new ElementChangeProfessionCurrent(this, 26, 18, this.servant.getProfession(), this.servant, buttonOk);
+		current = new ElementChangeModeCurrent(this, 26, 18, this.servant.getMode(), this.servant, buttonOk);
 		this.addElement(current);
 
 		int countX = 0;
 		int countY = 0;
-		for (int i = 0; i < servant.getProfessions().length; i++) {
+		for (int i = 0; i < servant.getModes().length; i++) {
 
-			if (!servant.getProfessions()[i].isEnableProfession(servant)) continue;
-			ElementChangeProfessionSelect changeIcon = new ElementChangeProfessionSelect(this, 8 + 18 * countX, 40 + 18 * countY, servant.getProfessions()[i], this.servant, current);
+			if (!servant.getModes()[i].isEnableMode(servant)) continue;
+			ElementChangeModeSelect changeIcon = new ElementChangeModeSelect(this, 8 + 18 * countX, 40 + 18 * countY, servant.getModes()[i], this.servant, current);
 			this.addElement(changeIcon);
 
 			countX++;
@@ -79,7 +79,7 @@ public class GuiServantSelectProfession extends GuiServantSelect {
 		if (!button.enabled) return;
 
 		if (buttonID == 12) {
-			LSMPacketHandler.INSTANCE.sendToServer(new MessageChangeProfession(this.servant, this.current.getProfession()));
+			LSMPacketHandler.INSTANCE.sendToServer(new MessageChangeMode(this.servant, this.current.getMode()));
 		}
 
 		if (buttonID == 11 || buttonID == 12) {
@@ -94,7 +94,7 @@ public class GuiServantSelectProfession extends GuiServantSelect {
 
 	@Override
 	protected String getGUITitle() {
-		return "gui." + "change_profession" + ".name";
+		return "gui." + "change_mode" + ".name";
 	}
 
 	@Override
