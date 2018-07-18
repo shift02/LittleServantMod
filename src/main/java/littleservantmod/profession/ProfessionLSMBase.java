@@ -12,6 +12,7 @@ import littleservantmod.api.profession.ProfessionBase;
 import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import littleservantmod.profession.behavior.BehaviorEscort;
+import littleservantmod.profession.behavior.BehaviorFree;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -56,7 +57,7 @@ public abstract class ProfessionLSMBase extends ProfessionBase {
 		//Behavior
 		this.behaviorEscort = new BehaviorEscort().setIconHolder(iconEscort).setUnlocalizedName("behavior_escort").setRegistryName(kyeEscort);
 
-		this.behaviorFree = new BehaviorEscort().setIconHolder(iconFree).setUnlocalizedName("behavior_free").setRegistryName(kyeFree);
+		this.behaviorFree = new BehaviorFree().setIconHolder(iconFree).setUnlocalizedName("behavior_free").setRegistryName(kyeFree);
 
 	}
 

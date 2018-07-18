@@ -66,4 +66,8 @@ public abstract class BehaviorBase implements IBehavior {
 		return this;
 	}
 
+	@Override
+	public void startBehavior(IServant servant) {
+	};
+
 }

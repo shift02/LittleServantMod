@@ -9,6 +9,7 @@ import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import littleservantmod.entity.ai.EntityAIFollow;
+import littleservantmod.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.util.ResourceLocation;
@@ -37,6 +38,9 @@ public class ProfessionUnemployed extends ProfessionLSMBase {
 
 		//うさぎについていく
 		servant.addAI(500, new EntityAIFollow(servant.getEntityInstance(), EntityRabbit.class, 0.5D));
+
+		//ウロウロ
+		servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), 0.5D));
 
 		//うさぎを見る
 		servant.addAI(900, new EntityAIWatchClosest(servant.getEntityInstance(), EntityRabbit.class, 4.0F));

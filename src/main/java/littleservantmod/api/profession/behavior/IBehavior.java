@@ -26,4 +26,6 @@ public interface IBehavior {
 
 	public boolean isEnableBehavior(IServant servant);
 
+	public void startBehavior(IServant servant);
+
 }

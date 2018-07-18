@@ -290,6 +290,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 		mode.initAI(this);
 
 		behavior.initAI(this);
+		behavior.startBehavior(this);
 
 		//}
 

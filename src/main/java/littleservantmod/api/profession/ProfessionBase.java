@@ -2,7 +2,6 @@ package littleservantmod.api.profession;
 
 import littleservantmod.api.IServant;
 import littleservantmod.entity.ai.EntityAITempt;
-import littleservantmod.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -47,7 +46,7 @@ public abstract class ProfessionBase implements IProfession {
 		servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), defaultSpeed, Items.SUGAR, false));
 
 		//ウロウロ
-		servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), defaultSpeed));
+		//servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), defaultSpeed));
 
 		//プレイヤーを見る
 		servant.addAI(900, new EntityAIWatchClosest(servant.getEntityInstance(), EntityPlayer.class, 8.0F));
