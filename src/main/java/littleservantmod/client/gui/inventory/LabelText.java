@@ -122,7 +122,7 @@ public class LabelText extends GuiLSMButton {
 	}
 
 	protected String getHoveredToolTip() {
-		return "gui.change_profession";
+		return "tooltip.change_profession.name";
 	}
 
 }

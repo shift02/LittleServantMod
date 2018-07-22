@@ -143,24 +143,26 @@ public class GuiServantBase extends InventoryEffectRenderer {
 			}
 		}
 
-		addTooltips(tooltip);
-		drawTooltip(tooltip);
+		//addTooltips(tooltip);
+		//drawTooltip(tooltip);
 
 		RenderHelper.enableGUIStandardItemLighting();
 	}
 
-	public void addTooltips(List<String> tooltip) {
+	public void addTooltips(List<String> tooltip, int mouseX, int mouseY) {
 
 		ElementBase element = getElementAtPosition(mouseX, mouseY);
 
 		if (element != null) {
 			element.addTooltip(tooltip);
 		}
+
 	}
 
-	public void drawTooltip(List<String> list) {
+	public void drawTooltip(List<String> list, int mouseX, int mouseY) {
 
-		drawTooltipHoveringText(list, mouseX, mouseY, fontRenderer);
+		//drawTooltipHoveringText(list, mouseX, mouseY, fontRenderer);
+		this.drawHoveringText(list, mouseX, mouseY);
 		tooltip.clear();
 	}
 
@@ -249,6 +251,9 @@ public class GuiServantBase extends InventoryEffectRenderer {
 				((GuiLSMButton) button).renderHoveredToolTip(mouseX, mouseY);
 			}
 		}
+
+		addTooltips(tooltip, mouseX, mouseY);
+		drawTooltip(tooltip, mouseX, mouseY);
 
 	}
 

@@ -2,25 +2,21 @@ package littleservantmod.client.gui.inventory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import littleservantmod.client.gui.sidetab.SideTabBase;
 import littleservantmod.client.gui.sidetab.SideTabMaster;
 import littleservantmod.client.gui.sidetab.SideTabTracker;
 import littleservantmod.entity.EntityLittleServant;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.common.Loader;
 
 /**
  * サイドタブを追加
@@ -59,10 +55,11 @@ public class GuiSideTabContainer extends GuiServantBase {
 
 		super.drawGuiContainerForegroundLayer(x, y);
 
+		/*
 		if (!Loader.isModLoaded("NotEnoughItems") && mc.player.inventory.getItemStack() == null) {
 			addTooltips(tooltip);
 			drawTooltip(tooltip);
-		}
+		}*/
 
 	}
 
@@ -140,7 +137,9 @@ public class GuiSideTabContainer extends GuiServantBase {
 	}
 
 	@Override
-	public void addTooltips(List<String> tooltip) {
+	public void addTooltips(List<String> tooltip, int mouseX, int mouseY) {
+
+		super.addTooltips(tooltip, mouseX, mouseY);
 
 		SideTabBase tab = getTabAtPosition(mouseX, mouseY);
 
@@ -178,16 +177,18 @@ public class GuiSideTabContainer extends GuiServantBase {
 		return null;
 	}
 
+	/*
 	@Override
 	public void drawTooltip(List<String> list) {
-
-		drawTooltipHoveringText(list, mouseX, mouseY, fontRenderer);
-		tooltip.clear();
+	
+		super.drawTooltip(list);
+		//drawTooltipHoveringText(list, mouseX, mouseY, fontRenderer);
+		//tooltip.clear();
 	}
-
+	
 	@Override
 	protected void drawTooltipHoveringText(List list, int x, int y, FontRenderer font) {
-
+	
 		if (list == null || list.isEmpty()) {
 			return;
 		}
@@ -196,11 +197,11 @@ public class GuiSideTabContainer extends GuiServantBase {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		int k = 0;
 		Iterator iterator = list.iterator();
-
+	
 		while (iterator.hasNext()) {
 			String s = (String) iterator.next();
 			int l = font.getStringWidth(s);
-
+	
 			if (l > k) {
 				k = l;
 			}
@@ -208,7 +209,7 @@ public class GuiSideTabContainer extends GuiServantBase {
 		int i1 = x + 12;
 		int j1 = y - 12;
 		int k1 = 8;
-
+	
 		if (list.size() > 1) {
 			k1 += 2 + (list.size() - 1) * 10;
 		}
@@ -232,11 +233,11 @@ public class GuiSideTabContainer extends GuiServantBase {
 		this.drawGradientRect(i1 + k + 2, j1 - 3 + 1, i1 + k + 3, j1 + k1 + 3 - 1, i2, j2);
 		this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 - 3 + 1, i2, i2);
 		this.drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
-
+	
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			String s1 = (String) list.get(k2);
 			font.drawStringWithShadow(s1, i1, j1, -1);
-
+	
 			if (k2 == 0) {
 				j1 += 2;
 			}
@@ -247,7 +248,7 @@ public class GuiSideTabContainer extends GuiServantBase {
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-	}
+	}*/
 
 	public static String localize(String key) {
 

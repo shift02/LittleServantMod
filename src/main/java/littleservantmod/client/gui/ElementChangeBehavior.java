@@ -26,7 +26,7 @@ public class ElementChangeBehavior extends ElementIcon {
 
 	@Override
 	public void addTooltip(List<String> list) {
-		list.add("sssss");
+		list.add(behavior.getBehaviorDisplayName(servant));
 	}
 
 	@Override

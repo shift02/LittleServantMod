@@ -101,5 +101,4 @@ public class GuiServantSelectProfession extends GuiServantSelect {
 	protected String getCurrentTitle() {
 		return this.current.getDisplayName();
 	}
-
 }

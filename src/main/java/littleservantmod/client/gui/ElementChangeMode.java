@@ -26,7 +26,7 @@ public class ElementChangeMode extends ElementIcon {
 
 	@Override
 	public void addTooltip(List<String> list) {
-		list.add("sssss");
+		list.add(mode.getModeDisplayName(servant));
 	}
 
 	@Override
