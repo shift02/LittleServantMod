@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -18,6 +19,8 @@ public class EntityLittleServant extends EntityLittleServantProfession {
 
 	public EntityLittleServant(World worldIn) {
 		super(worldIn);
+
+		((PathNavigateGround) this.getNavigator()).setBreakDoors(true);
 
 	}
 

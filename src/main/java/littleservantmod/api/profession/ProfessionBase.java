@@ -1,6 +1,7 @@
 package littleservantmod.api.profession;
 
 import littleservantmod.api.IServant;
+import littleservantmod.entity.ai.EntityAIOpenDoor2;
 import littleservantmod.entity.ai.EntityAITempt;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -41,6 +42,9 @@ public abstract class ProfessionBase implements IProfession {
 
 		//泳ぐ
 		servant.addAI(100, new EntityAISwimming(servant.getEntityInstance()));
+
+		//扉を開ける
+		servant.addAI(200, new EntityAIOpenDoor2(servant.getEntityInstance(), true));
 
 		//砂糖についてくる
 		servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), defaultSpeed, Items.SUGAR, false));
