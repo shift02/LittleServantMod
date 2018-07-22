@@ -1,6 +1,7 @@
 package littleservantmod.client.gui.sidetab;
 
 import littleservantmod.client.gui.inventory.GuiSideTabContainer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -23,8 +24,13 @@ public class SideTabMaster extends SideTabBase {
 	}
 
 	@Override
-	public ItemStack getTabIcon() {
+	public ItemStack getTabIconFromItem() {
 		return new ItemStack(Items.CAKE);
+	}
+
+	@Override
+	public TextureAtlasSprite getTabIcon() {
+		return null;
 	}
 
 	@Override

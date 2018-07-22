@@ -15,8 +15,13 @@ gui.change_profession.name=Profession
 gui.button_cancel.name=Cancel
 gui.button_ok.name=Done
 
+
 sidetab.master_info.name=Master Info
 sidetab.master_name.name=Master
+
+sidetab.profession_info.name=Profession Info
+sidetab.profession_name.name=Profession
+
 
 toptab.home.name=Home
 toptab.profession.name=Profession

@@ -6,6 +6,8 @@ import littleservantmod.LittleServantMod;
 import littleservantmod.client.gui.ElementBase;
 import littleservantmod.client.gui.inventory.GuiSideTabContainer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -107,6 +109,20 @@ public abstract class SideTabBase extends ElementBase {
 		//gui.drawTexturedModelRectFromIcon(1, 1, icon, 16, 16);
 	}
 
+	protected void drawTabIcon(TextureAtlasSprite icon) {
+
+		int offsetX = 2;
+
+		//gui.draw
+
+		((GuiSideTabContainer) gui).mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		((GuiSideTabContainer) gui).drawTexturedModalRect(posX + offsetX + 1, posY + 3 + 1, icon, 16, 16);
+
+		//gui.d
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0F);
+		//gui.drawTexturedModelRectFromIcon(1, 1, icon, 16, 16);
+	}
+
 	public boolean isFullyOpened() {
 
 		return currentWidth >= maxWidth;
@@ -138,11 +154,14 @@ public abstract class SideTabBase extends ElementBase {
 		this.posY = y;
 
 		this.drawBackground();
-		this.drawTabIcon(getTabIcon());
+		if (getTabIconFromItem() != null) this.drawTabIcon(getTabIconFromItem());
+		if (getTabIcon() != null) this.drawTabIcon(getTabIcon());
 
 		draw();
 	}
 
-	public abstract ItemStack getTabIcon();
+	public abstract ItemStack getTabIconFromItem();
+
+	public abstract TextureAtlasSprite getTabIcon();
 
 }

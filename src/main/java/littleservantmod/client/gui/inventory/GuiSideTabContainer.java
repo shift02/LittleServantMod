@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import littleservantmod.client.gui.sidetab.SideTabBase;
 import littleservantmod.client.gui.sidetab.SideTabMaster;
+import littleservantmod.client.gui.sidetab.SideTabProfession;
 import littleservantmod.client.gui.sidetab.SideTabTracker;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.renderer.GlStateManager;
@@ -44,6 +45,7 @@ public class GuiSideTabContainer extends GuiServantBase {
 		tabs.clear();
 
 		this.addTab(new SideTabMaster(this));
+		this.addTab(new SideTabProfession(this));
 
 		//Init
 		drawSideTabs();
