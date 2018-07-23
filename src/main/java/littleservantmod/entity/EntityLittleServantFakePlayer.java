@@ -1,17 +1,9 @@
 package littleservantmod.entity;
 
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
-
 import littleservantmod.ForgeLSMHooks;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.IEntityMultiPart;
-import net.minecraft.entity.MultiPartEntityPart;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -27,14 +19,18 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketAnimation;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
-import net.minecraft.util.CooldownTracker;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * サーヴァントにプレイヤーと同じ動作をできるようにするクラス <br />
@@ -48,8 +44,9 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 
 	/** Inventory of the player */
 	public InventoryServant inventory;
+	private IItemHandler inventoryHandler;
 
-	protected static final DataParameter<Integer> CURRENT_ITEN = EntityDataManager.<Integer> createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> CURRENT_ITEN = EntityDataManager.createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
 
 	public static final net.minecraft.entity.ai.attributes.IAttribute REACH_DISTANCE = new net.minecraft.entity.ai.attributes.RangedAttribute(null, "generic.reachDistance", 5.0D, 0.0D, 1024.0D).setShouldWatch(true);
 
@@ -69,7 +66,8 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		super.entityInit();
 
 		if (!world.isRemote) this.player = FakePlayerFactory.getMinecraft((WorldServer) world);
-		inventory = new InventoryServant((EntityLittleServant) this, player);
+		this.inventory = new InventoryServant((EntityLittleServant) this, player);
+		this.inventoryHandler = new InvWrapper(this.inventory);
 		this.dataManager.register(CURRENT_ITEN, 0);
 
 	}
@@ -120,7 +118,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		} else if (slotIn == EntityEquipmentSlot.OFFHAND) {
 			return this.inventory.offHandInventory.get(0);
 		} else {
-			return slotIn.getSlotType() == EntityEquipmentSlot.Type.ARMOR ? (ItemStack) this.inventory.armorInventory.get(slotIn.getIndex()) : ItemStack.EMPTY;
+			return slotIn.getSlotType() == EntityEquipmentSlot.Type.ARMOR ? this.inventory.armorInventory.get(slotIn.getIndex()) : ItemStack.EMPTY;
 		}
 	}
 
@@ -241,7 +239,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 					i = i + EnchantmentHelper.getKnockbackModifier(this);
 
 					if (this.isSprinting() && flag) {
-						this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, this.getSoundCategory(), 1.0F, 1.0F);
+						this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, this.getSoundCategory(), 1.0F, 1.0F);
 						++i;
 						flag1 = true;
 					}
@@ -311,7 +309,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 								}
 							}
 
-							this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, this.getSoundCategory(), 1.0F, 1.0F);
+							this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, this.getSoundCategory(), 1.0F, 1.0F);
 							this.spawnSweepParticles();
 						}
 
@@ -324,15 +322,15 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 						}
 
 						if (flag2) {
-							this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, this.getSoundCategory(), 1.0F, 1.0F);
+							this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, this.getSoundCategory(), 1.0F, 1.0F);
 							this.onCriticalHit(targetEntity);
 						}
 
 						if (!flag2 && !flag3) {
 							if (flag) {
-								this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, this.getSoundCategory(), 1.0F, 1.0F);
+								this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, this.getSoundCategory(), 1.0F, 1.0F);
 							} else {
-								this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, this.getSoundCategory(), 1.0F, 1.0F);
+								this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, this.getSoundCategory(), 1.0F, 1.0F);
 							}
 						}
 
@@ -385,7 +383,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 
 						//this.addExhaustion(0.1F);
 					} else {
-						this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, this.getSoundCategory(), 1.0F, 1.0F);
+						this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, this.getSoundCategory(), 1.0F, 1.0F);
 
 						if (flag4) {
 							targetEntity.extinguish();
@@ -475,4 +473,18 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Nullable
+	@Override
+	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing == null) {
+			return (T) inventoryHandler;
+		}
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+	}
 }
