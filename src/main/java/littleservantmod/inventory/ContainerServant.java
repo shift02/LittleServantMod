@@ -1,7 +1,5 @@
 package littleservantmod.inventory;
 
-import javax.annotation.Nullable;
-
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +11,9 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * GUIのサーバー側の処理
@@ -57,7 +58,7 @@ public class ContainerServant extends ContainerServantBase {
 				@Override
 				public boolean canTakeStack(EntityPlayer playerIn) {
 					ItemStack itemstack = this.getStack();
-					return !itemstack.isEmpty() && !playerIn.isCreative() && EnchantmentHelper.hasBindingCurse(itemstack) ? false : super.canTakeStack(playerIn);
+					return (itemstack.isEmpty() || playerIn.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.canTakeStack(playerIn);
 				}
 
 				@Override
@@ -93,6 +94,38 @@ public class ContainerServant extends ContainerServantBase {
 			this.addSlotToContainer(new Slot(playerInventory, i1, 8 + i1 * 18, 142 + 42));
 		}
 
+	}
+
+	@Override
+	@Nonnull
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+		Slot slot = this.inventorySlots.get(index);
+
+		if (slot == null || !slot.getHasStack()) {
+			return ItemStack.EMPTY;
+		}
+
+		ItemStack stack = slot.getStack();
+		int servantInvSize = 21;
+		int playerInvSize = 36;
+
+		// Servant -> Player
+		if (index < servantInvSize && !mergeItemStack(stack, servantInvSize, servantInvSize + playerInvSize, true))
+			return ItemStack.EMPTY;
+		// Player -> Servant
+		if (index >= servantInvSize && index < servantInvSize + playerInvSize && !mergeItemStack(stack, 0, servantInvSize, false))
+			return ItemStack.EMPTY;
+		// Others
+		if (!mergeItemStack(stack, 0, servantInvSize + playerInvSize, false))
+			return ItemStack.EMPTY;
+
+		if (stack.isEmpty()) {
+			slot.putStack(ItemStack.EMPTY);
+		} else {
+			slot.onSlotChanged();
+		}
+
+		return stack.copy();
 	}
 
 	@Override
