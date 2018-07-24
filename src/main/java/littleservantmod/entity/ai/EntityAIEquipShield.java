@@ -4,6 +4,7 @@ import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 import java.util.function.Predicate;
 
@@ -17,7 +18,7 @@ public class EntityAIEquipShield extends EntityAIEquip {
 	private static final Predicate<ItemStack> IS_SHIELD = SHIELD::isItemEqualIgnoreDurability;
 
 	public EntityAIEquipShield(EntityLittleServant servant) {
-		super(servant, EntityEquipmentSlot.OFFHAND, IS_SHIELD);
+		super(servant, EnumHand.OFF_HAND, IS_SHIELD);
 	}
 
 }
