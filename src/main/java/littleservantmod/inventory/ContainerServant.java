@@ -77,10 +77,22 @@ public class ContainerServant extends ContainerServantBase {
 			}
 		}
 		//頭の部分
-		this.addSlotToContainer(new Slot(servantInventoryIn, 19, 8 + 8 * 18, 84 - 8 + 1 * 18));
+		this.addSlotToContainer(new Slot(servantInventoryIn, 19, 8 + 8 * 18, 84 - 8 + 1 * 18) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public String getSlotTexture() {
+				return ItemArmor.EMPTY_SLOT_NAMES[3];
+			}
+		});
 
 		//オフハンドの部分
-		this.addSlotToContainer(new Slot(servantInventoryIn, 20, 8 + 7 * 18, 84 - 8 + 1 * 18));
+		this.addSlotToContainer(new Slot(servantInventoryIn, 20, 8 + 7 * 18, 84 - 8 + 1 * 18) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public String getSlotTexture() {
+				return "minecraft:items/empty_armor_slot_shield";
+			}
+		});
 
 		//プレイヤーのアイテム欄
 		for (int l = 0; l < 3; ++l) {
