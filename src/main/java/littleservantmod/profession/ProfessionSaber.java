@@ -3,10 +3,15 @@ package littleservantmod.profession;
 import littleservantmod.api.IServant;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.ai.EntityAIAttackMelee2;
-import littleservantmod.entity.ai.EntityAIEquipShield;
+import littleservantmod.entity.ai.EntityAIEquip;
 import littleservantmod.entity.ai.EntityAIEquipTool;
 import littleservantmod.entity.ai.target.EntityAINearestAttackableTarget2;
 import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+
+import java.util.function.Predicate;
 
 public class ProfessionSaber extends ProfessionLSMBase {
 
@@ -15,10 +20,10 @@ public class ProfessionSaber extends ProfessionLSMBase {
 
 		super.initAI(servant);
 
-		//シールドを持っているときは持ち変える
-		servant.addAI(200, new EntityAIEquipShield((EntityLittleServant) servant.getEntityInstance()));
+		//シールドかトーテムを持っているときは持ち替える
+		servant.addAI(200, new EntityAIEquip(servant.getEntityInstance(), EntityEquipmentSlot.OFFHAND, ((Predicate<ItemStack>) new ItemStack(Items.TOTEM_OF_UNDYING)::isItemEqual).or(new ItemStack(Items.SHIELD)::isItemEqualIgnoreDurability)));
 
-		//剣を持ち帰る
+		//剣に持ち替える
 		servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.saber));
 
 		//攻撃
