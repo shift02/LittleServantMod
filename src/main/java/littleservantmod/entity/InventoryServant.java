@@ -41,8 +41,8 @@ public class InventoryServant implements IInventory {
 	/** An array of 4 item stacks containing the currently worn armor pieces. */
 	public final NonNullList<ItemStack> armorInventory = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY);
 	private final List<NonNullList<ItemStack>> allInventories;
-	/** The index of the currently held item (0-8). */
-	public int currentItem;
+
+	public int[] currentIndex = new int[]{0, -1};
 	/** The player whose inventory this is. */
 	public EntityLittleServant servant;
 	public EntityPlayer player;
@@ -57,18 +57,10 @@ public class InventoryServant implements IInventory {
 		this.player = player;
 	}
 
-	/**
-	 * Returns the item stack currently held by the player.
-	 */
-	public ItemStack getCurrentItem() {
-		return isHotbar(this.currentItem) ? (ItemStack) this.mainInventory.get(this.currentItem) : ItemStack.EMPTY;
-	}
-
-	/**
-	 * Get the size of the player hotbar inventory
-	 */
-	public static int getHotbarSize() {
-		return 18;
+	public ItemStack getItemInHand(EnumHand hand) {
+		int index = this.currentIndex[hand.ordinal()];
+		if (index < 0 || index >= this.mainInventory.size()) return ItemStack.EMPTY;
+		return this.mainInventory.get(index);
 	}
 
 	private boolean canMergeStacks(ItemStack stack1, ItemStack stack2) {
@@ -95,43 +87,6 @@ public class InventoryServant implements IInventory {
 		return -1;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void setPickedItemStack(ItemStack stack) {
-		int i = this.getSlotFor(stack);
-
-		if (isHotbar(i)) {
-			this.currentItem = i;
-		} else {
-			if (i == -1) {
-				this.currentItem = this.getBestHotbarSlot();
-
-				if (!this.mainInventory.get(this.currentItem).isEmpty()) {
-					int j = this.getFirstEmptyStack();
-
-					if (j != -1) {
-						this.mainInventory.set(j, this.mainInventory.get(this.currentItem));
-					}
-				}
-
-				this.mainInventory.set(this.currentItem, stack);
-			} else {
-				this.pickItem(i);
-			}
-		}
-	}
-
-	public void pickItem(int index) {
-		this.currentItem = this.getBestHotbarSlot();
-		ItemStack itemstack = this.mainInventory.get(this.currentItem);
-		this.mainInventory.set(this.currentItem, this.mainInventory.get(index));
-		this.mainInventory.set(index, itemstack);
-	}
-
-	public static boolean isHotbar(int index) {
-		//サーヴァントは強いので持ち物全てを道具として使える
-		return index >= 0 && index < 18;//9;
-	}
-
 	/**
 	 * Finds the stack or an equivalent one in the main inventory
 	 */
@@ -156,48 +111,6 @@ public class InventoryServant implements IInventory {
 		}
 
 		return -1;
-	}
-
-	public int getBestHotbarSlot() {
-		for (int i = 0; i < 9; ++i) {
-			int j = (this.currentItem + i) % 9;
-
-			if (this.mainInventory.get(j).isEmpty()) {
-				return j;
-			}
-		}
-
-		for (int k = 0; k < 9; ++k) {
-			int l = (this.currentItem + k) % 9;
-
-			if (!this.mainInventory.get(l).isItemEnchanted()) {
-				return l;
-			}
-		}
-
-		return this.currentItem;
-	}
-
-	/**
-	 * Switch the current item to the next one or the previous one
-	 */
-	@SideOnly(Side.CLIENT)
-	public void changeCurrentItem(int direction) {
-		if (direction > 0) {
-			direction = 1;
-		}
-
-		if (direction < 0) {
-			direction = -1;
-		}
-
-		for (this.currentItem -= direction; this.currentItem < 0; this.currentItem += 9) {
-			;
-		}
-
-		while (this.currentItem >= 9) {
-			this.currentItem -= 9;
-		}
 	}
 
 	/**
@@ -319,10 +232,10 @@ public class InventoryServant implements IInventory {
 	 * stores an itemstack in the users inventory
 	 */
 	public int storeItemStack(ItemStack itemStackIn) {
-		if (this.canMergeStacks(this.getStackInSlot(this.currentItem), itemStackIn)) {
-			return this.currentItem;
-		} else if (this.canMergeStacks(this.getStackInSlot(40), itemStackIn)) {
-			return 40;
+		if (this.canMergeStacks(this.getItemInHand(EnumHand.MAIN_HAND), itemStackIn)) {
+			return this.currentIndex[EnumHand.MAIN_HAND.ordinal()];
+		} else if (this.canMergeStacks(this.getItemInHand(EnumHand.OFF_HAND), itemStackIn)) {
+			return this.currentIndex[EnumHand.OFF_HAND.ordinal()];
 		} else {
 			for (int i = 0; i < this.mainInventory.size(); ++i) {
 				if (this.canMergeStacks(this.mainInventory.get(i), itemStackIn)) {
@@ -342,7 +255,7 @@ public class InventoryServant implements IInventory {
 		for (NonNullList<ItemStack> nonnulllist : this.allInventories) {
 			for (int i = 0; i < nonnulllist.size(); ++i) {
 				if (!nonnulllist.get(i).isEmpty()) {
-					nonnulllist.get(i).updateAnimation(this.servant.world, this.servant, i, this.currentItem == i);
+					nonnulllist.get(i).updateAnimation(this.servant.world, this.servant, i, this.currentIndex[EnumHand.MAIN_HAND.ordinal()] == i);
 				}
 			}
 		}
@@ -524,8 +437,8 @@ public class InventoryServant implements IInventory {
 	public float getDestroySpeed(IBlockState state) {
 		float f = 1.0F;
 
-		if (!this.mainInventory.get(this.currentItem).isEmpty()) {
-			f *= this.mainInventory.get(this.currentItem).getDestroySpeed(state);
+		if (!this.getItemInHand(EnumHand.MAIN_HAND).isEmpty()) {
+			f *= this.getItemInHand(EnumHand.MAIN_HAND).getDestroySpeed(state);
 		}
 
 		return f;
@@ -661,8 +574,8 @@ public class InventoryServant implements IInventory {
 		if (state.getMaterial().isToolNotRequired()) {
 			return true;
 		} else {
-			ItemStack itemstack = this.getStackInSlot(this.currentItem);
-			return !itemstack.isEmpty() ? itemstack.canHarvestBlock(state) : false;
+			ItemStack itemstack = this.getItemInHand(EnumHand.MAIN_HAND);
+			return !itemstack.isEmpty() && itemstack.canHarvestBlock(state);
 		}
 	}
 
@@ -801,7 +714,7 @@ public class InventoryServant implements IInventory {
 			this.setInventorySlotContents(i, servantInventory.getStackInSlot(i));
 		}
 
-		this.currentItem = playerInventory.currentItem;
+		this.currentIndex = servantInventory.currentIndex;
 	}
 
 	@Override

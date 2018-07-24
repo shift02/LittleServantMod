@@ -55,7 +55,8 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	public InventoryServant inventory;
 	private IItemHandler inventoryHandler;
 
-	protected static final DataParameter<Integer> CURRENT_ITEN = EntityDataManager.createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> MAIN_HAND_ITEM = EntityDataManager.createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> OFF_HAND_ITEM = EntityDataManager.createKey(EntityLittleServantBase.class, DataSerializers.VARINT);
 
 	public static final net.minecraft.entity.ai.attributes.IAttribute REACH_DISTANCE = new net.minecraft.entity.ai.attributes.RangedAttribute(null, "generic.reachDistance", 5.0D, 0.0D, 1024.0D).setShouldWatch(true);
 
@@ -77,7 +78,8 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		if (!world.isRemote) this.player = FakePlayerFactory.getMinecraft((WorldServer) world);
 		this.inventory = new InventoryServant((EntityLittleServant) this, player);
 		this.inventoryHandler = new InvWrapper(this.inventory);
-		this.dataManager.register(CURRENT_ITEN, 0);
+		this.dataManager.register(MAIN_HAND_ITEM, this.inventory.currentIndex[0]);
+		this.dataManager.register(OFF_HAND_ITEM, this.inventory.currentIndex[1]);
 
 	}
 
@@ -122,12 +124,10 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	 * */
 	@Override
 	public ItemStack getItemStackFromSlot(EntityEquipmentSlot slotIn) {
-		if (slotIn == EntityEquipmentSlot.MAINHAND) {
-			return this.inventory.getCurrentItem();
-		} else if (slotIn == EntityEquipmentSlot.OFFHAND) {
-			return this.inventory.offHandInventory.get(0);
-		} else {
-			return slotIn.getSlotType() == EntityEquipmentSlot.Type.ARMOR ? this.inventory.armorInventory.get(slotIn.getIndex()) : ItemStack.EMPTY;
+		switch (slotIn.getSlotType()) {
+			case HAND: return this.inventory.getItemInHand(slotIn.getIndex() == 0 ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
+			case ARMOR: return this.inventory.armorInventory.get(slotIn.getIndex());
+			default: return ItemStack.EMPTY;
 		}
 	}
 
@@ -136,15 +136,14 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 	 */
 	@Override
 	public void setItemStackToSlot(EntityEquipmentSlot slotIn, ItemStack stack) {
-		if (slotIn == EntityEquipmentSlot.MAINHAND) {
-			this.playEquipSound(stack);
-			this.inventory.mainInventory.set(this.inventory.currentItem, stack);
-		} else if (slotIn == EntityEquipmentSlot.OFFHAND) {
-			this.playEquipSound(stack);
-			this.inventory.offHandInventory.set(0, stack);
-		} else if (slotIn.getSlotType() == EntityEquipmentSlot.Type.ARMOR) {
-			this.playEquipSound(stack);
-			this.inventory.armorInventory.set(slotIn.getIndex(), stack);
+		switch (slotIn.getSlotType()){
+			case HAND:
+				this.playEquipSound(stack);
+				this.inventory.mainInventory.set(this.inventory.currentIndex[slotIn.getIndex()], stack);
+				break;
+			case ARMOR:
+				this.playEquipSound(stack);
+				this.inventory.armorInventory.set(slotIn.getIndex(), stack);
 		}
 	}
 
@@ -443,22 +442,32 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		return this.cooldownTracker;
 	}
 
-	public int getCurrentItem() {
-		return this.dataManager.get(CURRENT_ITEN);
+	public int[] getItemsInHand(){
+		return new int[]{getItemInHand(EnumHand.MAIN_HAND),getItemInHand(EnumHand.OFF_HAND)};
 	}
 
-	public void setCurrentItem(int currentItem) {
-		this.inventory.currentItem = currentItem;
-		this.dataManager.set(CURRENT_ITEN, currentItem);
+	public int getItemInHand(EnumHand hand) {
+		return this.dataManager.get(hand == EnumHand.MAIN_HAND ? MAIN_HAND_ITEM : OFF_HAND_ITEM);
+	}
+
+	public void setItemInHand(int index, EnumHand hand) {
+		this.inventory.currentIndex[hand.ordinal()] = index;
+		this.dataManager.set(hand == EnumHand.MAIN_HAND ? MAIN_HAND_ITEM : OFF_HAND_ITEM, index);
 	}
 
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		super.notifyDataManagerChange(key);
 
-		if (CURRENT_ITEN.equals(key) && this.world.isRemote) {
+		if (MAIN_HAND_ITEM.equals(key) && this.world.isRemote) {
 
-			this.inventory.currentItem = getCurrentItem();
+			this.inventory.currentIndex[EnumHand.MAIN_HAND.ordinal()] = getItemInHand(EnumHand.MAIN_HAND);
+
+		}
+
+		if (OFF_HAND_ITEM.equals(key) && this.world.isRemote) {
+
+			this.inventory.currentIndex[EnumHand.OFF_HAND.ordinal()] = getItemInHand(EnumHand.OFF_HAND);
 
 		}
 
@@ -469,7 +478,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		super.readEntityFromNBT(compound);
 		NBTTagList nbttaglist = compound.getTagList("Inventory", 10);
 		this.inventory.readFromNBT(nbttaglist);
-		this.inventory.currentItem = compound.getInteger("SelectedItemSlot");
+		this.inventory.currentIndex = compound.getIntArray("InHandIndexes");
 
 	}
 
@@ -478,7 +487,8 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 		super.writeEntityToNBT(compound);
 		compound.setTag("Inventory", this.inventory.writeToNBT(new NBTTagList()));
 		//		compound.setInteger("SelectedItemSlot", this.inventory.currentItem);
-		compound.setInteger("SelectedItemSlot", this.getCurrentItem());
+		//      compound.setInteger("SelectedItemSlot", this.getCurrentItem());
+		compound.setIntArray("InHandIndexes", this.getItemsInHand());
 
 	}
 

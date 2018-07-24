@@ -115,8 +115,8 @@ public class GuiServantInventory extends GuiSideTabContainer {
 		int i = this.guiLeft;
 		int j = this.guiTop;
 
-		int i1 = 6 + 18 * (this.servant.inventory.currentItem % 9);
-		int ij = 74 + 18 * (this.servant.inventory.currentItem / 9);
+		int i1 = 6 + 18 * (this.servant.inventory.currentIndex[0] % 9);
+		int ij = 74 + 18 * (this.servant.inventory.currentIndex[0] / 9);
 
 		this.drawTexturedModalRect(i + i1, j + ij, 176, 0, 20, 20);
 
