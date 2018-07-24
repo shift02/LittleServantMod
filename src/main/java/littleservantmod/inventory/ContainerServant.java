@@ -27,7 +27,7 @@ public class ContainerServant extends ContainerServantBase {
 		super(playerInventory, servantInventoryIn, servantIn);
 
 		//Main size
-		int slotIndex = 15;
+		int slotIndex = 16;
 
 		//装備 (Servantは小さいので帽子が不要)
 		for (int k = 0; k < 3; ++k) {
@@ -73,14 +73,11 @@ public class ContainerServant extends ContainerServantBase {
 		//サーヴァントのアイテム欄
 		for (int l = 0; l < 2; ++l) {
 			for (int j1 = 0; j1 < 9; ++j1) {
-				if (l != 1 || j1 < 7) this.addSlotToContainer(new Slot(servantInventoryIn, j1 + l * 9, 8 + j1 * 18, 84 - 8 + l * 18));
+				if (l != 1 || j1 < 8) this.addSlotToContainer(new Slot(servantInventoryIn, j1 + l * 9, 8 + j1 * 18, 84 - 8 + l * 18));
 			}
 		}
 		//頭の部分
-		this.addSlotToContainer(new Slot(servantInventoryIn, 19, 8 + 8 * 18, 84 - 8 + 1 * 18));
-
-		//オフハンドの部分
-		this.addSlotToContainer(new Slot(servantInventoryIn, 20, 8 + 7 * 18, 84 - 8 + 1 * 18));
+		this.addSlotToContainer(new Slot(servantInventoryIn, 20, 8 + 8 * 18, 84 - 8 + 1 * 18));
 
 		//プレイヤーのアイテム欄
 		for (int l = 0; l < 3; ++l) {
