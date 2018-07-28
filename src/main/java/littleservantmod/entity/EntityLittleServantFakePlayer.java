@@ -1,6 +1,10 @@
 package littleservantmod.entity;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.google.common.collect.Lists;
+
 import littleservantmod.ForgeLSMHooks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -38,16 +42,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 /**
  * サーヴァントにプレイヤーと同じ動作をできるようにするクラス <br />
  * プレイヤー由来の処理もここに
  * @author shift02
  *
  */
-public abstract class EntityLittleServantFakePlayer extends EntityLittleServantBase {
+public abstract class EntityLittleServantFakePlayer extends EntityLittleServantBlock {
 
 	public EntityPlayer player;
 

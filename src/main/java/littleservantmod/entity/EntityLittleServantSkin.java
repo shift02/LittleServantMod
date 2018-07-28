@@ -12,6 +12,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
+/**
+ * サーヴァントの見た目を管理する
+ * */
 public class EntityLittleServantSkin extends EntityLittleServantProfession {
 
 	private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid.png");
