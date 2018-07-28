@@ -2,9 +2,12 @@ package littleservantmod.client.renderer.entity;
 
 import littleservantmod.LittleServantMod;
 import littleservantmod.client.model.ModelLittleServantBase;
+import littleservantmod.client.model.ModelLittleServantButler;
+import littleservantmod.client.model.ModelLittleServantMaid;
 import littleservantmod.client.renderer.entity.layers.LayerCustomHead;
 import littleservantmod.client.renderer.entity.layers.LayerHeldItem;
 import littleservantmod.entity.EntityLittleServant;
+import littleservantmod.entity.EntityLittleServantSkin;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -18,8 +21,15 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
 	private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid.png");
 	private static final ResourceLocation TAMED_MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid_tamed.png");
 
+	private static final ResourceLocation BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler.png");
+	private static final ResourceLocation TAMED_BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler_tamed.png");
+
+	public static final ModelLittleServantBase butler = new ModelLittleServantButler(0.0F, false);
+	public static final ModelLittleServantBase maid = new ModelLittleServantMaid(0.0F, false);
+
 	public RenderEntityLittleServant(RenderManager renderManagerIn) {
-		super(renderManagerIn, new ModelLittleServantBase(0.0F, false), 0.5F);
+		//super(renderManagerIn, new ModelLittleServantBase(0.0F, false), 0.5F);
+		super(renderManagerIn, butler, 0.5F);
 
 		this.addLayer(new LayerHeldItem(this));
 		this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
@@ -29,7 +39,10 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
 	@Override
 	public void doRender(EntityLittleServant entity, double x, double y, double z, float entityYaw, float partialTicks) {
 
+		this.mainModel = entity.getSkin() == EntityLittleServantSkin.SKIN_STEVE ? maid : butler;
+
 		setModelVisibilities(entity);
+
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}
 
@@ -107,11 +120,8 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
 	@Override
 	protected ResourceLocation getEntityTexture(EntityLittleServant entity) {
 
-		if (entity.isTamed()) {
-			return TAMED_MAID_TEXTURES;
-		}
+		return entity.getEntityTexture(entity);
 
-		return MAID_TEXTURES;
 	}
 
 	@Override

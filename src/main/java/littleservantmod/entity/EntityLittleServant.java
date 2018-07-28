@@ -13,7 +13,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityLittleServant extends EntityLittleServantProfession {
+public class EntityLittleServant extends EntityLittleServantSkin {
 
 	public boolean isGui = false;
 
