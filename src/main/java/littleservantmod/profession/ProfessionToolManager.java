@@ -9,6 +9,7 @@ import littleservantmod.LittleServantMod;
 import littleservantmod.api.profession.IProfessionTool;
 import littleservantmod.api.profession.IProfessionToolManager;
 import littleservantmod.api.profession.ProfessionToolBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -31,6 +32,8 @@ public class ProfessionToolManager implements IProfessionToolManager {
 
 	public static ResourceLocation ripper = new ResourceLocation(LittleServantMod.MOD_ID, "ripper");
 
+	public static ResourceLocation torcher = new ResourceLocation(LittleServantMod.MOD_ID, "torcher");
+
 	public ProfessionToolManager() {
 
 		//バニラ
@@ -46,6 +49,9 @@ public class ProfessionToolManager implements IProfessionToolManager {
 
 		//毛刈り兵
 		addProfessionTool(ripper, new ProfessionToolBase(new ItemStack(Items.SHEARS)));
+
+		//たいまつ兵
+		addProfessionTool(torcher, new ProfessionToolBase(new ItemStack(Blocks.TORCH)));
 
 	}
 
