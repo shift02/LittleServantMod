@@ -10,7 +10,7 @@ public abstract class EntityLittleServantBlock extends EntityLittleServantBase {
 	public final EntityAITasks targetBlockTasks;
 
 	/** The active target the Task system uses for tracking */
-	private BlockPos useTargetBlock;
+	private BlockPos useTargetBlock = BlockPos.ORIGIN;
 
 	public EntityLittleServantBlock(World worldIn) {
 		super(worldIn);
@@ -27,6 +27,14 @@ public abstract class EntityLittleServantBlock extends EntityLittleServantBase {
 		this.targetBlockTasks.onUpdateTasks();
 		this.world.profiler.endSection();
 
+	}
+
+	public BlockPos getUseTargetBlock() {
+		return useTargetBlock;
+	}
+
+	public void setUseTargetBlock(BlockPos useTargetBlock) {
+		this.useTargetBlock = useTargetBlock;
 	}
 
 }

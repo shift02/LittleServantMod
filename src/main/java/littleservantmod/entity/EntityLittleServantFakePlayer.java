@@ -483,7 +483,6 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Nullable
 	@Override
 	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
