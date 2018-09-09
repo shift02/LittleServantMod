@@ -1,12 +1,9 @@
 package littleservantmod.entity.ai;
 
+import littleservantmod.entity.EntityLittleServantFakePlayer;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraft.util.EnumHand;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.function.Predicate;
@@ -14,40 +11,38 @@ import java.util.stream.IntStream;
 
 public class EntityAIEquip extends EntityAIBase {
 
-	private final IItemHandlerModifiable inventory;
-	private final IItemHandlerModifiable equipments;
-	private final EntityEquipmentSlot equipmentSlot;
+	private final EntityLittleServantFakePlayer servant;
+	private final int defaultIndex;
+	private final EnumHand hand;
 	private final Predicate<ItemStack> shouldEquip;
 
-	public EntityAIEquip(ICapabilityProvider servant, EntityEquipmentSlot equipmentSlot, Predicate<ItemStack> shouldEquip) {
-
-		if (!servant.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null))
-			throw new IllegalArgumentException();
-		this.inventory = (IItemHandlerModifiable) servant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		this.equipments = (IItemHandlerModifiable) servant.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.VALUES[equipmentSlot.ordinal()]);
-		this.equipmentSlot = equipmentSlot;
+	public EntityAIEquip(EntityLittleServantFakePlayer servant, int defaultIndex, EnumHand hand, Predicate<ItemStack> shouldEquip) {
+		this.servant = servant;
+		this.defaultIndex = defaultIndex;
+		this.hand = hand;
 		this.shouldEquip = shouldEquip;
+	}
 
+	public EntityAIEquip(EntityLittleServantFakePlayer servant, EnumHand hand, Predicate<ItemStack> shouldEquip) {
+		this(servant, -1, hand, shouldEquip);
 	}
 
 	@Override
 	public boolean shouldExecute() {
 
-		return !this.shouldEquip.test(this.equipments.getStackInSlot(this.equipmentSlot.getIndex()));
+		return !this.shouldEquip.test(this.servant.inventory.getItemInHand(hand));
 	}
 
 	@Override
 	public void updateTask() {
 
-		IntStream.range(0, this.inventory.getSlots())
+		int index = IntStream.range(0, this.servant.inventory.mainInventory.size())
 				.parallel()
-				.mapToObj(i -> Pair.of(i, this.inventory.getStackInSlot(i)))
-				.filter(p -> this.shouldEquip.test(p.getRight()))
+				.filter(i -> this.shouldEquip.test(this.servant.inventory.mainInventory.get(i)))
 				.findAny()
-				.ifPresent(p -> {
-					this.inventory.setStackInSlot(p.getLeft(), this.equipments.getStackInSlot(this.equipmentSlot.getIndex()));
-					this.equipments.setStackInSlot(this.equipmentSlot.getIndex(), p.getRight());
-				});
+				.orElse(defaultIndex);
+
+		this.servant.setItemInHand(index, hand);
 
 	}
 
