@@ -10,30 +10,32 @@ import net.minecraft.util.ResourceLocation;
 
 public class LittleServantModAPI {
 
-	public static final String MOD_ID = "littleservantmod";
+    public static final String MOD_ID = "littleservantmod";
 
-	public static IProfessionManager professionManager;
+    public static IProfessionManager professionManager;
 
-	/**
-	 * 職業を登録する
-	 * @param factory
-	 * @deprecated {@link AttachProfessionEvent}を使用する
-	 */
-	@Deprecated
-	public static void registerProfession(IProfessionFactory factory) {
+    public static ILSMRegister register;
 
-		professionManager.registerProfession(factory);
+    /**
+     * 職業を登録する
+     * @param factory
+     * @deprecated {@link AttachProfessionEvent}を使用する
+     */
+    @Deprecated
+    public static void registerProfession(IProfessionFactory factory) {
 
-	}
+        professionManager.registerProfession(factory);
 
-	public static IMode getBasicMode() {
-		return professionManager.getBasicMode();
-	}
+    }
 
-	public static IBehavior getBasicBehavior() {
-		return professionManager.getBasicBehavior();
-	}
+    public static IMode getBasicMode() {
+        return professionManager.getBasicMode();
+    }
 
-	public static IMode noneMode = new ModeNone().setUnlocalizedName("mode_none").setRegistryName(new ResourceLocation(MOD_ID, "mode_none"));
+    public static IBehavior getBasicBehavior() {
+        return professionManager.getBasicBehavior();
+    }
+
+    public static IMode noneMode = new ModeNone().setUnlocalizedName("mode_none").setRegistryName(new ResourceLocation(MOD_ID, "mode_none"));
 
 }

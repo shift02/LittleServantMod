@@ -3,6 +3,7 @@ package littleservantmod.api.profession;
 import littleservantmod.api.IServant;
 import littleservantmod.entity.ai.EntityAIOpenDoor2;
 import littleservantmod.entity.ai.EntityAITempt;
+import littleservantmod.entity.ai.EntityAIUseSugar;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -20,89 +21,92 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public abstract class ProfessionBase implements IProfession {
 
-	protected double defaultSpeed = 0.5D;
+    protected double defaultSpeed = 0.5D;
 
-	protected ResourceLocation resourceLocation;
-	protected String unlocalizedName;
+    protected ResourceLocation resourceLocation;
+    protected String unlocalizedName;
 
-	@SideOnly(Side.CLIENT)
-	protected TextureAtlasSprite icon;
+    @SideOnly(Side.CLIENT)
+    protected TextureAtlasSprite icon;
 
-	public void init() {
-	}
+    public void init() {
+    }
 
-	@Override
-	public void initAI(IServant servant) {
+    @Override
+    public void initAI(IServant servant) {
 
-		this.initDefaultAI(servant);
+        this.initDefaultAI(servant);
 
-	}
+    }
 
-	protected void initDefaultAI(IServant servant) {
+    protected void initDefaultAI(IServant servant) {
 
-		//泳ぐ
-		servant.addAI(100, new EntityAISwimming(servant.getEntityInstance()));
+        //泳ぐ
+        servant.addAI(100, new EntityAISwimming(servant.getEntityInstance()));
 
-		//扉を開ける
-		servant.addAI(200, new EntityAIOpenDoor2(servant.getEntityInstance(), true));
+        //回復
+        servant.addAI(200, new EntityAIUseSugar(servant.getEntityInstance()));
 
-		//砂糖についてくる
-		servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), defaultSpeed, Items.SUGAR, false));
+        //扉を開ける
+        servant.addAI(200, new EntityAIOpenDoor2(servant.getEntityInstance(), true));
 
-		//ウロウロ
-		//servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), defaultSpeed));
+        //砂糖についてくる
+        servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), defaultSpeed, Items.SUGAR, false));
 
-		//プレイヤーを見る
-		servant.addAI(900, new EntityAIWatchClosest(servant.getEntityInstance(), EntityPlayer.class, 8.0F));
-		// 見回すAIの追加
-		servant.addAI(900, new EntityAILookIdle(servant.getEntityInstance()));
+        //ウロウロ
+        //servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), defaultSpeed));
 
-	}
+        //プレイヤーを見る
+        servant.addAI(900, new EntityAIWatchClosest(servant.getEntityInstance(), EntityPlayer.class, 8.0F));
+        // 見回すAIの追加
+        servant.addAI(900, new EntityAILookIdle(servant.getEntityInstance()));
 
-	@SideOnly(Side.CLIENT)
-	public ProfessionBase setIcon(TextureAtlasSprite icon) {
-		this.icon = icon;
-		return this;
-	}
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public TextureAtlasSprite getIcon(IServant servant) {
+    @SideOnly(Side.CLIENT)
+    public ProfessionBase setIcon(TextureAtlasSprite icon) {
+        this.icon = icon;
+        return this;
+    }
 
-		if (icon == null) {
-			//Missing
-			return net.minecraft.client.Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
-		}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public TextureAtlasSprite getIcon(IServant servant) {
 
-		return icon;
-	}
+        if (icon == null) {
+            //Missing
+            return net.minecraft.client.Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+        }
 
-	public ProfessionBase setUnlocalizedName(String unlocalizedName) {
-		this.unlocalizedName = unlocalizedName;
-		return this;
-	}
+        return icon;
+    }
 
-	public String getUnlocalizedName() {
-		return "profession." + this.unlocalizedName;
-	}
+    public ProfessionBase setUnlocalizedName(String unlocalizedName) {
+        this.unlocalizedName = unlocalizedName;
+        return this;
+    }
 
-	public String getUnlocalizedName(IServant servant) {
-		return "profession." + this.unlocalizedName;
-	}
+    public String getUnlocalizedName() {
+        return "profession." + this.unlocalizedName;
+    }
 
-	@Override
-	public String getProfessionDisplayName(IServant servant) {
-		return I18n.translateToLocal(this.getUnlocalizedName(servant) + ".name").trim();
-	}
+    public String getUnlocalizedName(IServant servant) {
+        return "profession." + this.unlocalizedName;
+    }
 
-	@Override
-	public ResourceLocation getRegistryName() {
-		return this.resourceLocation;
-	}
+    @Override
+    public String getProfessionDisplayName(IServant servant) {
+        return I18n.translateToLocal(this.getUnlocalizedName(servant) + ".name").trim();
+    }
 
-	public ProfessionBase setRegistryName(ResourceLocation resourceLocation) {
-		this.resourceLocation = resourceLocation;
-		return this;
-	}
+    @Override
+    public ResourceLocation getRegistryName() {
+        return this.resourceLocation;
+    }
+
+    public ProfessionBase setRegistryName(ResourceLocation resourceLocation) {
+        this.resourceLocation = resourceLocation;
+        return this;
+    }
 
 }
