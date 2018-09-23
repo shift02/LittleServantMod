@@ -29,119 +29,119 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LSMProxy implements IGuiHandler {
 
-	@SidedProxy(modId = LittleServantMod.MOD_ID)
-	private static LSMProxy proxy;
+    @SidedProxy(modId = LittleServantMod.MOD_ID)
+    private static LSMProxy proxy;
 
-	public static LSMProxy getProxy() {
-		return proxy;
-	}
+    public static LSMProxy getProxy() {
+        return proxy;
+    }
 
-	public void fmlPreInit() {
+    public void fmlPreInit() {
 
-	}
+    }
 
-	public EntityPlayer getClientPlayer() {
-		return null;
-	}
+    public EntityPlayer getClientPlayer() {
+        return null;
+    }
 
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    @Override
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
-		EntityLittleServant entity = OpenGuiEntityId.getEntityFromXYZ(world, x, y, z);
+        EntityLittleServant entity = OpenGuiEntityId.getEntityFromXYZ(world, x, y, z);
 
-		switch (ID) {
-		case 0:
-			return new ContainerServant(player.inventory, entity.inventory, entity);
-		case 1:
-			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
+        switch (ID) {
+        case 0:
+            return new ContainerServant(player.inventory, entity.getInventory(), entity);
+        case 1:
+            return new ContainerServantProfession(player.inventory, entity.getInventory(), entity);
 
-		case 10:
-			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
+        case 10:
+            return new ContainerServantProfession(player.inventory, entity.getInventory(), entity);
 
-		case 11:
-			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
+        case 11:
+            return new ContainerServantProfession(player.inventory, entity.getInventory(), entity);
 
-		case 12:
-			return new ContainerServantProfession(player.inventory, entity.inventory, entity);
-		}
+        case 12:
+            return new ContainerServantProfession(player.inventory, entity.getInventory(), entity);
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
-		EntityLittleServant entity = OpenGuiEntityId.getEntityFromXYZ(world, x, y, z);
+        EntityLittleServant entity = OpenGuiEntityId.getEntityFromXYZ(world, x, y, z);
 
-		switch (ID) {
-		case 0:
-			return new GuiServantInventory(entity, player.inventory, new ContainerServant(player.inventory, entity.inventory, entity));
-		case 1:
-			return new GuiServantProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
-		case 10:
-			return new GuiServantSelectProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
-		case 11:
-			return new GuiServantSelectMode(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
-		case 12:
-			return new GuiServantSelectBehavior(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.inventory, entity));
-		}
+        switch (ID) {
+        case 0:
+            return new GuiServantInventory(entity, player.inventory, new ContainerServant(player.inventory, entity.getInventory(), entity));
+        case 1:
+            return new GuiServantProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.getInventory(), entity));
+        case 10:
+            return new GuiServantSelectProfession(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.getInventory(), entity));
+        case 11:
+            return new GuiServantSelectMode(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.getInventory(), entity));
+        case 12:
+            return new GuiServantSelectBehavior(entity, player.inventory, new ContainerServantProfession(player.inventory, entity.getInventory(), entity));
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public void openGui(EntityPlayer player, EntityLittleServantBase entity) {
+    public void openGui(EntityPlayer player, EntityLittleServantBase entity) {
 
-		OpenGuiEntityId id = new OpenGuiEntityId(entity);
+        OpenGuiEntityId id = new OpenGuiEntityId(entity);
 
-		player.openGui(LittleServantMod.instance, 0, player.world, id.getX(), 0, 0);
+        player.openGui(LittleServantMod.instance, 0, player.world, id.getX(), 0, 0);
 
-	}
+    }
 
-	@SideOnly(Side.SERVER)
-	public static class ServerProxy extends LSMProxy {
+    @SideOnly(Side.SERVER)
+    public static class ServerProxy extends LSMProxy {
 
-	}
+    }
 
-	public static TextureAtlasSprite escort;
-	public static TextureAtlasSprite free;
+    public static TextureAtlasSprite escort;
+    public static TextureAtlasSprite free;
 
-	@SideOnly(Side.CLIENT)
-	public static class ClientProxy extends LSMProxy {
+    @SideOnly(Side.CLIENT)
+    public static class ClientProxy extends LSMProxy {
 
-		@Override
-		public EntityPlayer getClientPlayer() {
-			return Minecraft.getMinecraft().player;
-		}
+        @Override
+        public EntityPlayer getClientPlayer() {
+            return Minecraft.getMinecraft().player;
+        }
 
-		@SubscribeEvent
-		public void textureStitch(TextureStitchEvent.Pre event) {
-			TextureMap textureMap = event.getMap();
+        @SubscribeEvent
+        public void textureStitch(TextureStitchEvent.Pre event) {
+            TextureMap textureMap = event.getMap();
 
-			if (textureMap == Minecraft.getMinecraft().getTextureMapBlocks()) {
+            if (textureMap == Minecraft.getMinecraft().getTextureMapBlocks()) {
 
-				//TODO この辺をもう少しスマートにしたい
-				ProfessionEventHandler.iconUnemployed.setIcon(
-						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed")));
+                //TODO この辺をもう少しスマートにしたい
+                ProfessionEventHandler.iconUnemployed.setIcon(
+                        textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed")));
 
-				ProfessionEventHandler.iconChores.setIcon(
-						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_chores")));
+                ProfessionEventHandler.iconChores.setIcon(
+                        textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_chores")));
 
-				ModeEventHandler.iconDefault.setIcon(
-						textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_default")));
+                ModeEventHandler.iconDefault.setIcon(
+                        textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_default")));
 
-				ModeNone.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_none"));
+                ModeNone.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_none"));
 
-				ModeBasic.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_basic"));
+                ModeBasic.icon = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_basic"));
 
-				escort = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_escort"));
+                escort = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_escort"));
 
-				free = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_free"));
+                free = textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_free"));
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 
 }
