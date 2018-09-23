@@ -78,56 +78,8 @@ public class EntityAIUseTorch extends EntityAIMoveToBlock2 {
                     }
 
                 }
-                /*
-                System.out.println(itemstack);
-                if (itemstack.onItemUse(servant.getPlayer(), world, blockpos, EnumHand.MAIN_HAND, EnumFacing.UP, 0.5f, 1.0f, 0.5f) == EnumActionResult.SUCCESS) {
-                
-                }
-                /*
-                world.setBlockState(blockpos, Blocks.WHEAT.getDefaultState(), 3);
-                itemstack.shrink(1);
-                if (itemstack.isEmpty()) {
-                    this.servant.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-                }*/
-            }
 
-            /*
-            if (this.currentTask == 0 && block instanceof BlockCrops && ((BlockCrops) block).isMaxAge(iblockstate)) {
-                world.destroyBlock(blockpos, true);
-            } else if (this.currentTask == 1 && iblockstate.getMaterial() == Material.AIR) {
-                InventoryBasic inventorybasic = this.servant.getVillagerInventory();
-            
-                for (int i = 0; i < inventorybasic.getSizeInventory(); ++i) {
-                    ItemStack itemstack = inventorybasic.getStackInSlot(i);
-                    boolean flag = false;
-            
-                    if (!itemstack.isEmpty()) {
-                        if (itemstack.getItem() == Items.WHEAT_SEEDS) {
-                            world.setBlockState(blockpos, Blocks.WHEAT.getDefaultState(), 3);
-                            flag = true;
-                        } else if (itemstack.getItem() == Items.POTATO) {
-                            world.setBlockState(blockpos, Blocks.POTATOES.getDefaultState(), 3);
-                            flag = true;
-                        } else if (itemstack.getItem() == Items.CARROT) {
-                            world.setBlockState(blockpos, Blocks.CARROTS.getDefaultState(), 3);
-                            flag = true;
-                        } else if (itemstack.getItem() == Items.BEETROOT_SEEDS) {
-                            world.setBlockState(blockpos, Blocks.BEETROOTS.getDefaultState(), 3);
-                            flag = true;
-                        }
-                    }
-            
-                    if (flag) {
-                        itemstack.shrink(1);
-            
-                        if (itemstack.isEmpty()) {
-                            inventorybasic.setInventorySlotContents(i, ItemStack.EMPTY);
-                        }
-            
-                        break;
-                    }
-                }
-            }*/
+            }
 
             this.currentTask = -1;
             this.runDelay = 10;
