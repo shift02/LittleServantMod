@@ -35,6 +35,7 @@ profession.chores.name=Chores
 profession.saber.name=Saber
 profession.archer.name=Archer
 profession.ripper.name=Ripper
+profession.torcher.name=Torcher
 
 
 mode.mode_none.name=None
