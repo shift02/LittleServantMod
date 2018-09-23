@@ -10,6 +10,7 @@ import littleservantmod.api.LittleServantModAPI;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -88,8 +89,13 @@ public class EntityAIUseSugar extends EntityAIBase {
             double d0 = this.rand.nextGaussian() * 0.02D;
             double d1 = this.rand.nextGaussian() * 0.02D;
             double d2 = this.rand.nextGaussian() * 0.02D;
-            servant.world.spawnParticle(enumparticletypes, servant.posX + this.rand.nextFloat() * servant.width * 2.0F - servant.width, servant.posY + 0.9D + this.rand.nextFloat() * servant.height,
-                    servant.posZ + this.rand.nextFloat() * servant.width * 2.0F - servant.width, d0, d1, d2);
+
+            ((WorldServer) servant.world).spawnParticle(enumparticletypes, servant.posX + this.rand.nextFloat() * servant.width * 2.0F - servant.width, servant.posY + 0.9D + this.rand.nextFloat() * servant.height,
+                    servant.posZ + this.rand.nextFloat() * servant.width * 2.0F - servant.width, 1, d0, d1, d2, 5, null);
+
+            /*
+            ((WorldServer) servant.world).spawnParticle(enumparticletypes, servant.posX + this.rand.nextFloat() * servant.width * 2.0F - servant.width, servant.posY + 0.9D + this.rand.nextFloat() * servant.height,
+                    servant.posZ + this.rand.nextFloat() * servant.width * 2.0F - servant.width, d0, d1, d2);*/
         }
     }
 
