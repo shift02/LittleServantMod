@@ -9,6 +9,7 @@ import littleservantmod.api.ISugarItemHandler;
 import littleservantmod.api.LittleServantModAPI;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -83,15 +84,18 @@ public class EntityAIUseSugar extends EntityAIBase {
     }
 
     protected void playSitEffect() {
+
+        servant.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+
         EnumParticleTypes enumparticletypes = EnumParticleTypes.NOTE;
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 1; ++i) {
             double d0 = this.rand.nextGaussian() * 0.02D;
             double d1 = this.rand.nextGaussian() * 0.02D;
             double d2 = this.rand.nextGaussian() * 0.02D;
 
             ((WorldServer) servant.world).spawnParticle(enumparticletypes, servant.posX + this.rand.nextFloat() * servant.width * 2.0F - servant.width, servant.posY + 0.9D + this.rand.nextFloat() * servant.height,
-                    servant.posZ + this.rand.nextFloat() * servant.width * 2.0F - servant.width, 1, d0, d1, d2, 5, null);
+                    servant.posZ + this.rand.nextFloat() * servant.width * 2.0F - servant.width, 1, d0, d1, d2, 0.0d);
 
             /*
             ((WorldServer) servant.world).spawnParticle(enumparticletypes, servant.posX + this.rand.nextFloat() * servant.width * 2.0F - servant.width, servant.posY + 0.9D + this.rand.nextFloat() * servant.height,
