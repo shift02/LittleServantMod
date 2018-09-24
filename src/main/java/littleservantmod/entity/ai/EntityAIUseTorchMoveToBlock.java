@@ -12,14 +12,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EntityAIUseTorch extends EntityAIMoveToBlock2 {
+public class EntityAIUseTorchMoveToBlock extends EntityAIMoveToBlock2 {
 
     private final EntityLittleServant servant;
     private boolean hasTorchItem;
     /** 0 => torch, -1 => none */
     private int currentTask;
 
-    public EntityAIUseTorch(EntityLittleServant servant, double speedIn) {
+    public EntityAIUseTorchMoveToBlock(EntityLittleServant servant, double speedIn) {
         super(servant, speedIn, 16);
         this.servant = servant;
     }
@@ -40,7 +40,7 @@ public class EntityAIUseTorch extends EntityAIMoveToBlock2 {
 
     @Override
     public int getDefaultRunDelay() {
-        return 30;
+        return 20;
     }
 
     /**
@@ -72,6 +72,7 @@ public class EntityAIUseTorch extends EntityAIMoveToBlock2 {
                     ItemBlock itemBlock = (ItemBlock) itemstack.getItem();
                     IBlockState state = Block.getBlockFromItem(itemBlock).getStateForPlacement(world, blockpos, EnumFacing.UP, 0.5f, 1.0f, 0.5f, itemstack.getMetadata(), this.servant, EnumHand.MAIN_HAND);
                     world.setBlockState(blockpos, state, 3);
+                    this.servant.swingArm(EnumHand.MAIN_HAND);
                     itemstack.shrink(1);
                     if (itemstack.isEmpty()) {
                         this.servant.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
