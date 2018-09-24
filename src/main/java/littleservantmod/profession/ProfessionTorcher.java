@@ -3,6 +3,7 @@ package littleservantmod.profession;
 import littleservantmod.api.IServant;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.ai.EntityAIEquipTool;
+import littleservantmod.entity.ai.EntityAIUseTorch;
 import littleservantmod.entity.ai.EntityAIUseTorchMoveToBlock;
 
 public class ProfessionTorcher extends ProfessionLSMBase {
@@ -17,6 +18,9 @@ public class ProfessionTorcher extends ProfessionLSMBase {
 
         //500
         servant.addAI(500, new EntityAIUseTorchMoveToBlock((EntityLittleServant) servant.getEntityInstance(), 0.8d));
+
+        //足元に松明
+        servant.addAI(600, new EntityAIUseTorch((EntityLittleServant) servant.getEntityInstance()));
 
         //Target
         /*
