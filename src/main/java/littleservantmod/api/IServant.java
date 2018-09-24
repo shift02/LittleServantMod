@@ -12,12 +12,14 @@ import net.minecraft.entity.ai.EntityAIBase;
  */
 public interface IServant {
 
-	public void addAI(int priority, EntityAIBase task);
+    public void addAI(int priority, EntityAIBase task);
 
-	public void addTargetAI(int priority, EntityAIBase task);
+    public void addTargetAI(int priority, EntityAIBase task);
 
-	public EntityLiving getEntityInstance();
+    public void addBlockTargetAI(int priority, EntityAIBase task);
 
-	public EntityLivingBase getOwner();
+    public EntityLiving getEntityInstance();
+
+    public EntityLivingBase getOwner();
 
 }
