@@ -19,6 +19,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -46,12 +47,15 @@ public class LittleServantMod {
 
     private static Logger logger;
 
+    public static boolean isDebug = false;
+
     @Instance(MOD_ID)
     public static LittleServantMod instance;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
+        isDebug = event.getSourceFile().isDirectory() && (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
         LittleServantModAPI.register = new LSMRegister();
 
