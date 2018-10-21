@@ -18,117 +18,123 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServant> {
 
-	private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid.png");
-	private static final ResourceLocation TAMED_MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid_tamed.png");
+    private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid.png");
+    private static final ResourceLocation TAMED_MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid_tamed.png");
 
-	private static final ResourceLocation BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler.png");
-	private static final ResourceLocation TAMED_BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler_tamed.png");
+    private static final ResourceLocation BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler.png");
+    private static final ResourceLocation TAMED_BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler_tamed.png");
 
-	public static final ModelLittleServantBase butler = new ModelLittleServantButler(0.0F, false);
-	public static final ModelLittleServantBase maid = new ModelLittleServantMaid(0.0F, false);
+    public static final ModelLittleServantBase butler = new ModelLittleServantButler(0.0F, false);
+    public static final ModelLittleServantBase maid = new ModelLittleServantMaid(0.0F, false);
 
-	public RenderEntityLittleServant(RenderManager renderManagerIn) {
-		//super(renderManagerIn, new ModelLittleServantBase(0.0F, false), 0.5F);
-		super(renderManagerIn, butler, 0.5F);
+    public RenderEntityLittleServant(RenderManager renderManagerIn) {
+        //super(renderManagerIn, new ModelLittleServantBase(0.0F, false), 0.5F);
+        super(renderManagerIn, butler, 0.5F);
 
-		this.addLayer(new LayerHeldItem(this));
-		this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
 
-	}
+    }
 
-	@Override
-	public void doRender(EntityLittleServant entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    @Override
+    public void doRender(EntityLittleServant entity, double x, double y, double z, float entityYaw, float partialTicks) {
 
-		this.mainModel = entity.getSkin() == EntityLittleServantSkin.SKIN_STEVE ? maid : butler;
+        this.mainModel = entity.getSkin() == EntityLittleServantSkin.SKIN_STEVE ? maid : butler;
 
-		setModelVisibilities(entity);
+        setModelVisibilities(entity);
 
-		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-	}
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    }
 
-	private void setModelVisibilities(EntityLittleServant clientPlayer) {
+    private void setModelVisibilities(EntityLittleServant clientPlayer) {
 
-		//プレイヤーと同じ感じでモデルの変化をさせる
+        //プレイヤーと同じ感じでモデルの変化をさせる
 
-		ModelLittleServantBase modelplayer = this.getMainModel();
+        ModelLittleServantBase modelplayer = this.getMainModel();
 
-		/*if (clientPlayer.isSpectator()) {
-			modelplayer.setVisible(false);
-			modelplayer.bipedHead.showModel = true;
-			modelplayer.bipedHeadwear.showModel = true;
-		} else { */
-		ItemStack itemstack = clientPlayer.getHeldItemMainhand();
-		ItemStack itemstack1 = clientPlayer.getHeldItemOffhand();
-		modelplayer.setVisible(true);
+        /*if (clientPlayer.isSpectator()) {
+        	modelplayer.setVisible(false);
+        	modelplayer.bipedHead.showModel = true;
+        	modelplayer.bipedHeadwear.showModel = true;
+        } else { */
+        ItemStack itemstack = clientPlayer.getHeldItemMainhand();
+        ItemStack itemstack1 = clientPlayer.getHeldItemOffhand();
+        modelplayer.setVisible(true);
 
-		/*modelplayer.bipedHeadwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.HAT);
-		modelplayer.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
-		modelplayer.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
-		modelplayer.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
-		modelplayer.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
-		modelplayer.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
-		*/
-		modelplayer.isSneak = clientPlayer.isSneaking();
-		ModelBiped.ArmPose modelbiped$armpose = ModelBiped.ArmPose.EMPTY;
-		ModelBiped.ArmPose modelbiped$armpose1 = ModelBiped.ArmPose.EMPTY;
+        /*modelplayer.bipedHeadwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.HAT);
+        modelplayer.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
+        modelplayer.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
+        modelplayer.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
+        modelplayer.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
+        modelplayer.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
+        */
+        modelplayer.isSneak = clientPlayer.isSneaking();
+        ModelBiped.ArmPose modelbiped$armpose = ModelBiped.ArmPose.EMPTY;
+        ModelBiped.ArmPose modelbiped$armpose1 = ModelBiped.ArmPose.EMPTY;
 
-		if (!itemstack.isEmpty()) {
-			modelbiped$armpose = ModelBiped.ArmPose.ITEM;
+        if (!itemstack.isEmpty()) {
+            modelbiped$armpose = ModelBiped.ArmPose.ITEM;
 
-			if (clientPlayer.getItemInUseCount() > 0) {
-				EnumAction enumaction = itemstack.getItemUseAction();
+            if (clientPlayer.getItemInUseCount() > 0) {
+                EnumAction enumaction = itemstack.getItemUseAction();
 
-				if (enumaction == EnumAction.BLOCK) {
-					modelbiped$armpose = ModelBiped.ArmPose.BLOCK;
-				} else if (enumaction == EnumAction.BOW) {
-					modelbiped$armpose = ModelBiped.ArmPose.BOW_AND_ARROW;
-				}
-			}
-		}
+                if (enumaction == EnumAction.BLOCK) {
+                    modelbiped$armpose = ModelBiped.ArmPose.BLOCK;
+                } else if (enumaction == EnumAction.BOW) {
+                    modelbiped$armpose = ModelBiped.ArmPose.BOW_AND_ARROW;
+                }
+            }
+        }
 
-		if (!itemstack1.isEmpty()) {
-			modelbiped$armpose1 = ModelBiped.ArmPose.ITEM;
+        if (!itemstack1.isEmpty()) {
+            modelbiped$armpose1 = ModelBiped.ArmPose.ITEM;
 
-			if (clientPlayer.getItemInUseCount() > 0) {
-				EnumAction enumaction1 = itemstack1.getItemUseAction();
+            if (clientPlayer.getItemInUseCount() > 0) {
+                EnumAction enumaction1 = itemstack1.getItemUseAction();
 
-				if (enumaction1 == EnumAction.BLOCK) {
-					modelbiped$armpose1 = ModelBiped.ArmPose.BLOCK;
-				}
-				// FORGE: fix MC-88356 allow offhand to use bow and arrow animation
-				else if (enumaction1 == EnumAction.BOW) {
-					modelbiped$armpose1 = ModelBiped.ArmPose.BOW_AND_ARROW;
-				}
-			}
-		}
+                if (enumaction1 == EnumAction.BLOCK) {
+                    modelbiped$armpose1 = ModelBiped.ArmPose.BLOCK;
+                }
+                // FORGE: fix MC-88356 allow offhand to use bow and arrow animation
+                else if (enumaction1 == EnumAction.BOW) {
+                    modelbiped$armpose1 = ModelBiped.ArmPose.BOW_AND_ARROW;
+                }
+            }
+        }
 
-		if (clientPlayer.getPrimaryHand() == EnumHandSide.RIGHT) {
-			modelplayer.rightArmPose = modelbiped$armpose;
-			modelplayer.leftArmPose = modelbiped$armpose1;
-		} else {
-			modelplayer.rightArmPose = modelbiped$armpose1;
-			modelplayer.leftArmPose = modelbiped$armpose;
-		}
-		//}
-	}
+        if (clientPlayer.getPrimaryHand() == EnumHandSide.RIGHT) {
+            modelplayer.rightArmPose = modelbiped$armpose;
+            modelplayer.leftArmPose = modelbiped$armpose1;
+        } else {
+            modelplayer.rightArmPose = modelbiped$armpose1;
+            modelplayer.leftArmPose = modelbiped$armpose;
+        }
+        //}
+    }
 
-	@Override
-	public ModelLittleServantBase getMainModel() {
-		return (ModelLittleServantBase) super.getMainModel();
-	}
+    @Override
+    public ModelLittleServantBase getMainModel() {
+        return (ModelLittleServantBase) super.getMainModel();
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(EntityLittleServant entity) {
+    @Override
+    protected ResourceLocation getEntityTexture(EntityLittleServant entity) {
 
-		return entity.getEntityTexture(entity);
+        return entity.getEntityTexture(entity);
 
-	}
+    }
 
-	@Override
-	public void renderName(EntityLittleServant entity, double x, double y, double z) {
-		if (this.canRenderName(entity) && !entity.isGui) {
-			this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 64);
-		}
-	}
+    @Override
+    public void renderName(EntityLittleServant entity, double x, double y, double z) {
+        if (this.canRenderName(entity) && !entity.isGui) {
+            this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 64);
+        }
+    }
+
+    @Override
+    protected boolean canRenderName(EntityLittleServant entity) {
+        //if(LittleServantMod.isDebug)return true;
+        return super.canRenderName(entity) && (entity.getAlwaysRenderNameTagForRender() || entity.hasCustomName() && entity == this.renderManager.pointedEntity);
+    }
 
 }
