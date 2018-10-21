@@ -254,7 +254,7 @@ public class ModelLittleServantMaid extends ModelLittleServantBase {
             f = 1.0F;
         }
 
-        //limbSwingAmount *= 0.5;
+        limbSwingAmount *= 0.5;
 
         if (!this.isRiding) {
             this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / f;
