@@ -1,6 +1,7 @@
 package littleservantmod.entity;
 
 import littleservantmod.LSMProxy;
+import littleservantmod.LSMSounds;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -36,12 +37,12 @@ public class EntityLittleServant extends EntityLittleServantSkin {
      * */
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_GHAST_AMBIENT;
+        return LSMSounds.getAmbientSound(this);
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_GHAST_HURT;
+        return LSMSounds.getHurtSound(this, damageSourceIn);
     }
 
     @Override
