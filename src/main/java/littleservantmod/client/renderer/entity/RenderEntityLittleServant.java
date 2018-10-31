@@ -7,7 +7,7 @@ import littleservantmod.client.model.ModelLittleServantMaid;
 import littleservantmod.client.renderer.entity.layers.LayerCustomHead;
 import littleservantmod.client.renderer.entity.layers.LayerHeldItem;
 import littleservantmod.entity.EntityLittleServant;
-import littleservantmod.entity.EntityLittleServantSkin;
+import littleservantmod.entity.ServantSkin;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -39,7 +39,7 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
     @Override
     public void doRender(EntityLittleServant entity, double x, double y, double z, float entityYaw, float partialTicks) {
 
-        this.mainModel = entity.getSkin() == EntityLittleServantSkin.SKIN_STEVE ? maid : butler;
+        this.mainModel = entity.getServantSkin() == ServantSkin.SKIN_STEVE ? maid : butler;
 
         setModelVisibilities(entity);
 
