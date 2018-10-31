@@ -5,7 +5,6 @@ import littleservantmod.LSMSounds;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
@@ -47,7 +46,7 @@ public class EntityLittleServant extends EntityLittleServantSkin {
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_GHAST_DEATH;
+        return LSMSounds.getDeathSound(this);
     }
 
     //protected SoundEvent getStepSound() {

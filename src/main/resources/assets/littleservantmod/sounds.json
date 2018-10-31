@@ -26,5 +26,34 @@
         "sounds": [
             "minecraft:mob/ghast/death"
         ]
+    },
+
+    "entity.little_butler.ambient": {
+        "category": "hostile",
+        "sounds": [
+            "minecraft:mob/ghast/moan1",
+            "minecraft:mob/ghast/moan2",
+            "minecraft:mob/ghast/moan3",
+            "minecraft:mob/ghast/moan4",
+            "minecraft:mob/ghast/moan5",
+            "minecraft:mob/ghast/moan6",
+            "minecraft:mob/ghast/moan7"
+        ]
+    },
+    "entity.little_butler.hurt": {
+        "category": "hostile",
+        "sounds": [
+            "minecraft:mob/ghast/scream1",
+            "minecraft:mob/ghast/scream2",
+            "minecraft:mob/ghast/scream3",
+            "minecraft:mob/ghast/scream4",
+            "minecraft:mob/ghast/scream5"
+        ]
+    },
+    "entity.little_butler.death": {
+        "category": "hostile",
+        "sounds": [
+            "minecraft:mob/ghast/death"
+        ]
     }
 }
