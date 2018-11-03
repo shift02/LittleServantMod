@@ -13,6 +13,7 @@ import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.packet.LSMPacketHandler;
 import littleservantmod.profession.ProfessionEventHandler;
 import littleservantmod.profession.ProfessionManager;
+import littleservantmod.profession.ServantToolManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EnumCreatureType;
@@ -92,6 +93,8 @@ public class LittleServantMod {
         //Minecraft.getMinecraft().getResourceManager()
 
         //new FolderResourcePack(null)
+
+        LittleServantModAPI.servantToolManager = ServantToolManager.getInstance();
 
     }
 

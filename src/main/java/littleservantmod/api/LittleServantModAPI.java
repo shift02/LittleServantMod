@@ -3,6 +3,7 @@ package littleservantmod.api;
 import littleservantmod.api.profession.AttachProfessionEvent;
 import littleservantmod.api.profession.IProfessionFactory;
 import littleservantmod.api.profession.IProfessionManager;
+import littleservantmod.api.profession.IServantToolManager;
 import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import littleservantmod.api.profession.mode.ModeNone;
@@ -15,6 +16,9 @@ public class LittleServantModAPI {
     public static IProfessionManager professionManager;
 
     public static ILSMRegister register;
+
+    //メモ：独自形式の武器なら職業(Profession)を追加する方が簡単かも
+    public static IServantToolManager servantToolManager;
 
     /**
      * 職業を登録する
