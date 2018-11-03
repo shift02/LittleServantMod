@@ -1,6 +1,6 @@
 package littleservantmod.entity.ai;
 
-import littleservantmod.profession.ProfessionToolManager;
+import littleservantmod.profession.ServantToolManager;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
@@ -60,7 +60,7 @@ public class EntityAIAttackRangedBow2<T extends EntityLiving, R extends IRangedA
 
 		if (item.isEmpty()) return false;
 
-		if (ProfessionToolManager.getInstance().isTool(toolType, item)) return true;
+		if (ServantToolManager.getInstance().isTool(toolType, item)) return true;
 
 		return false;
 

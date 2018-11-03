@@ -24,7 +24,7 @@ public class ProfessionSaber extends ProfessionLSMBase {
         servant.addAI(200, new EntityAIEquipShield((EntityLittleServant) servant.getEntityInstance()));
 
         //剣を持ち帰る
-        servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.saber));
+        servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ServantToolManager.saber));
 
         //攻撃
         servant.addAI(500, new EntityAIAttackMelee2((EntityLittleServant) servant.getEntityInstance(), 0.8d, false));

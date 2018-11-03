@@ -17,7 +17,7 @@ public class ProfessionRipper extends ProfessionLSMBase {
 		super.initAI(servant);
 
 		//ハサミを持ち帰る
-		servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.ripper));
+		servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ServantToolManager.ripper));
 
 		//毛を狩る
 		servant.addAI(500, new EntityAIUseItemForEntity((EntityLittleServant) servant.getEntityInstance(), 0.8d, false));

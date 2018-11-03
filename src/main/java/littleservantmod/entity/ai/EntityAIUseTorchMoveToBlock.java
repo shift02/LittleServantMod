@@ -1,7 +1,7 @@
 package littleservantmod.entity.ai;
 
 import littleservantmod.entity.EntityLittleServant;
-import littleservantmod.profession.ProfessionToolManager;
+import littleservantmod.profession.ServantToolManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +32,7 @@ public class EntityAIUseTorchMoveToBlock extends EntityAIMoveToBlock2 {
         if (this.runDelay <= 0) {
 
             this.currentTask = -1;
-            this.hasTorchItem = ProfessionToolManager.getInstance().isTool(ProfessionToolManager.torcher, this.servant.getHeldItemMainhand());
+            this.hasTorchItem = ServantToolManager.getInstance().isTool(ServantToolManager.torcher, this.servant.getHeldItemMainhand());
         }
 
         return super.shouldExecute();
@@ -65,7 +65,7 @@ public class EntityAIUseTorchMoveToBlock extends EntityAIMoveToBlock2 {
             IBlockState iblockstate = world.getBlockState(blockpos);
             Block block = iblockstate.getBlock();
 
-            if (this.currentTask == 0 && iblockstate.getMaterial() == Material.AIR && ProfessionToolManager.getInstance().isTool(ProfessionToolManager.torcher, this.servant.getHeldItemMainhand())) {
+            if (this.currentTask == 0 && iblockstate.getMaterial() == Material.AIR && ServantToolManager.getInstance().isTool(ServantToolManager.torcher, this.servant.getHeldItemMainhand())) {
                 ItemStack itemstack = this.servant.getHeldItemMainhand();
                 if (itemstack.getItem() instanceof ItemBlock) {
 

@@ -1,7 +1,7 @@
 package littleservantmod.entity.ai;
 
 import littleservantmod.entity.EntityLittleServant;
-import littleservantmod.profession.ProfessionToolManager;
+import littleservantmod.profession.ServantToolManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -47,7 +47,7 @@ public class EntityAIUseTorch extends EntityAIBase {
             IBlockState iblockstate = world.getBlockState(blockpos);
             Block block = iblockstate.getBlock();
 
-            if (iblockstate.getMaterial() == Material.AIR && ProfessionToolManager.getInstance().isTool(ProfessionToolManager.torcher, this.servant.getHeldItemMainhand())) {
+            if (iblockstate.getMaterial() == Material.AIR && ServantToolManager.getInstance().isTool(ServantToolManager.torcher, this.servant.getHeldItemMainhand())) {
                 ItemStack itemstack = this.servant.getHeldItemMainhand();
                 if (itemstack.getItem() instanceof ItemBlock) {
 

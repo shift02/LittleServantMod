@@ -14,7 +14,7 @@ public class ProfessionTorcher extends ProfessionLSMBase {
         super.initAI(servant);
 
         //松明に持ち替える
-        servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ProfessionToolManager.torcher));
+        servant.addAI(200, new EntityAIEquipTool((EntityLittleServant) servant.getEntityInstance(), ServantToolManager.torcher));
 
         //500
         servant.addAI(500, new EntityAIUseTorchMoveToBlock((EntityLittleServant) servant.getEntityInstance(), 0.8d));
