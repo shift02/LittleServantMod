@@ -4,6 +4,6 @@ import net.minecraft.util.ResourceLocation;
 
 public interface IServantToolManager {
 
-	public void addServantTool(ResourceLocation type, IProfessionTool tool);
+	public void addServantTool(ResourceLocation type, IServantTool tool);
 
 }
