@@ -1,6 +1,5 @@
 package littleservantmod.client.renderer.entity;
 
-import littleservantmod.LittleServantMod;
 import littleservantmod.client.model.ModelLittleServantBase;
 import littleservantmod.client.model.ModelLittleServantButler;
 import littleservantmod.client.model.ModelLittleServantMaid;
@@ -17,12 +16,6 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServant> {
-
-    private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid.png");
-    private static final ResourceLocation TAMED_MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid_tamed.png");
-
-    private static final ResourceLocation BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler.png");
-    private static final ResourceLocation TAMED_BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler_tamed.png");
 
     public static final ModelLittleServantBase butler = new ModelLittleServantButler(0.0F, false);
     public static final ModelLittleServantBase maid = new ModelLittleServantMaid(0.0F, false);

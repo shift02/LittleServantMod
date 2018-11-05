@@ -17,11 +17,11 @@ import net.minecraft.world.World;
  * */
 public class EntityLittleServantSkin extends EntityLittleServantProfession {
 
-    private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid.png");
-    private static final ResourceLocation TAMED_MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_maid/mob_littlemaid_tamed.png");
+    private static final ResourceLocation MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entity/little_maid/mob_little_maid.png");
+    private static final ResourceLocation TAMED_MAID_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entity/little_maid/mob_little_maid_tamed.png");
 
-    private static final ResourceLocation BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler.png");
-    private static final ResourceLocation TAMED_BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entitys/little_butler/mob_little_butler_tamed.png");
+    private static final ResourceLocation BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entity/little_butler/mob_little_butler.png");
+    private static final ResourceLocation TAMED_BUTLER_TEXTURES = new ResourceLocation(LittleServantMod.MOD_ID, "textures/entity/little_butler/mob_little_butler_tamed.png");
 
     protected static final DataParameter<String> SKIN = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
 
