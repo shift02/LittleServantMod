@@ -106,7 +106,7 @@ public class LittleServantMod {
 
             if (biome != null && this.canSpawn(biome)) {
                 EntityRegistry.addSpawn(EntityLittleServant.class, 7, 2, 6, EnumCreatureType.CREATURE, biome);
-                logger.info("Registering spawn in " + biome.getBiomeName());
+                logger.info("Registering spawn in " + LSMProxy.getProxy().getBiomeName(biome));
             }
         }
     }

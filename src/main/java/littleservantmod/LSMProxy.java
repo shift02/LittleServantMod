@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -98,20 +99,29 @@ public class LSMProxy implements IGuiHandler {
 
     }
 
+    public String getBiomeName(Biome biome) {
+        return "";
+    }
+
     @SideOnly(Side.SERVER)
     public static class ServerProxy extends LSMProxy {
 
     }
 
-    public static TextureAtlasSprite escort;
-    public static TextureAtlasSprite free;
-
     @SideOnly(Side.CLIENT)
     public static class ClientProxy extends LSMProxy {
+
+        public static TextureAtlasSprite escort;
+        public static TextureAtlasSprite free;
 
         @Override
         public EntityPlayer getClientPlayer() {
             return Minecraft.getMinecraft().player;
+        }
+
+        @Override
+        public String getBiomeName(Biome biome) {
+            return biome.getBiomeName();
         }
 
         @SubscribeEvent
