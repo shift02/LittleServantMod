@@ -44,7 +44,7 @@ public class LittleServantMod {
     /** MOD名称 */
     public static final String MOD_NAME = "LittleServantMod";
     /** MODのバージョン */
-    public static final String MOD_VERSION = "0.0.9";
+    public static final String MOD_VERSION = "0.0.10";
 
     private static Logger logger;
 
