@@ -11,7 +11,7 @@ import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.EntityLittleServantBase;
 import littleservantmod.inventory.ContainerServant;
 import littleservantmod.inventory.ContainerServantProfession;
-import littleservantmod.profession.ProfessionEventHandler;
+import littleservantmod.profession.DefaultProfessionEventHandler;
 import littleservantmod.profession.mode.ModeEventHandler;
 import littleservantmod.util.OpenGuiEntityId;
 import net.minecraft.client.Minecraft;
@@ -131,10 +131,10 @@ public class LSMProxy implements IGuiHandler {
             if (textureMap == Minecraft.getMinecraft().getTextureMapBlocks()) {
 
                 //TODO この辺をもう少しスマートにしたい
-                ProfessionEventHandler.iconUnemployed.setIcon(
+                DefaultProfessionEventHandler.iconUnemployed.setIcon(
                         textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed")));
 
-                ProfessionEventHandler.iconChores.setIcon(
+                DefaultProfessionEventHandler.iconChores.setIcon(
                         textureMap.registerSprite(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_chores")));
 
                 ModeEventHandler.iconDefault.setIcon(

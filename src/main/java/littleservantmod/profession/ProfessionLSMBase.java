@@ -12,6 +12,8 @@ import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.api.profession.ProfessionBase;
 import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
+import littleservantmod.client.util.IIconHolder;
+import littleservantmod.client.util.IconHolder;
 import littleservantmod.profession.behavior.BehaviorEscort;
 import littleservantmod.profession.behavior.BehaviorFree;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -95,13 +97,13 @@ public abstract class ProfessionLSMBase extends ProfessionBase {
         return this.behaviorEscort;
     }
 
-    protected IconHolder iconHolder;
+    protected IIconHolder iconHolder;
 
-    public IconHolder getIconHolder() {
+    public IIconHolder getIconHolder() {
         return iconHolder;
     }
 
-    public ProfessionLSMBase setIconHolder(IconHolder iconHolder) {
+    public ProfessionLSMBase setIconHolder(IIconHolder iconHolder) {
         this.iconHolder = iconHolder;
         return this;
     }

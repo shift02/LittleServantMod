@@ -2,7 +2,7 @@ package littleservantmod.profession.behavior;
 
 import littleservantmod.api.IServant;
 import littleservantmod.api.profession.behavior.BehaviorBase;
-import littleservantmod.profession.IconHolder;
+import littleservantmod.client.util.IconHolder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

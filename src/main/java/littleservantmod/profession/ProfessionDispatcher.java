@@ -131,17 +131,17 @@ public class ProfessionDispatcher implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public IProfession getDefaultProfession() {
-		return professionsMap.get(ProfessionEventHandler.kyeUnemployed);
+		return professionsMap.get(DefaultProfessionEventHandler.kyeUnemployed);
 	}
 
 	public IProfession getDefaultTamedProfession() {
-		return professionsMap.get(ProfessionEventHandler.keyChores);
+		return professionsMap.get(DefaultProfessionEventHandler.keyChores);
 	}
 
 	public IProfession getProfession(ResourceLocation resourceLocation) {
 
 		if (!this.professionsMap.containsKey(resourceLocation)) {
-			this.professionsMap.get(ProfessionEventHandler.kyeUnemployed);
+			this.professionsMap.get(DefaultProfessionEventHandler.kyeUnemployed);
 		}
 
 		return this.professionsMap.get(resourceLocation);

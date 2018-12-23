@@ -2,7 +2,7 @@ package littleservantmod.profession.mode;
 
 import littleservantmod.LittleServantMod;
 import littleservantmod.api.profession.mode.AttachProfessionModeEvent;
-import littleservantmod.profession.IconHolder;
+import littleservantmod.client.util.IconHolder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

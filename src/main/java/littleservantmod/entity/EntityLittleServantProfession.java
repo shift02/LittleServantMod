@@ -5,7 +5,7 @@ import littleservantmod.api.profession.behavior.IBehavior;
 import littleservantmod.api.profession.mode.IMode;
 import littleservantmod.entity.ai.EntityAISit;
 import littleservantmod.profession.ProfessionDispatcher;
-import littleservantmod.profession.ProfessionEventHandler;
+import littleservantmod.profession.DefaultProfessionEventHandler;
 import littleservantmod.profession.ProfessionManager;
 import littleservantmod.profession.mode.ModeEventHandler;
 import net.minecraft.entity.EntityLiving;
@@ -41,7 +41,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataManager.register(PROFESSION, ProfessionEventHandler.kyeUnemployed.toString());
+		this.dataManager.register(PROFESSION, DefaultProfessionEventHandler.kyeUnemployed.toString());
 		this.dataManager.register(MODE, ModeEventHandler.kyeDefault.toString());
 		this.dataManager.register(BEHAVIOR, ModeEventHandler.kyeDefault.toString());
 
@@ -342,7 +342,7 @@ public class EntityLittleServantProfession extends EntityLittleServantFakePlayer
 					mode,
 					behavior);
 		} else {
-			this.changeProfession(this.getProfession(ProfessionEventHandler.keyChores));
+			this.changeProfession(this.getProfession(DefaultProfessionEventHandler.keyChores));
 		}
 
 		if (this.professions != null && compound.hasKey("LMSProfessions")) {

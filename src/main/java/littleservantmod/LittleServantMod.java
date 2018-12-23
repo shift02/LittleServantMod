@@ -11,7 +11,7 @@ import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.client.renderer.entity.RenderEntityLittleServant;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.packet.LSMPacketHandler;
-import littleservantmod.profession.ProfessionEventHandler;
+import littleservantmod.profession.DefaultProfessionEventHandler;
 import littleservantmod.profession.ProfessionManager;
 import littleservantmod.profession.ServantToolManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -86,7 +86,7 @@ public class LittleServantMod {
         LittleServantModAPI.professionManager = ProfessionManager.getInstance();
 
         //職業
-        MinecraftForge.EVENT_BUS.register(new ProfessionEventHandler());
+        MinecraftForge.EVENT_BUS.register(new DefaultProfessionEventHandler());
         //ProfessionManager.getInstance().registProfession(new ProfessionUnemployed());
         //ProfessionManager.getInstance().registProfession(new ProfessionChores());
 
