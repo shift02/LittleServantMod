@@ -92,7 +92,7 @@ public class GuiServantInventory extends GuiSideTabContainer {
         int j = this.guiTop;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        this.renderCurrentSlot();
+        this.renderCurrentItemSlot();
 
         this.servant.isGui = true;
         drawEntityOnScreen(i + 51, j + 75 - 16, 30, i + 51 - this.oldMouseX, j + 75 - 50 - this.oldMouseY, this.servant);
@@ -101,23 +101,24 @@ public class GuiServantInventory extends GuiSideTabContainer {
         this.mc.getTextureManager().bindTexture(Gui.ICONS);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         renderArmor(guiLeft + 84, guiTop + 20);
-        renderHealth(guiLeft + 84, guiTop + 77);
-        renderAir(guiLeft + 84, guiTop + 56);
-        //drawHeathArmor(0, 0);
+        renderHealth(guiLeft + 84, guiTop + 72);//-39
+
+        //水中なら空気を描画
+        if (servant.isInsideOfMaterial(Material.WATER)) renderAir(guiLeft + 84, guiTop + 46);
 
         //super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
     }
 
-    protected void renderCurrentSlot() {
+    /**
+     * サーヴァントが持っているアイテムのスロットを描画
+     */
+    protected void renderCurrentItemSlot() {
 
-        int i = this.guiLeft;
-        int j = this.guiTop;
+        int left = 6 + 18 * (this.servant.getInventory().currentItem % 9);
+        int top = 74 + 18 * (this.servant.getInventory().currentItem / 9);
 
-        int i1 = 6 + 18 * (this.servant.getInventory().currentItem % 9);
-        int ij = 74 + 18 * (this.servant.getInventory().currentItem / 9);
-
-        this.drawTexturedModalRect(i + i1, j + ij, 176, 0, 20, 20);
+        this.drawTexturedModalRect(this.guiLeft + left, this.guiTop + top, 176, 0, 20, 20);
 
     }
 
@@ -226,14 +227,12 @@ public class GuiServantInventory extends GuiSideTabContainer {
         int left = width + 81;
         int top = height;
 
-        if (servant.isInsideOfMaterial(Material.WATER) || 0 == 0) {
-            int air = servant.getAir();
-            int full = MathHelper.ceil((air - 2) * 10.0D / 300.0D);
-            int partial = MathHelper.ceil(air * 10.0D / 300.0D) - full;
+        int air = servant.getAir();
+        int full = MathHelper.ceil((air - 2) * 10.0D / 300.0D);
+        int partial = MathHelper.ceil(air * 10.0D / 300.0D) - full;
 
-            for (int i = 0; i < full + partial; ++i) {
-                drawTexturedModalRect(left - i * 8 - 9, top, (i < full ? 16 : 25), 18, 9, 9);
-            }
+        for (int i = 0; i < full + partial; ++i) {
+            drawTexturedModalRect(left - i * 8 - 9, top, (i < full ? 16 : 25), 18, 9, 9);
         }
 
     }
