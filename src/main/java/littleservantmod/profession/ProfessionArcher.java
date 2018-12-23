@@ -1,12 +1,12 @@
 package littleservantmod.profession;
 
+import littleservantmod.api.IRangedAttackLSM;
 import littleservantmod.api.IServant;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.ai.EntityAIAttackRangedBow2;
 import littleservantmod.entity.ai.EntityAIEquipTool;
 import littleservantmod.entity.ai.target.EntityAINearestAttackableTarget2;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -18,7 +18,7 @@ import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 
-public class ProfessionArcher extends ProfessionLSMBase implements IRangedAttackMob {
+public class ProfessionArcher extends ProfessionLSMBase implements IRangedAttackLSM {
 
     protected IServant servant;
 
@@ -45,6 +45,12 @@ public class ProfessionArcher extends ProfessionLSMBase implements IRangedAttack
 
     }
 
+    /**
+     * 遠隔攻撃を使用して指定されたエンティティを攻撃する<br />
+     * Entityにプレイヤーの遠隔攻撃をシミュレーションさせる
+     *
+     * @see net.minecraft.entity.IRangedAttackMob#attackEntityWithRangedAttack(net.minecraft.entity.EntityLivingBase, float)
+     */
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
         EntityArrow entityarrow = this.getArrow(distanceFactor);
@@ -66,6 +72,13 @@ public class ProfessionArcher extends ProfessionLSMBase implements IRangedAttack
     @Override
     public void setSwingingArms(boolean swingingArms) {
         // TODO 自動生成されたメソッド・スタブ
+
+    }
+
+    @Override
+    public int canUseCount() {
+
+        return 20;
 
     }
 
