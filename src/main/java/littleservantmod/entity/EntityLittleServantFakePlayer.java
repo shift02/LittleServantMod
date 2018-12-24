@@ -156,7 +156,7 @@ public abstract class EntityLittleServantFakePlayer extends EntityLittleServantB
 
     public InventoryServant getInventory() {
         if (this.inventory == null) {
-            this.inventory = new InventoryServant((EntityLittleServant) this, this.getPlayer());
+            this.inventory = new InventoryServant((EntityLittleServant) this);
         }
         return inventory;
     }
