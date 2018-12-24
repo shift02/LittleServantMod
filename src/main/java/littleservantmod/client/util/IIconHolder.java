@@ -1,6 +1,8 @@
 package littleservantmod.client.util;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * TextureAtlasSpriteを保持するクラス<br />
@@ -10,6 +12,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
  */
 public interface IIconHolder {
 
+    @SideOnly(Side.CLIENT)
     public TextureAtlasSprite getIcon();
 
 }

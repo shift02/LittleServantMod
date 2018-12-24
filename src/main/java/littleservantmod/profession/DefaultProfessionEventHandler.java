@@ -3,8 +3,8 @@ package littleservantmod.profession;
 import littleservantmod.LittleServantMod;
 import littleservantmod.api.profession.AttachProfessionEvent;
 import littleservantmod.client.util.IIconHolder;
-import littleservantmod.client.util.IconHolder;
-import littleservantmod.client.util.IconVanillaHolder;
+import littleservantmod.client.util.IconHolderDynamic;
+import littleservantmod.client.util.IconHolderVanilla;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -15,27 +15,27 @@ public class DefaultProfessionEventHandler {
 
     /** 無職 */
     public static ResourceLocation kyeUnemployed = new ResourceLocation(LittleServantMod.MOD_ID, "unemployed");
-    public static IconHolder iconUnemployed = new IconHolder();
+    public static IIconHolder iconUnemployed = new IconHolderDynamic(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_unemployed"));
 
     /** 雑用 */
     public static ResourceLocation keyChores = new ResourceLocation(LittleServantMod.MOD_ID, "chores");
-    public static IconHolder iconChores = new IconHolder();
+    public static IIconHolder iconChores = new IconHolderDynamic(new ResourceLocation(LittleServantMod.MOD_ID, "icons/icon_chores"));
 
     /** 剣士 */
     public static ResourceLocation keySaber = new ResourceLocation(LittleServantMod.MOD_ID, "saber");
-    public static IIconHolder iconSaber = new IconVanillaHolder(new ResourceLocation("items/diamond_sword"));
+    public static IIconHolder iconSaber = new IconHolderVanilla(new ResourceLocation("items/diamond_sword"));
 
     /** 弓兵 */
     public static ResourceLocation keyArcher = new ResourceLocation(LittleServantMod.MOD_ID, "archer");
-    public static IIconHolder iconArcher = new IconVanillaHolder(new ResourceLocation("items/bow_standby"));
+    public static IIconHolder iconArcher = new IconHolderVanilla(new ResourceLocation("items/bow_standby"));
 
     /** 毛刈り兵 */
     public static ResourceLocation keyRipper = new ResourceLocation(LittleServantMod.MOD_ID, "ripper");
-    public static IIconHolder iconRipper = new IconVanillaHolder(new ResourceLocation("items/shears"));
+    public static IIconHolder iconRipper = new IconHolderVanilla(new ResourceLocation("items/shears"));
 
     /** たいまつ兵 */
     public static ResourceLocation keyTorcher = new ResourceLocation(LittleServantMod.MOD_ID, "torcher");
-    public static IIconHolder iconTorcher = new IconVanillaHolder(new ResourceLocation("blocks/torch_on"));
+    public static IIconHolder iconTorcher = new IconHolderVanilla(new ResourceLocation("blocks/torch_on"));
 
     @SubscribeEvent
     public void onAttachProfessionEvent(AttachProfessionEvent evt) {

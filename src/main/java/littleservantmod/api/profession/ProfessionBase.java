@@ -1,8 +1,6 @@
 package littleservantmod.api.profession;
 
 import littleservantmod.api.IServant;
-import littleservantmod.entity.EntityLittleServantFakePlayer;
-import littleservantmod.entity.ai.EntityAICollectEntityItem;
 import littleservantmod.entity.ai.EntityAIOpenDoor2;
 import littleservantmod.entity.ai.EntityAITempt;
 import littleservantmod.entity.ai.EntityAIUseSugar;
@@ -54,9 +52,6 @@ public abstract class ProfessionBase implements IProfession {
 
         //砂糖についてくる
         servant.addAI(300, new EntityAITempt(servant.getEntityInstance(), defaultSpeed, Items.SUGAR, false));
-
-        //落ちているアイテムを拾う
-        servant.addAI(400, new EntityAICollectEntityItem((EntityLittleServantFakePlayer) servant.getEntityInstance(), defaultSpeed, 4));
 
         //ウロウロ
         //servant.addAI(800, new EntityAIWanderAvoidWater(servant.getEntityInstance(), defaultSpeed));
