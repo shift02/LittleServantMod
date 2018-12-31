@@ -127,7 +127,8 @@ public class GuiServantInventory extends GuiSideTabContainer {
         int top = y;
 
         int level = ForgeLSMHooks.getTotalArmorValue(this.servant);
-        for (int i = 1; level > 0 && i < 20; i += 2) {
+
+        for (int i = 1; isRenderArmor(level) && i < 20; i += 2) {
             if (i < level) {
                 drawTexturedModalRect(left, top, 34, 9, 9, 9);
             } else if (i == level) {
@@ -137,6 +138,10 @@ public class GuiServantInventory extends GuiSideTabContainer {
             }
             left += 8;
         }
+    }
+
+    private boolean isRenderArmor(int level) {
+        return true;
     }
 
     public void renderHealth(int width, int height) {
