@@ -4,9 +4,6 @@ import java.util.Iterator;
 
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Objects;
-
-import littleservantmod.api.ISugarItemHandler;
 import littleservantmod.api.LittleServantModAPI;
 import littleservantmod.client.renderer.entity.RenderEntityLittleServant;
 import littleservantmod.entity.EntityLittleServant;
@@ -17,9 +14,6 @@ import littleservantmod.profession.ServantToolManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -129,22 +123,8 @@ public class LittleServantMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        // some example code
-        logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 
-        LittleServantModAPI.register.resistSugarItemHandler(new ISugarItemHandler() {
-
-            @Override
-            public float useItem(ItemStack item) {
-                item.splitStack(1);
-                return 0.5F;
-            }
-
-            @Override
-            public boolean canUse(ItemStack item) {
-                return Objects.equal(item.getItem(), Items.SUGAR);
-            }
-        });
+        LSMSugarItems.registrySugarItem();
 
         /*
         String name = "Loading Resource";
