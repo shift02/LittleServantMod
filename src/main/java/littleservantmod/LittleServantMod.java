@@ -1,7 +1,5 @@
 package littleservantmod;
 
-import java.util.Iterator;
-
 import org.apache.logging.log4j.Logger;
 
 import littleservantmod.api.LittleServantModAPI;
@@ -13,11 +11,8 @@ import littleservantmod.profession.ProfessionManager;
 import littleservantmod.profession.ServantToolManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -60,13 +55,11 @@ public class LittleServantMod {
         EntityRegistry.registerModEntity(new ResourceLocation(MOD_ID, "little_servant"), EntityLittleServant.class,
                 "little_servant", 0, this, trackingRange, updateFrequency, sendVelocityUpdates, 0xffffff, 0xFF0000);
 
-        this.addSpawn();
-
         if (!event.getSide().isServer()) {
             RenderingRegistry.registerEntityRenderingHandler(EntityLittleServant.class, new IRenderFactory() {
                 @Override
                 public Render createRenderFor(RenderManager manager) {
-                    return new RenderEntityLittleServant(manager);//new SampleEntityRender(manager);
+                    return new RenderEntityLittleServant(manager);
                 }
             });
         }
@@ -90,35 +83,6 @@ public class LittleServantMod {
 
         LittleServantModAPI.servantToolManager = ServantToolManager.getInstance();
 
-    }
-
-    public void addSpawn() {
-
-        Iterator<Biome> biomeIterator = Biome.REGISTRY.iterator();
-        while (biomeIterator.hasNext()) {
-            Biome biome = biomeIterator.next();
-
-            if (biome != null && this.canSpawn(biome)) {
-                EntityRegistry.addSpawn(EntityLittleServant.class, 7, 2, 6, EnumCreatureType.CREATURE, biome);
-                logger.info("Registering spawn in " + LSMProxy.getProxy().getBiomeName(biome));
-            }
-        }
-    }
-
-    private boolean canSpawn(Biome biome) {
-
-        //伝統　砂漠で探す
-        if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY)) return true;
-
-        //if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT))return false;
-        if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD)) return false;
-
-        if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)) return false;
-        if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.END)) return false;
-
-        if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.VOID)) return false;
-
-        return true;
     }
 
     @EventHandler
@@ -148,7 +112,9 @@ public class LittleServantMod {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        this.addSpawn();
+
+        //サーヴァントのスポーン設定
+        LSMBiomes.registerBiomesSpawn(logger);
     }
 
 }
