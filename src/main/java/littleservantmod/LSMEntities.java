@@ -24,7 +24,7 @@ public class LSMEntities {
         int updateFrequency = 3;
         boolean sendVelocityUpdates = true;
         EntityRegistry.registerModEntity(new ResourceLocation(LittleServantMod.MOD_ID, "little_servant"), EntityLittleServant.class,
-                "little_servant", 0, this, trackingRange, updateFrequency, sendVelocityUpdates, 0xffffff, 0xFF0000);
+                "little_servant", 0, LittleServantMod.instance, trackingRange, updateFrequency, sendVelocityUpdates, 0xffffff, 0xFF0000);
 
         if (!event.getSide().isServer()) {
             RenderingRegistry.registerEntityRenderingHandler(EntityLittleServant.class, new IRenderFactory() {
