@@ -20,11 +20,17 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 @Mod(modid = LittleServantMod.MOD_ID, name = LittleServantMod.MOD_NAME, version = LittleServantMod.MOD_VERSION, useMetadata = true)
 public class LittleServantMod {
 
-    /** ModID文字列 */
+    /**
+     * ModID文字列
+     */
     public static final String MOD_ID = "littleservantmod";
-    /** MOD名称 */
+    /**
+     * MOD名称
+     */
     public static final String MOD_NAME = "LittleServantMod";
-    /** MODのバージョン */
+    /**
+     * MODのバージョン
+     */
     public static final String MOD_VERSION = "0.0.11";
 
     private static Logger logger;
@@ -47,8 +53,9 @@ public class LittleServantMod {
         this.lSMEntities = new LSMEntities(event);
         this.lSMEntities.registerEntities();
 
+
         LSMProxy.getProxy().fmlPreInit();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, LSMProxy.getProxy());
+        NetworkRegistry.INSTANCE.registerGuiHandler(LittleServantMod.instance, LSMProxy.getProxy());
         MinecraftForge.EVENT_BUS.register(LSMProxy.getProxy());
 
         LSMPacketHandler.init(event);
