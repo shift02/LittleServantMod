@@ -23,7 +23,7 @@ import net.minecraft.world.World;
  */
 public class EntityLittleServantProfession extends EntityLittleServantFakePlayer {
 
-	public static ProfessionDispatcher professions;
+	public ProfessionDispatcher professions;
 
 	protected static final DataParameter<String> PROFESSION = EntityDataManager.<String> createKey(EntityLittleServantBase.class, DataSerializers.STRING);
 

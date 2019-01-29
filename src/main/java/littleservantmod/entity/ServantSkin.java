@@ -2,6 +2,9 @@ package littleservantmod.entity;
 
 import java.util.Arrays;
 
+/**
+ * サーヴァントの見た目を判定するクラス
+ */
 public enum ServantSkin {
 
     SKIN_STEVE("steve"), SKIN_ALEX("alex");
