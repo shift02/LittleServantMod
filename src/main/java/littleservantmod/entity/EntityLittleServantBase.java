@@ -28,8 +28,8 @@ import net.minecraft.world.World;
 
 /**
  * バニラからのメソッドや処理はこちらに実装する
- * @author shift02
  *
+ * @author shift02
  */
 public abstract class EntityLittleServantBase extends EntityLiving implements IServant, INpc {
 
@@ -42,18 +42,22 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
     public static final AttributeModifier FLEEING_SPEED_MODIFIER = (new AttributeModifier(FLEEING_SPEED_MODIFIER_UUID,
             "Fleeing speed bonus", 2.0D, 2)).setSaved(false);
 
-    private BlockPos homePosition = BlockPos.ORIGIN;
-    /** If -1 there is no maximum distance */
+    /**
+     * If -1 there is no maximum distance
+     */
     private float maximumHomeDistance = -1.0F;
 
     /*
      * EntityTameable
      */
-    protected static final DataParameter<Boolean> TAMED = EntityDataManager.<Boolean> createKey(EntityLittleServantBase.class, DataSerializers.BOOLEAN);
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>> createKey(EntityLittleServantBase.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-    protected static final DataParameter<Boolean> SITED = EntityDataManager.<Boolean> createKey(EntityLittleServantBase.class, DataSerializers.BOOLEAN);
+    protected static final DataParameter<Boolean> TAMED = EntityDataManager.<Boolean>createKey(EntityLittleServantBase.class, DataSerializers.BOOLEAN);
+    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityLittleServantBase.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    protected static final DataParameter<Boolean> SITED = EntityDataManager.<Boolean>createKey(EntityLittleServantBase.class, DataSerializers.BOOLEAN);
 
     public EntityAISit aiSit;
+
+    //同期
+    protected static final DataParameter<BlockPos> HOME = EntityDataManager.<BlockPos>createKey(EntityLittleServantBase.class, DataSerializers.BLOCK_POS);
 
     public EntityLittleServantBase(World worldIn) {
         super(worldIn);
@@ -68,6 +72,8 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
         this.dataManager.register(TAMED, Boolean.FALSE);
         this.dataManager.register(OWNER_UNIQUE_ID, Optional.absent());
         this.dataManager.register(SITED, Boolean.FALSE);
+
+        this.dataManager.register(HOME, BlockPos.ORIGIN);
     }
 
     @Override
@@ -81,6 +87,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
     /*
      * EntityCreature
      */
+
     /**
      * Applies logic related to leashes, for example dragging the entity or breaking the leash.
      */
@@ -137,7 +144,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
         if (this.maximumHomeDistance == -1.0F) {
             return true;
         } else {
-            return this.homePosition.distanceSq(pos) < this.maximumHomeDistance * this.maximumHomeDistance;
+            return this.getHomePosition().distanceSq(pos) < this.maximumHomeDistance * this.maximumHomeDistance;
         }
     }
 
@@ -145,16 +152,16 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
      * Sets home position and max distance for it
      */
     public void setHomePosAndDistance(BlockPos pos, int distance) {
-        this.homePosition = pos;
+        this.dataManager.set(HOME, pos);
         this.maximumHomeDistance = distance;
     }
 
     public void clearHomePosition() {
-        this.homePosition = BlockPos.ORIGIN;
+        this.dataManager.set(HOME, BlockPos.ORIGIN);
     }
 
     public BlockPos getHomePosition() {
-        return this.homePosition;
+        return this.dataManager.get(HOME);
     }
 
     public float getMaximumHomeDistance() {
@@ -271,6 +278,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
     /*
      * NBT
      */
+
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
