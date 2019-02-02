@@ -5,11 +5,15 @@ import littleservantmod.client.model.ModelLittleServantButler;
 import littleservantmod.client.model.ModelLittleServantMaid;
 import littleservantmod.client.renderer.entity.layers.LayerCustomHead;
 import littleservantmod.client.renderer.entity.layers.LayerHeldItem;
+import littleservantmod.client.renderer.entity.layers.LayerHomePosition;
+import littleservantmod.client.renderer.entity.layers.LayerWorldRenderer;
 import littleservantmod.entity.EntityLittleServant;
 import littleservantmod.entity.ServantSkin;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
@@ -27,6 +31,9 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
 
+        //位置関係の描画を追加
+        this.addLayer(new LayerHomePosition(this));
+
     }
 
     @Override
@@ -36,7 +43,18 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
 
         setModelVisibilities(entity);
 
+        GlStateManager.pushMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
+        GlStateManager.popMatrix();
+
+        //World系
+        for (LayerRenderer<EntityLittleServant> layerrenderer : this.layerRenderers) {
+            if (layerrenderer instanceof LayerWorldRenderer) {
+                GlStateManager.pushMatrix();
+                ((LayerWorldRenderer<EntityLittleServant>) layerrenderer).doRenderWorldLayer(entity, partialTicks);
+                GlStateManager.popMatrix();
+            }
+        }
     }
 
     private void setModelVisibilities(EntityLittleServant clientPlayer) {
