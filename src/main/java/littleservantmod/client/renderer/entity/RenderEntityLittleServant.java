@@ -48,13 +48,16 @@ public class RenderEntityLittleServant extends RenderLivingBase<EntityLittleServ
         GlStateManager.popMatrix();
 
         //World系
-        for (LayerRenderer<EntityLittleServant> layerrenderer : this.layerRenderers) {
-            if (layerrenderer instanceof LayerWorldRenderer) {
-                GlStateManager.pushMatrix();
-                ((LayerWorldRenderer<EntityLittleServant>) layerrenderer).doRenderWorldLayer(entity, partialTicks);
-                GlStateManager.popMatrix();
+        if (!entity.inGui()) {
+            for (LayerRenderer<EntityLittleServant> layerrenderer : this.layerRenderers) {
+                if (layerrenderer instanceof LayerWorldRenderer) {
+                    GlStateManager.pushMatrix();
+                    ((LayerWorldRenderer<EntityLittleServant>) layerrenderer).doRenderWorldLayer(entity, partialTicks);
+                    GlStateManager.popMatrix();
+                }
             }
         }
+
     }
 
     private void setModelVisibilities(EntityLittleServant clientPlayer) {

@@ -53,6 +53,15 @@ public class EntityLittleServant extends EntityLittleServantSkin {
     //	return SoundEvents.ENTITY_ZOMBIE_STEP;
     //}
 
+    /**
+     * GUIでの描画かどうかのフラグ
+     *
+     * @return GUIでの描画ならtrue
+     */
+    public boolean inGui() {
+        return isGui;
+    }
+
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack itemstack = player.getHeldItem(hand);

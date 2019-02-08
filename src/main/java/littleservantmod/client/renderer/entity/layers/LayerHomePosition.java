@@ -2,6 +2,7 @@ package littleservantmod.client.renderer.entity.layers;
 
 import javax.annotation.Nullable;
 
+import littleservantmod.client.renderer.RendererHelper;
 import littleservantmod.client.renderer.entity.RenderEntityLittleServant;
 import littleservantmod.entity.EntityLittleServant;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,8 +22,11 @@ public class LayerHomePosition implements LayerWorldRenderer<EntityLittleServant
 
     protected final RenderEntityLittleServant livingEntityRenderer;
 
+    private final RendererHelper rendererHelper;
+
     public LayerHomePosition(RenderEntityLittleServant livingEntityRendererIn) {
         this.livingEntityRenderer = livingEntityRendererIn;
+        this.rendererHelper = new RendererHelper();
     }
 
     @Override
@@ -33,6 +37,7 @@ public class LayerHomePosition implements LayerWorldRenderer<EntityLittleServant
     public void doRenderWorldLayer(@Nullable EntityLittleServant entityLittleServant, float partialTicks) {
 
         if (entityLittleServant == null) return;
+
         GlStateManager.pushMatrix();
 
         GlStateManager.enableBlend();
@@ -47,11 +52,15 @@ public class LayerHomePosition implements LayerWorldRenderer<EntityLittleServant
         //HomePositionの取得
         BlockPos homePosition = entityLittleServant.getHomePosition();
 
-        if (homePosition != null) {
+        if (homePosition != null && !homePosition.equals(BlockPos.ORIGIN)) {
 
             AxisAlignedBB homeAABB = FULL_BLOCK_AABB.offset(homePosition);
 
-            RenderGlobal.renderFilledBox(homeAABB, 1.0F, 1.0F, 1.0F, 0.4F);
+            //Homeの描画
+            RenderGlobal.renderFilledBox(homeAABB, 0.6F, 0.6F, 1.0F, 0.4F);
+
+            //Home地点からサーヴァントまでの線の描画
+            rendererHelper.renderLine(homePosition, entityLittleServant, 0.6F, 0.6F, 1.0F, 0.8F);
 
         }
 
