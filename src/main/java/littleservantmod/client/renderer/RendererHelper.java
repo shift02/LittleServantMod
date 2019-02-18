@@ -47,6 +47,63 @@ public class RendererHelper {
 
     }
 
+    public void renderBoundingBox(BlockPos pos, AxisAlignedBB box, float red, float green, float blue, float alpha, float partialTicks) {
+
+        AxisAlignedBB posAxisAlignedBB = FULL_BLOCK_AABB.offset(pos);
+
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.glLineWidth(2.0F);
+        GlStateManager.disableTexture2D();
+        GlStateManager.depthMask(false);
+
+        RenderGlobal.drawSelectionBoundingBox(posAxisAlignedBB, red, green, blue, alpha);
+
+        RenderGlobal.drawSelectionBoundingBox(box, red, green, blue, alpha);
+
+        //２点間の描画
+        renderConnectBoundingBox(posAxisAlignedBB, box, red, green, blue, alpha, partialTicks);
+
+        GlStateManager.depthMask(true);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+
+    }
+
+    private void renderConnectBoundingBox(AxisAlignedBB small, AxisAlignedBB big, float red, float green, float blue, float alpha, float partialTicks) {
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+
+        bufferbuilder.pos(small.minX, small.minY, small.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.minX, big.minY, big.minZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.minX, small.minY, small.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.minX, big.minY, big.maxZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.minX, small.maxY, small.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.minX, big.maxY, big.minZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.minX, small.maxY, small.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.minX, big.maxY, big.maxZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.maxX, small.minY, small.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.maxX, big.minY, big.minZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.maxX, small.minY, small.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.maxX, big.minY, big.maxZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.maxX, small.maxY, small.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.maxX, big.maxY, big.minZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(small.maxX, small.maxY, small.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(big.maxX, big.maxY, big.maxZ).color(red, green, blue, alpha).endVertex();
+
+        tessellator.draw();
+
+    }
+
     /**
      * PosからEntityまでの線を描画
      *

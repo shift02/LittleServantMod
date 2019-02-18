@@ -47,6 +47,8 @@ public class LayerHomePosition implements LayerWorldRenderer<EntityLittleServant
             //Homeの描画
             rendererHelper.renderFilledBox(homePosition, 0.6F, 0.6F, 1.0F, 0.4F);
 
+            rendererHelper.renderBoundingBox(homePosition, entityLittleServant.getHomeAndDistance(), 0.0F, 0.0F, 0.0F, 1.0F, partialTicks);
+
             //Home地点からサーヴァントまでの線の描画
             rendererHelper.renderLine(homePosition, entityLittleServant, 0.0F, 0.0F, 1.0F, 1.0F);
 

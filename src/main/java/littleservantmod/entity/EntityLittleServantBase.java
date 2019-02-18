@@ -22,6 +22,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -35,17 +36,14 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
 
     protected EntityAIWander wander;
 
+    private final AxisAlignedBB FULL_BLOCK_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+
     /*
      * EntityCreature
      */
     public static final UUID FLEEING_SPEED_MODIFIER_UUID = UUID.fromString("E199AD21-BA8A-4C53-8D13-6182D5C69D3A");
     public static final AttributeModifier FLEEING_SPEED_MODIFIER = (new AttributeModifier(FLEEING_SPEED_MODIFIER_UUID,
             "Fleeing speed bonus", 2.0D, 2)).setSaved(false);
-
-    /**
-     * If -1 there is no maximum distance
-     */
-    private float maximumHomeDistance = -1.0F;
 
     /*
      * EntityTameable
@@ -58,6 +56,10 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
 
     //同期
     protected static final DataParameter<BlockPos> HOME = EntityDataManager.<BlockPos>createKey(EntityLittleServantBase.class, DataSerializers.BLOCK_POS);
+    /**
+     * If -1 there is no maximum distance
+     */
+    protected static final DataParameter<Float> HOME_DISTANCE = EntityDataManager.<Float>createKey(EntityLittleServantBase.class, DataSerializers.FLOAT);
 
     public EntityLittleServantBase(World worldIn) {
         super(worldIn);
@@ -74,6 +76,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
         this.dataManager.register(SITED, Boolean.FALSE);
 
         this.dataManager.register(HOME, BlockPos.ORIGIN);
+        this.dataManager.register(HOME_DISTANCE, -1.0F);
     }
 
     @Override
@@ -105,7 +108,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
             	if (f > 10.0F) {
             		this.clearLeashed(true, true);
             	}
-            
+
             	return;
             }*/
 
@@ -141,10 +144,11 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
     }
 
     public boolean isWithinHomeDistanceFromPosition(BlockPos pos) {
-        if (this.maximumHomeDistance == -1.0F) {
+        float homeDistance = getMaximumHomeDistance();
+        if (homeDistance == -1.0F) {
             return true;
         } else {
-            return this.getHomePosition().distanceSq(pos) < this.maximumHomeDistance * this.maximumHomeDistance;
+            return this.getHomePosition().distanceSq(pos) < homeDistance * homeDistance;
         }
     }
 
@@ -153,7 +157,7 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
      */
     public void setHomePosAndDistance(BlockPos pos, int distance) {
         this.dataManager.set(HOME, pos);
-        this.maximumHomeDistance = distance;
+        this.dataManager.set(HOME_DISTANCE, (float) distance);
     }
 
     public void clearHomePosition() {
@@ -165,18 +169,27 @@ public abstract class EntityLittleServantBase extends EntityLiving implements IS
     }
 
     public float getMaximumHomeDistance() {
-        return this.maximumHomeDistance;
+        return this.dataManager.get(HOME_DISTANCE);
     }
 
     public void detachHome() {
-        this.maximumHomeDistance = -1.0F;
+        this.dataManager.set(HOME_DISTANCE, -1.0F);
+    }
+
+    /**
+     * サーヴァントの活動範囲
+     *
+     * @return AABB
+     */
+    public AxisAlignedBB getHomeAndDistance() {
+        return FULL_BLOCK_AABB.offset(this.getHomePosition()).grow(this.getMaximumHomeDistance());
     }
 
     /**
      * Returns whether a home area is defined for this entity.
      */
     public boolean hasHome() {
-        return this.maximumHomeDistance != -1.0F;
+        return this.getMaximumHomeDistance() != -1.0F;
     }
 
     protected double followLeashSpeed() {
